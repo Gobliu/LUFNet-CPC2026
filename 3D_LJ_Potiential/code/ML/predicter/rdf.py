@@ -14,6 +14,18 @@ from collections import Counter
 
 def pack_data(qpl_list):
     # shape = [nsamples, (q,p,boxsize), trajetory,  nparticles, DIM]
+    """Function pack_data.
+    
+    Parameters
+    ----------
+    qpl_list : Any
+        Tensor containing concatenated (q, p, boxsize) trajectories.
+    
+    Returns
+    -------
+    Any
+        Tuple of extracted q, p, and box-size tensors.
+    """
     q_traj = qpl_list[:, 0, :, :, :].clone().detach()
     p_traj = qpl_list[:, 1, :, :, :].clone().detach()
     l_init = qpl_list[:, 2, :, :, :].clone().detach()
@@ -22,6 +34,18 @@ def pack_data(qpl_list):
 
 
 def l_max_distance(l_list):
+    """Function l_max_distance.
+    
+    Parameters
+    ----------
+    l_list : Any
+        Periodic box lengths tensor, broadcastable to positions.
+    
+    Returns
+    -------
+    Any
+        Tuple of (boxsize, maximum distance) scalars.
+    """
     boxsize = torch.mean(l_list)
     L_h = boxsize / 2.
     q_max = math.sqrt(L_h * L_h + L_h * L_h + L_h * L_h)

@@ -7,6 +7,20 @@ from data_loader.data_io import data_io
 # ====================================================== 
 def read_data(filename,nchain):
 
+    """Function read_data.
+    
+    Parameters
+    ----------
+    filename : Any
+        TODO: Describe filename.
+    nchain : Any
+        TODO: Describe nchain.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     qpl_list,tau_long,tau_short = data_io.read_trajectory_qpl(filename)
 
     # shape of qp_list is [nsamples, (q, p,l), trajectory length, nparticle, DIM = 2 or 3]
@@ -41,6 +55,26 @@ def read_data(filename,nchain):
 # ====================================================== 
 def ran_shuffle(q_list,p_list,l_list,q_label,p_label):
 
+    """Function ran_shuffle.
+    
+    Parameters
+    ----------
+    q_list : Any
+        TODO: Describe q_list.
+    p_list : Any
+        TODO: Describe p_list.
+    l_list : Any
+        TODO: Describe l_list.
+    q_label : Any
+        TODO: Describe q_label.
+    p_label : Any
+        TODO: Describe p_label.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     nsamples = q_list.shape[0]
     perm_indx = torch.randperm(nsamples)
 
@@ -77,6 +111,18 @@ def ran_shuffle(q_list,p_list,l_list,q_label,p_label):
 # 
 # ====================================================== 
 def make_tree(node):
+    """Function make_tree.
+    
+    Parameters
+    ----------
+    node : Any
+        TODO: Describe node.
+    
+    Returns
+    -------
+    None
+        TODO: Describe return value.
+    """
     dot = make_dot(node)
     dot.render('qlist')
     

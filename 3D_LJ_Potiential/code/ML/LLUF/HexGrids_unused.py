@@ -8,7 +8,22 @@ class HexGrids:
 
     # b_list = list of grid distance
     # a_list = list of grid off set angle
+    """Class HexGrids.
+    
+    Notes
+    -----
+    Generates 2D hexagonal grid points around each particle (unused in 3D).
+    """
     def __init__(self,b_list,a_list):
+        """Function __init__.
+        
+        Parameters
+        ----------
+        b_list : Any
+            List of grid radii or lattice constants for grid layers.
+        a_list : Any
+            List of angular offsets (radians) for grid layers.
+        """
         self.b = b_list
         nlayers = len(b_list)
         grids = []
@@ -26,6 +41,20 @@ class HexGrids:
     # a = angle offset
     def hex_grids_list(self,b,a):
 
+        """Function hex_grids_list.
+        
+        Parameters
+        ----------
+        b : Any
+            Grid radius or lattice constant.
+        a : Any
+            Angular offset (radians).
+        
+        Returns
+        -------
+        Any
+            Tensor of 6 grid points around the origin.
+        """
         dt = 2*np.pi/6.0
         grids = []
         for g in range(6):
@@ -67,6 +96,24 @@ class HexGrids:
 
     def show_grids_nparticles(self, q_list, uli_list, boxsize, name):
 
+        """Function show_grids_nparticles.
+        
+        Parameters
+        ----------
+        q_list : Any
+            Particle positions tensor of shape (nsamples, nparticles, dim).
+        uli_list : Any
+            Grid point positions tensor for all particles.
+        boxsize : Any
+            Simulation box size per dimension.
+        name : Any
+            Plot label or tag.
+        
+        Returns
+        -------
+        None
+            None
+        """
         bs = boxsize.detach().numpy()
 
         for i in range(1):  # show two samples

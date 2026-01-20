@@ -40,10 +40,41 @@ class torch_dataset(Dataset):
 
 # ===========================================================
 class my_data:
+    """Class my_data.
+    
+    Notes
+    -----
+    TODO: Add class details.
+    """
     def __init__(self,train_filename,val_filename,test_filename,tau_long, window_sliding, saved_pair_steps,
                       tau_traj_len,train_pts=0,val_pts=0,test_pts=0): # 20250809
 
         # 20250809 to adjust tau_long
+        """Function __init__.
+        
+        Parameters
+        ----------
+        train_filename : Any
+            TODO: Describe train_filename.
+        val_filename : Any
+            TODO: Describe val_filename.
+        test_filename : Any
+            TODO: Describe test_filename.
+        tau_long : Any
+            TODO: Describe tau_long.
+        window_sliding : Any
+            TODO: Describe window_sliding.
+        saved_pair_steps : Any
+            TODO: Describe saved_pair_steps.
+        tau_traj_len : Any
+            TODO: Describe tau_traj_len.
+        train_pts : Any
+            TODO: Describe train_pts.
+        val_pts : Any
+            TODO: Describe val_pts.
+        test_pts : Any
+            TODO: Describe test_pts.
+        """
         traj_len_index = round(tau_traj_len/tau_long) * saved_pair_steps
         label_index = int((traj_len_index - saved_pair_steps) + window_sliding * saved_pair_steps)
         print('tau_traj_len',tau_traj_len, 'tau_long', tau_long, 'saved_pair_steps', saved_pair_steps)
@@ -83,6 +114,34 @@ class my_data:
 
     # ===========================================================
     def check_md_trajectory(self,q_init,p_init,q_final,p_final,l_list,neval,tau,nitr,append_strike):
+        """Function check_md_trajectory.
+        
+        Parameters
+        ----------
+        q_init : Any
+            TODO: Describe q_init.
+        p_init : Any
+            TODO: Describe p_init.
+        q_final : Any
+            TODO: Describe q_final.
+        p_final : Any
+            TODO: Describe p_final.
+        l_list : Any
+            TODO: Describe l_list.
+        neval : Any
+            TODO: Describe neval.
+        tau : Any
+            TODO: Describe tau.
+        nitr : Any
+            TODO: Describe nitr.
+        append_strike : Any
+            TODO: Describe append_strike.
+        
+        Returns
+        -------
+        None
+            TODO: Describe return value.
+        """
         assert(self.train_set.check_load.md_trajectory(q_init,p_init,q_final,p_final,
                             l_list,neval,tau,nitr,append_strike )),'data_loader.py:82 error'
     # ===========================================================
@@ -93,6 +152,20 @@ class my_data:
         # perform subsampling of data when specified
         # this is important when we need to perform quick debugging with
         # few data points
+        """Function sample.
+        
+        Parameters
+        ----------
+        data_set : Any
+            TODO: Describe data_set.
+        num_pts : Any
+            TODO: Describe num_pts.
+        
+        Returns
+        -------
+        Any
+            TODO: Describe return value.
+        """
         if num_pts > 0:
             if num_pts > len(data_set):
                 print("error: request more than CIFAR10 set")
@@ -107,8 +180,23 @@ class my_data:
 # ===========================================================
 class data_loader:
     #  data loader upon this custom dataset
+    """Class data_loader.
+    
+    Notes
+    -----
+    TODO: Add class details.
+    """
     def __init__(self,data_set, batch_size):
 
+        """Function __init__.
+        
+        Parameters
+        ----------
+        data_set : Any
+            TODO: Describe data_set.
+        batch_size : Any
+            TODO: Describe batch_size.
+        """
         self.data_set = data_set
         self.batch_size = batch_size
 

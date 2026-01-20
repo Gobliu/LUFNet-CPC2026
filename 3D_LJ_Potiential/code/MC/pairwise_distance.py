@@ -34,6 +34,24 @@ def pair_dq(q_list,l_list):
 def plot_pairs(dd,npar,rho, boxsize):
 
     # plot compare square pair-wise distance
+    """Function plot_pairs.
+    
+    Parameters
+    ----------
+    dd : Any
+        TODO: Describe dd.
+    npar : Any
+        TODO: Describe npar.
+    rho : Any
+        TODO: Describe rho.
+    boxsize : Any
+        TODO: Describe boxsize.
+    
+    Returns
+    -------
+    None
+        TODO: Describe return value.
+    """
     temp_list = [0.01, 0.1, 0.2, 0.4, 0.6]
     fig, axs = plt.subplots(1, dd.shape[0], figsize=(16, 4))
     print(boxsize.item())

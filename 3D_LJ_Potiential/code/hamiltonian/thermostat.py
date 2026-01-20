@@ -4,6 +4,24 @@ from utils.mydevice import mydevice
 
 def thermostat(p_list,gamma,temp,tau):
     # p_list shape [nsamples,nparticles,dim]
+    """Function thermostat.
+    
+    Parameters
+    ----------
+    p_list : Any
+        TODO: Describe p_list.
+    gamma : Any
+        TODO: Describe gamma.
+    temp : Any
+        TODO: Describe temp.
+    tau : Any
+        TODO: Describe tau.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     c1 = math.exp(-gamma * 0.5* tau) # weight of the rescaling factor
     c2 = math.sqrt(1 - c1 * c1) * math.sqrt(temp) # weight of the amplitude of the gaussian number
     R = torch.normal(0,1,size=p_list.shape)
@@ -12,6 +30,24 @@ def thermostat(p_list,gamma,temp,tau):
 
 def thermostat_ML(p_list,gamma,temp,tau):
     # p_list shape [nsamples,nparticles,dim]
+    """Function thermostat_ML.
+    
+    Parameters
+    ----------
+    p_list : Any
+        TODO: Describe p_list.
+    gamma : Any
+        TODO: Describe gamma.
+    temp : Any
+        TODO: Describe temp.
+    tau : Any
+        TODO: Describe tau.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     c1 = math.exp(-gamma *  tau) # weight of the rescaling factor
     c2 = math.sqrt(1 - c1 * c1) * math.sqrt(temp) # weight of the amplitude of the gaussian number
     R = torch.normal(0,1,size=p_list.shape, device=mydevice.get())

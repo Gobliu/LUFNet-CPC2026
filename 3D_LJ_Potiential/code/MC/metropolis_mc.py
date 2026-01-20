@@ -22,6 +22,13 @@ class metropolis_mc:
 
     def __init__(self,system_logs):
 
+        """Function __init__.
+        
+        Parameters
+        ----------
+        system_logs : Any
+            TODO: Describe system_logs.
+        """
         metropolis_mc._obj_count += 1
         assert (metropolis_mc._obj_count == 1), type(self).__name__ + " has more than one object"
 
@@ -31,6 +38,13 @@ class metropolis_mc:
         print('metropolis_mc initialized : boxsize ',self.boxsize, flush=True)
 
     def position_sampler(self):
+        """Function position_sampler.
+        
+        Returns
+        -------
+        Any
+            TODO: Describe return value.
+        """
         if MC_parameters.DIM==2:
             return self.position_sampler2d()
         elif MC_parameters.DIM==3:

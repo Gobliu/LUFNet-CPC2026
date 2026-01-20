@@ -27,6 +27,24 @@ def mcsteps(u,start_step, npar,rho,temp, ylabel, mean=None, std=None):
 
 
 def dist(e, npar,rho, saved_dir):
+    """Function dist.
+    
+    Parameters
+    ----------
+    e : Any
+        TODO: Describe e.
+    npar : Any
+        TODO: Describe npar.
+    rho : Any
+        TODO: Describe rho.
+    saved_dir : Any
+        TODO: Describe saved_dir.
+    
+    Returns
+    -------
+    None
+        TODO: Describe return value.
+    """
     xmin=torch.min(e)
     xmax=torch.max(e)
 

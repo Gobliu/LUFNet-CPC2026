@@ -14,6 +14,13 @@ import yaml
 
 def main():
 
+    """Function main.
+    
+    Returns
+    -------
+    None
+        TODO: Describe return value.
+    """
     _ = mydevice()
     _ = system_logs(mydevice)
     system_logs.print_start_logs()

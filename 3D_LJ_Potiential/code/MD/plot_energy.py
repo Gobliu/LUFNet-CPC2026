@@ -11,6 +11,20 @@ import matplotlib.pyplot as plt
 
 def de(e,npar):
     #shape = [trajectory, nsamples]
+    """Function de.
+    
+    Parameters
+    ----------
+    e : Any
+        TODO: Describe e.
+    npar : Any
+        TODO: Describe npar.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     e_shift = (e - e[0])/npar
     e_shift = e_shift.clone().detach().cpu().numpy()
     mean_e = np.mean(e_shift,axis=1)

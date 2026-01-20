@@ -10,6 +10,24 @@ import matplotlib.pyplot as plt
 
 def plot_pw_graph(r, features, ncols, fig_filename):
 
+        """Function plot_pw_graph.
+        
+        Parameters
+        ----------
+        r : Any
+            TODO: Describe r.
+        features : Any
+            TODO: Describe features.
+        ncols : Any
+            TODO: Describe ncols.
+        fig_filename : Any
+            TODO: Describe fig_filename.
+        
+        Returns
+        -------
+        None
+            TODO: Describe return value.
+        """
         fig, ax = plt.subplots(nrows=1, ncols=ncols, figsize=(10, 6))
         for i in range(ncols):
             ax[i].plot(r, features[:,i],'o',label='feature {}'.format(i+1))
@@ -32,6 +50,18 @@ def plot_pw_graph(r, features, ncols, fig_filename):
         #fig.savefig(fig_filename + '_par{}_{}.pdf'.format(i+1,k+1), bbox_inches='tight', dpi=200)
 
 def l_max_distance(l_list):
+    """Function l_max_distance.
+    
+    Parameters
+    ----------
+    l_list : Any
+        TODO: Describe l_list.
+    
+    Returns
+    -------
+    Any
+        TODO: Describe return value.
+    """
     boxsize = torch.mean(l_list)
     L_h = boxsize / 2.
     q_max = math.sqrt(L_h * L_h + L_h * L_h)

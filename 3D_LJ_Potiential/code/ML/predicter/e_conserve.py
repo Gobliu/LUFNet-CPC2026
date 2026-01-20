@@ -10,6 +10,20 @@ from hamiltonian.lennard_jones2d    import lennard_jones2d
 
 def pack_data(qpl_list, idx):
 
+    """Function pack_data.
+    
+    Parameters
+    ----------
+    qpl_list : Any
+        Tensor containing concatenated (q, p, boxsize) trajectories.
+    idx : Any
+        Trajectory time index to slice.
+    
+    Returns
+    -------
+    Any
+        Tuple of extracted q, p, and box-size tensors.
+    """
     q_init = qpl_list[:,0,idx,:,:].clone().detach()
     p_init = qpl_list[:,1,idx,:,:].clone().detach()
     l_init = qpl_list[:,2,idx,:,:].clone().detach()
@@ -21,6 +35,24 @@ def pack_data(qpl_list, idx):
     return q_init,p_init,l_init
 
 def total_energy(potential_function, q_list, p_list, l_list):
+    """Function total_energy.
+    
+    Parameters
+    ----------
+    potential_function : Any
+        Potential energy model (e.g., Lennard-Jones).
+    q_list : Any
+        Particle positions tensor of shape (nsamples, nparticles, dim).
+    p_list : Any
+        Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
+    l_list : Any
+        Periodic box lengths tensor, broadcastable to positions.
+    
+    Returns
+    -------
+    Any
+        Tuple of (kinetic energy, potential energy) tensors.
+    """
     pe = potential_function.total_energy(q_list, l_list)
     ke = torch.sum(p_list * p_list, dim=(1, 2)) * 0.5
     return ke, pe

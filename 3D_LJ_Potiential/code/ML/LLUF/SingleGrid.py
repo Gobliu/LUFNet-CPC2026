@@ -3,8 +3,16 @@ from utils.mydevice import mydevice
 
 class SingleGrid:
 
+    """Class SingleGrid.
+    
+    Notes
+    -----
+    Generates a single grid point at each particle position.
+    """
     def __init__(self):
         # grids_ncenter.shape is [6*nlayers, 2]
+        """Function __init__.
+        """
         grids_ncenter = torch.tensor([[0,0]]) # shape [1,2]
         self.all_grids = mydevice.load(grids_ncenter)
         self.ngrids = 1

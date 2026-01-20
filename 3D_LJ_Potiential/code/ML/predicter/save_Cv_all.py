@@ -10,6 +10,22 @@ def Specific_heat(pe, npar,T):
 
     # pe shape [trajectory,nsamples]
     # print('pe', pe.min(), pe.max())
+    """Function Specific_heat.
+    
+    Parameters
+    ----------
+    pe : Any
+        Potential energy samples array.
+    npar : Any
+        Number of particles.
+    T : Any
+        Temperature (scalar).
+    
+    Returns
+    -------
+    Any
+        Scalar specific-heat drift at the final time step.
+    """
     mean_pe = np.mean(pe,axis=1)
     mean_pe2 = np.mean(pe*pe,axis=1)
     cv_per_npar = (mean_pe2 - mean_pe*mean_pe)/(T*T) /npar

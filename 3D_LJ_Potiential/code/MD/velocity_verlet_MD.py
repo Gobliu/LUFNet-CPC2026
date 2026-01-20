@@ -18,7 +18,20 @@ import torch
 
 class Langevin_MD:
 
+    """Class Langevin_MD.
+    
+    Notes
+    -----
+    TODO: Add class details.
+    """
     def __init__(self,lennard_jones2d):
+        """Function __init__.
+        
+        Parameters
+        ----------
+        lennard_jones2d : Any
+            TODO: Describe lennard_jones2d.
+        """
         self.lennard_jones2d = lennard_jones2d
         print(' velocity verlet MD')
         #self.f_stat = force()
@@ -29,6 +42,28 @@ class Langevin_MD:
 
     def one_step(self,q_list,p_list,l_list,tau, gamma, temp):
 
+        """Function one_step.
+        
+        Parameters
+        ----------
+        q_list : Any
+            TODO: Describe q_list.
+        p_list : Any
+            TODO: Describe p_list.
+        l_list : Any
+            TODO: Describe l_list.
+        tau : Any
+            TODO: Describe tau.
+        gamma : Any
+            TODO: Describe gamma.
+        temp : Any
+            TODO: Describe temp.
+        
+        Returns
+        -------
+        Any
+            TODO: Describe return value.
+        """
         p_plus = thermostat(p_list, gamma, temp, tau)
         p_list_2 = p_plus - 0.5*tau*self.lennard_jones2d.derivative(q_list,l_list)
 
@@ -46,6 +81,32 @@ class Langevin_MD:
 
     def nsteps(self,q_list,p_list,l_list,tau,nitr,append_strike, gamma, temp):
 
+        """Function nsteps.
+        
+        Parameters
+        ----------
+        q_list : Any
+            TODO: Describe q_list.
+        p_list : Any
+            TODO: Describe p_list.
+        l_list : Any
+            TODO: Describe l_list.
+        tau : Any
+            TODO: Describe tau.
+        nitr : Any
+            TODO: Describe nitr.
+        append_strike : Any
+            TODO: Describe append_strike.
+        gamma : Any
+            TODO: Describe gamma.
+        temp : Any
+            TODO: Describe temp.
+        
+        Returns
+        -------
+        Any
+            TODO: Describe return value.
+        """
         assert (nitr % append_strike == 0), 'incompatible strike and nitr'
 
         qpl_list = []

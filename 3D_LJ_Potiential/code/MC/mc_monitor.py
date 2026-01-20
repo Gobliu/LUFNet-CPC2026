@@ -6,6 +6,32 @@ import glob
 import matplotlib.ticker as ticker
 
 def split_mcsteps(u,npar,rho,temp, ylabel,start=0, mean=None, std=None):
+    """Function split_mcsteps.
+    
+    Parameters
+    ----------
+    u : Any
+        TODO: Describe u.
+    npar : Any
+        TODO: Describe npar.
+    rho : Any
+        TODO: Describe rho.
+    temp : Any
+        TODO: Describe temp.
+    ylabel : Any
+        TODO: Describe ylabel.
+    start : Any
+        TODO: Describe start.
+    mean : Any
+        TODO: Describe mean.
+    std : Any
+        TODO: Describe std.
+    
+    Returns
+    -------
+    None
+        TODO: Describe return value.
+    """
     print(len(u))
 
     rows, cols = 5, 5 # 5, 5

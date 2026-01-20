@@ -28,6 +28,18 @@ class momentum_sampler:
 
     def momentum_samples(self, mass=1):
         # 'generate': 'maxwell'
+        """Function momentum_samples.
+        
+        Parameters
+        ----------
+        mass : Any
+            TODO: Describe mass.
+        
+        Returns
+        -------
+        Any
+            TODO: Describe return value.
+        """
         sigma = np.sqrt( MC_parameters.temperature )  # sqrt(kT/m)
         self.vel = np.random.normal(0, 1, (self.vel.shape)) * sigma # make sure shape correct
         momentum = torch.tensor(self.vel) * mass

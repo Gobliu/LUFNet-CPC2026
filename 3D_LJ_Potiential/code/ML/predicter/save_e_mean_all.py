@@ -10,6 +10,20 @@ import matplotlib.pyplot as plt
 import os
 
 def de(e,npar):
+    """Function de.
+    
+    Parameters
+    ----------
+    e : Any
+        Epoch or step index.
+    npar : Any
+        Number of particles.
+    
+    Returns
+    -------
+    Any
+        Scalar normalized energy drift at the final time step.
+    """
     e = e.clone().detach().cpu().numpy()
     #shape = [trajectory, nsamples]
     mean_e = np.mean(e, axis=1)
