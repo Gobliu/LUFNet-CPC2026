@@ -213,5 +213,3 @@ class data_loader:
 
         self.test_loader  = torch.utils.data.DataLoader(self.data_set.test_set,
                             batch_size=batch_size, shuffle=False, **kwargs)
-
-

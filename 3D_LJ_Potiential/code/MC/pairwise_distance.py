@@ -9,15 +9,21 @@ import torch
 import numpy as np
 from scipy.stats import gaussian_kde
 
-def pair_dq(q_list,l_list):
-    '''
-    # pair_dq(q_list):
+def pair_dq(q_list, l_list):
+    """Compute pairwise distances between particles with PBC.
 
-        use to compute the pair distance between particles
+    Parameters
+    ----------
+    q_list : torch.Tensor
+        Tensor shaped [batch, nparticles, dim] of positions.
+    l_list : torch.Tensor
+        Tensor shaped like ``q_list`` containing box sizes.
 
-        :param q_list: with only time point , shape = [batch,nparticles,dim=2 or 3]
-        :return: square pair distance
-    '''
+    Returns
+    -------
+    torch.Tensor
+        Tensor shaped [batch, nparticles, nparticles - 1] of pair distances.
+    """
 
     nsamples, nparticle, dim = q_list.shape
 
@@ -31,26 +37,20 @@ def pair_dq(q_list,l_list):
 
     return dd
 
-def plot_pairs(dd,npar,rho, boxsize):
+def plot_pairs(dd, npar, rho, boxsize):
+    """Plot histograms and KDEs of pairwise distances across temperatures.
 
-    # plot compare square pair-wise distance
-    """Function plot_pairs.
-    
     Parameters
     ----------
-    dd : Any
-        TODO: Describe dd.
-    npar : Any
-        TODO: Describe npar.
+    dd : torch.Tensor
+        Tensor shaped [ntemps, nsamples, nparticles, nparticles - 1] of pair
+        distances in reduced units.
+    npar : int
+        Number of particles for labeling.
     rho : Any
-        TODO: Describe rho.
-    boxsize : Any
-        TODO: Describe boxsize.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
+        Density label used in the figure title.
+    boxsize : torch.Tensor or float
+        Scalar box size used to scale distances.
     """
     temp_list = [0.01, 0.1, 0.2, 0.4, 0.6]
     fig, axs = plt.subplots(1, dd.shape[0], figsize=(16, 4))
@@ -97,4 +97,3 @@ if __name__ == '__main__':
     dd_list = torch.stack(dd_list)
 
     plot_pairs(dd_list,npar,rho,torch.mean(boxsize))
-

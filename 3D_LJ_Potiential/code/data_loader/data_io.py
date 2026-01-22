@@ -6,12 +6,6 @@ class data_io:
     # standardize shape of q_list  is [nsamples,         trajectory length, nparticle, DIM]
     # ================================================
     @staticmethod
-    """Class data_io.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     def read_trajectory_qpl(filename):
         ''' given a filename, read the qp paired pts trajectory
 
@@ -104,6 +98,7 @@ class data_io:
         '''
         w_b_dis = {'weights': weight, 'bias': bias}
         torch.save(w_b_dis, filename)
+
     # ================================================
     @staticmethod
     def random_shuffle(qpl_list,tau_long,tau_short):
@@ -150,6 +145,3 @@ if __name__=='__main__':
     qpl_sh = data_io.random_shuffle(qpl_list,tau_long,tau_short)
 
     print('qpl_sh ',qpl_sh[:2])
-
-
-

@@ -144,6 +144,7 @@ class trainer:
             q_input_list,p_input_list,q_predict,p_predict,l_init = self.mlvv.nsteps(q_input_list,p_input_list,q_cur,p_cur,
                                                      l_init)
 
+            print("ws step ", ws, " q_label ", q_label, " p_label ", p_label, "weights ", self.weights)
             loss_val += self.loss_obj.eval(q_predict,p_predict,q_label[:,ws],p_label[:,ws],q_traj_list[-1],p_traj_list[-1],l_init,self.weights[ws])
 
             q_cur = q_predict
