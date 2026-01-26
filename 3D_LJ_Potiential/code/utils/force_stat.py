@@ -2,15 +2,7 @@ import numpy as np
 
 class force_stat:
 
-    """Class force_stat.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     def __init__(self):
-        """Function __init__.
-        """
         self.dim = 2
         self.clear()
 
@@ -32,13 +24,6 @@ class force_stat:
         self.cntr += 1
 
     def clear(self):
-        """Function clear.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         self.force_mean  = np.zeros(self.dim) # make zero
         self.force_stdd  = np.zeros(self.dim)
         self.force_min   =  1e10*np.ones(self.dim)
@@ -46,20 +31,6 @@ class force_stat:
         self.cntr = 0
 
     def print(self, e, label):
-        """Function print.
-        
-        Parameters
-        ----------
-        e : Any
-            TODO: Describe e.
-        label : Any
-            TODO: Describe label.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         print(e, label, 'update function  cntr ' , self.cntr)
 
         if self.cntr > 0:

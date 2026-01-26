@@ -6,7 +6,7 @@ from utils.system_logs import system_logs
 from utils.mydevice import mydevice
 import math
 import numpy as np
-#import MD.pairwise_distance as plot_pairs
+# import MD.pairwise_distance as plot_pairs
 from utils.pbc import pairwise_dq_pbc
 from utils.get_paired_distance_indices import get_paired_distance_indices
 from collections import Counter
@@ -14,18 +14,6 @@ from collections import Counter
 
 def pack_data(qpl_list):
     # shape = [nsamples, (q,p,boxsize), trajetory,  nparticles, DIM]
-    """Function pack_data.
-    
-    Parameters
-    ----------
-    qpl_list : Any
-        Tensor containing concatenated (q, p, boxsize) trajectories.
-    
-    Returns
-    -------
-    Any
-        Tuple of extracted q, p, and box-size tensors.
-    """
     q_traj = qpl_list[:, 0, :, :, :].clone().detach()
     p_traj = qpl_list[:, 1, :, :, :].clone().detach()
     l_init = qpl_list[:, 2, :, :, :].clone().detach()
@@ -34,22 +22,20 @@ def pack_data(qpl_list):
 
 
 def l_max_distance(l_list):
-    """Function l_max_distance.
-    
-    Parameters
-    ----------
-    l_list : Any
-        Periodic box lengths tensor, broadcastable to positions.
-    
-    Returns
-    -------
-    Any
-        Tuple of (boxsize, maximum distance) scalars.
-    """
     boxsize = torch.mean(l_list)
     L_h = boxsize / 2.
-    q_max = math.sqrt(L_h * L_h + L_h * L_h + L_h * L_h)
+    dim = l_list.shape[-1]
+    if dim == 2:
+        print('calc maximum distance on dim=2')
+        q_max = math.sqrt(L_h * L_h + L_h * L_h)
+    elif dim == 3:
+        print('calc maximum distance on dim=3')
+        q_max = math.sqrt(L_h * L_h + L_h * L_h + L_h * L_h)
+    else:
+        assert False, 'invalid dim given .... '
+
     print('boxsize', boxsize.item(), 'maximum distance dq = {:.2f}, dq^2 = {:.2f}'.format(q_max, q_max * q_max))
+
     return boxsize, q_max
 
 
@@ -92,7 +78,8 @@ def pairDistributionFunction(grdelta, grbinmax, q_list, l_list):
 
 
 if __name__ == '__main__':
-    # python rdf.py 64 0.85 0.9 3 1000 0.002 0 0 None 1800000 l
+    # md : python rdf.py 64 0.85 0.9 3 1000 0.001 1000 20 None 1800000 l
+    # ml : python rdf.py 64 0.85 0.9 3 1000 0.05 1000 20 065 180000 l
 
     _ = mydevice()
     _ = system_logs(mydevice)
@@ -126,32 +113,53 @@ if __name__ == '__main__':
        saved_model = saved_model.strip()
 
     if saved_model is None:
-        print('run md data .......')
-        data = {
-            "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}/'.format(dim,  npar, rho, T)
-                + 'n{}rho{}T{}.pt'.format(npar, rho, T),
-            "saved_dir": '../../../data_sets/gen_by_MD/{}d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}/'.format(dim,  npar, rho,  T)
-            # "filename": '../../../data_sets/gen_by_MD/{}d/n{}lt0.1stpstraj18_l_dpt45000.pt'.format(dim,npar),
-            # "saved_dir": '../../../data_sets/gen_by_MD/{}d/'.format(dim)
-            #              + 'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),
-            # "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every1t1000/n{}rho{}T{}/'.format(dim,tau_long, npar, rho, T)
-            #            + 'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),
-            # "saved_dir": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every1t1000/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T)
-            # "filename": '../../../data_sets/gen_by_MC/{}d/n{}rho{}/'.format(dim, npar, rho )
-            #             + 'n{}T{}seed1386nsamples1.pt'.format(npar, T),
-            # "saved_dir": '../../../data_sets/gen_by_MC/{}d/n{}rho{}/'.format(dim,  npar, rho )
-        }
-    else:
-        print('run ml data  .......')
-        data = {
-            "filename": '../../../data_sets/gen_by_ML/{}d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(dim,tau_long,dpt, region, npar, rho, T)
-                        + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format(npar, gamma, saved_model,tau_long),
-            "saved_dir": '../../../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)}
+        if dim == 2:
+            print('load md data on 2d .......')
+            data = {
+                     "filename" : '../../../data_sets/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
+                     'n{}rho{}T{}gamma{}.pt'.format(npar,rho,T,gamma),
+                     "saved_dir": "../../../data_sets/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/".format( tau_long,npar, rho, T)}
 
-    maindict = {
-        "grdelta": 0.06,
-        "traj_len": 8
-    }
+        elif dim == 3:
+            print('load md data on 3d .......')
+            data = {
+                     "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
+                            'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),
+                      "saved_dir": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/".format( dim, tau_long,npar, rho, T) }
+
+        else:
+            assert False, 'invalid dim given .... '
+
+    else:
+        if dim == 2:
+            print(f'load ml data on 2d .......')
+            data = {
+                "filename": '../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)
+                            + 'pred_n{}len08ws08gamma{}mb{}_tau{}.pt'.format(npar, gamma, saved_model,tau_long),
+                "saved_dir": '../../../data_sets/gen_by_ML/2d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)}
+
+        elif dim == 3:
+            print(f'load ml data on 3d .......')
+            data = {
+                "filename": '../../../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long, dpt, region, npar,  rho, T)
+                            + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format( npar, gamma, saved_model, tau_long),
+                "saved_dir": "../../../data_sets/gen_by_ML/{}d/lt{}dpt{}_{}/n{}rho{}T{}/".format(dim, tau_long, dpt, region, npar,  rho,  T)}
+
+        else:
+            assert False, 'invalid dim given .... '
+
+
+    if dim == 2:
+        maindict = {
+            "grdelta": 0.06,
+            "traj_len": 8
+        }
+
+    if dim == 3:
+        maindict = {
+            "grdelta": 0.03,
+            "traj_len": 8
+        }
 
     print('load file', data, flush=True)
     data1 = torch.load(data["filename"], map_location=map_location)

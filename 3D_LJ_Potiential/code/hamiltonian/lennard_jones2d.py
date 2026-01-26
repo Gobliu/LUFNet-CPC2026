@@ -6,23 +6,8 @@ import torch.optim as optim
 
 class lennard_jones2d:
 
-    """Class lennard_jones2d.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     def __init__(self,epsilon=1.0,sigma=1.0):
 
-        """Function __init__.
-        
-        Parameters
-        ----------
-        epsilon : Any
-            TODO: Describe epsilon.
-        sigma : Any
-            TODO: Describe sigma.
-        """
         self.epsilon = epsilon
         self.s06      = sigma**6
         self.s12     = sigma**12
@@ -30,20 +15,6 @@ class lennard_jones2d:
 
     def derivative(self,q_list,l_list):
 
-        """Function derivative.
-        
-        Parameters
-        ----------
-        q_list : Any
-            TODO: Describe q_list.
-        l_list : Any
-            TODO: Describe l_list.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -66,20 +37,6 @@ class lennard_jones2d:
 
     def total_energy(self,q_list,l_list):
 
-        """Function total_energy.
-        
-        Parameters
-        ----------
-        q_list : Any
-            TODO: Describe q_list.
-        l_list : Any
-            TODO: Describe l_list.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -97,18 +54,6 @@ class lennard_jones2d:
 
     def paired_energy(self,r):
 
-        """Function paired_energy.
-        
-        Parameters
-        ----------
-        r : Any
-            TODO: Describe r.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         pair06 = (self.s06  / (r**6  + self.eps))
         pair12 = (self.s12 / (r**12 + self.eps))
 
@@ -117,20 +62,6 @@ class lennard_jones2d:
 
     def paired_distance(self,q_list,l_list):
 
-        """Function paired_distance.
-        
-        Parameters
-        ----------
-        q_list : Any
-            TODO: Describe q_list.
-        l_list : Any
-            TODO: Describe l_list.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -144,20 +75,6 @@ class lennard_jones2d:
  
     def repulsive_energy(self,q_list,l_list):
 
-        """Function repulsive_energy.
-        
-        Parameters
-        ----------
-        q_list : Any
-            TODO: Describe q_list.
-        l_list : Any
-            TODO: Describe l_list.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]

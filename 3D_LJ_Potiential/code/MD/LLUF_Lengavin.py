@@ -9,30 +9,7 @@ from utils.utils import assert_nan
 
 class LLUF_Lengavin(nn.Module):
 
-    """Class LLUF_Lengavin.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     def __init__(self,prepare_data, LLUF_update_p, LLUF_update_q, tau_long, t_init=1, nnet=1):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        prepare_data : Any
-            TODO: Describe prepare_data.
-        LLUF_update_p : Any
-            TODO: Describe LLUF_update_p.
-        LLUF_update_q : Any
-            TODO: Describe LLUF_update_q.
-        tau_long : Any
-            TODO: Describe tau_long.
-        t_init : Any
-            TODO: Describe t_init.
-        nnet : Any
-            TODO: Describe nnet.
-        """
         super().__init__()
 
         self.prepare_data = prepare_data
@@ -56,30 +33,6 @@ class LLUF_Lengavin(nn.Module):
         # phi0.shape = [nsamples*nparticles, ngrids*DIM]
         # p_input_list [pi0,pi1,pi2,...]
 
-        """Function one_step.
-        
-        Parameters
-        ----------
-        q_input_list : Any
-            TODO: Describe q_input_list.
-        p_input_list : Any
-            TODO: Describe p_input_list.
-        q_pre : Any
-            TODO: Describe q_pre.
-        p_pre : Any
-            TODO: Describe p_pre.
-        l_list : Any
-            TODO: Describe l_list.
-        gamma : Any
-            TODO: Describe gamma.
-        temp : Any
-            TODO: Describe temp.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         q_cur = q_pre  + p_pre * self.tau + self.LLUF_update_q(q_input_list, p_input_list, q_pre)
         q_cur = pbc(q_cur, l_list)
 
@@ -105,26 +58,6 @@ class LLUF_Lengavin(nn.Module):
         #assert(n_chain==1),'MD/velocity_verletx,py: error only n_chain = 1 is implemented '
 
         # our mbpw-net model chain up to predict the new configuration for n-times
-        """Function nsteps.
-        
-        Parameters
-        ----------
-        q_input_list : Any
-            TODO: Describe q_input_list.
-        p_input_list : Any
-            TODO: Describe p_input_list.
-        q_pre : Any
-            TODO: Describe q_pre.
-        p_pre : Any
-            TODO: Describe p_pre.
-        l_list : Any
-            TODO: Describe l_list.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         q_input_list,p_input_list,q_cur,p_cur,l_list = \
                                   self.one_step(q_input_list,p_input_list,q_pre,p_pre,l_list)
 

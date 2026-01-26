@@ -3,12 +3,6 @@ import math
 
 class MC_parameters:
 
-    """Class MC_parameters.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     nparticle = None
     temperature = None
 
@@ -32,18 +26,6 @@ class MC_parameters:
 
     @staticmethod
     def load_dict(json_filename):
-        """Function load_dict.
-        
-        Parameters
-        ----------
-        json_filename : Any
-            TODO: Describe json_filename.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         with open(json_filename) as f:
             data = json.load(f)
 

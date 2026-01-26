@@ -20,22 +20,7 @@ import sys
 
 class PhiFeatures:
 
-    """Class PhiFeatures.
-    
-    Notes
-    -----
-    Computes position-based (phi) features on grid points using a pairwise network.
-    """
     def __init__(self,grid_object,net): #b_list,a_list,net):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        grid_object : Any
-            Grid generator that returns grid points per particle.
-        net : Any
-            PyTorch module used for feature extraction or updates.
-        """
         self.grid_object = grid_object
         self.net = net
         self.mask = None
@@ -49,20 +34,6 @@ class PhiFeatures:
         # q_list shape [nsamples, nparticles, DIM = 2 or 3] # 20250807 now we only implement 3d system.
         # l_list shape [nsamples, nparticles, DIM = 2 or 3]
         # make all grid points        self.nsamples, self.nparticles, self.DIM = q_list.shape
-        """Function __call__.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Phi feature tensor of shape (nsamples, nparticles, ngrids * dim).
-        """
         uli_list = self.grid_object(q_list, l_list)  # position at grid points
         # uli_list.shape is [nsamples, nparticles * ngrids, DIM=(x,y) or (x,y,z)]
         q_var = self.gen_qvar(q_list, l_list, uli_list, self.net, self.grid_object.ngrids)  # force fields
@@ -74,22 +45,6 @@ class PhiFeatures:
     def make_mask(self,nsamples,nparticles,dim):
         # mask to mask out only centered at i-th particle
         # and then use to make zero of pair-wise which interact with itself
-        """Function make_mask.
-        
-        Parameters
-        ----------
-        nsamples : Any
-            Number of samples in the batch.
-        nparticles : Any
-            Number of particles per sample.
-        dim : Any
-            Coordinate dimension (e.g., 2 or 3).
-        
-        Returns
-        -------
-        Any
-            Mask tensor with zeros on the diagonal to exclude self-interactions.
-        """
         self.mask = torch.ones([nsamples,nparticles,nparticles,dim],device=mydevice.get())
         dia = torch.diagonal(self.mask,dim1=1,dim2=2) # [nsamples, dim =2 or 3, nparticles]
         dia.fill_(0.0)
@@ -97,26 +52,6 @@ class PhiFeatures:
     # ===================================================
     def gen_qvar(self, q_list, l_list, uli_list, pwnet, ngrids): 
         # uli_list.shape is [nsamples, nparticles * ngrids, DIM=2 or 3] # 20250807 now we only implement 3d system.
-        """Function gen_qvar.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        uli_list : Any
-            Grid point positions tensor for all particles.
-        pwnet : Any
-            Pairwise network mapping distance features to vector outputs.
-        ngrids : Any
-            Number of grid points per particle.
-        
-        Returns
-        -------
-        Any
-            Phi feature tensor of shape (nsamples, nparticles, ngrids * dim).
-        """
         nsamples, nparticles, DIM = q_list.shape
         _qvar = self.qvar(q_list, l_list, uli_list, pwnet, ngrids)
         # shape is [ nsamples, nparticles * ngrids, DIM =2 or 3]
@@ -128,26 +63,6 @@ class PhiFeatures:
     def qvar(self, q_list, l_list, uli_list, pwnet, ngrids):  # uli_list = grid center position
         # uli_list.shape is [nsamples, nparticles * ngrids, DIM=2 or 3] # 20250807 now we only implement 3d system.
 
-        """Function qvar.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        uli_list : Any
-            Grid point positions tensor for all particles.
-        pwnet : Any
-            Pairwise network mapping distance features to vector outputs.
-        ngrids : Any
-            Number of grid points per particle.
-        
-        Returns
-        -------
-        Any
-            Summed pairwise grid contributions of shape (nsamples, nparticles * ngrids, dim).
-        """
         nsamples, nparticles, dim = q_list.shape
 
         l_list = torch.unsqueeze(l_list, dim=2)
@@ -190,22 +105,6 @@ class PhiFeatures:
     def dpair_pbc_sq(self, q, uli_list, l_list):  #
 
         # all list dimensionless
-        """Function dpair_pbc_sq.
-        
-        Parameters
-        ----------
-        q : Any
-            Positions tensor.
-        uli_list : Any
-            Grid point positions tensor for all particles.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Tuple of (pairwise displacements, squared distances).
-        """
         q_state = torch.unsqueeze(q, dim=2)
         # shape is [nsamples, nparticles, 1, DIM=(x,y)]
 

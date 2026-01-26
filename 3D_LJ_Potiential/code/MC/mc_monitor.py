@@ -5,29 +5,7 @@ import numpy as np
 import glob
 import matplotlib.ticker as ticker
 
-def split_mcsteps(u, npar, rho, temp, ylabel, start=0, mean=None, std=None):
-    """Plot per-sample MC energy traces across multiple figures.
-
-    Parameters
-    ----------
-    u : Sequence[array_like]
-        Sequence of arrays shaped like [nsteps, 2] where column 0 is step and
-        column 1 is energy.
-    npar : int
-        Number of particles for normalization.
-    rho : Any
-        Density label used in plot titles.
-    temp : Any
-        Temperature label used in plot titles.
-    ylabel : str
-        Y-axis label.
-    start : int, optional
-        Start index for plotting the trace.
-    mean : Any, optional
-        Optional mean values (unused, kept for API parity).
-    std : Any, optional
-        Optional std values (unused, kept for API parity).
-    """
+def split_mcsteps(u,npar,rho,temp, ylabel,start=0, mean=None, std=None):
     print(len(u))
 
     rows, cols = 5, 5 # 5, 5
@@ -62,27 +40,8 @@ def split_mcsteps(u, npar, rho, temp, ylabel, start=0, mean=None, std=None):
         plt.tight_layout()
         plt.show()
 
-def mcsteps(u, npar, rho, temp, ylabel, mean=None, std=None):
-    """Plot a single MC energy trace for a given sample.
-
-    Parameters
-    ----------
-    u : Sequence[array_like]
-        Sequence of arrays shaped like [nsteps, 2] where column 0 is step and
-        column 1 is energy.
-    npar : int
-        Number of particles for normalization.
-    rho : Any
-        Density label used in plot titles.
-    temp : Any
-        Temperature label used in plot titles.
-    ylabel : str
-        Y-axis label.
-    mean : Any, optional
-        Optional mean values (unused, kept for API parity).
-    std : Any, optional
-        Optional std values (unused, kept for API parity).
-    """
+def mcsteps(u,npar,rho,temp, ylabel, mean=None, std=None):
+    '''plot of potential energy at different temp or combined temp for nsamples ( train/ valid ) '''
 
     plt.title(r'every 100 mc steps at npar={} $\rho$={} T={}'.format(npar,rho,temp), fontsize=15)
     plt.plot(u[0][:,0],u[0][:,1]/npar, 'k-', label='s{}'.format(0))

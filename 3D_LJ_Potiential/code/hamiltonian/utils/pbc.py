@@ -1,13 +1,6 @@
 import torch
 
 def check_pbc():
-    """Function check_pbc.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     nsamples = 1
     nparticles = 1
     dim = 2
@@ -53,40 +46,12 @@ def check_pbc():
   
 # ======================================================
 def pbc(q_list,l_list):
-    """Function pbc.
-    
-    Parameters
-    ----------
-    q_list : Any
-        TODO: Describe q_list.
-    l_list : Any
-        TODO: Describe l_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     idx = torch.where(torch.abs(q_list)>0.5*l_list)
     q_list[idx] = q_list[idx] - torch.round(q_list[idx]/l_list[idx])*l_list[idx]
     return q_list
 # ======================================================
 def delta_pbc(q_list, l_list):
 
-    """Function delta_pbc.
-    
-    Parameters
-    ----------
-    q_list : Any
-        TODO: Describe q_list.
-    l_list : Any
-        TODO: Describe l_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     dq_list = delta_state(q_list)
 
     llist0 = torch.unsqueeze(l_list, dim=1)
@@ -100,18 +65,6 @@ def delta_pbc(q_list, l_list):
     return dq_list
 # ======================================================
 def delta_state(state_list):
-    """Function delta_state.
-    
-    Parameters
-    ----------
-    state_list : Any
-        TODO: Describe state_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     state_len = state_list.shape[1]  # nparticle
     state0 = torch.unsqueeze(state_list, dim=1)
     # shape is [nsamples, 1, nparticle, DIM]
@@ -128,13 +81,6 @@ def delta_state(state_list):
 # ======================================================
 
 def check_delta_pbc():
-    """Function check_delta_pbc.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     nsamples = 10  #100
     nparticles = 2
     dim = 2

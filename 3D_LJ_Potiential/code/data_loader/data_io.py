@@ -98,27 +98,10 @@ class data_io:
         '''
         w_b_dis = {'weights': weight, 'bias': bias}
         torch.save(w_b_dis, filename)
-
     # ================================================
     @staticmethod
     def random_shuffle(qpl_list,tau_long,tau_short):
 
-        """Function random_shuffle.
-        
-        Parameters
-        ----------
-        qpl_list : Any
-            TODO: Describe qpl_list.
-        tau_long : Any
-            TODO: Describe tau_long.
-        tau_short : Any
-            TODO: Describe tau_short.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         nsamples = qpl_list.shape[0]
         rand_idx = torch.randperm(nsamples)
         qpl_shuffle = qpl_list[rand_idx]
@@ -145,3 +128,6 @@ if __name__=='__main__':
     qpl_sh = data_io.random_shuffle(qpl_list,tau_long,tau_short)
 
     print('qpl_sh ',qpl_sh[:2])
+
+
+

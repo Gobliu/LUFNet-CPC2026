@@ -10,22 +10,6 @@ def Specific_heat(pe, npar,T):
 
     # pe shape [trajectory,nsamples]
     # print('pe', pe.min(), pe.max())
-    """Function Specific_heat.
-    
-    Parameters
-    ----------
-    pe : Any
-        Potential energy samples array.
-    npar : Any
-        Number of particles.
-    T : Any
-        Temperature (scalar).
-    
-    Returns
-    -------
-    Any
-        Scalar specific-heat drift at the final time step.
-    """
     mean_pe = np.mean(pe,axis=1)
     mean_pe2 = np.mean(pe*pe,axis=1)
     cv_per_npar = (mean_pe2 - mean_pe*mean_pe)/(T*T) /npar
@@ -54,23 +38,40 @@ if __name__ == '__main__':
     data0_list = []
     data1_list = []
     data2_list = []
-    temp_list = [0.44, 0.46, 0.48, 0.5]
-    for temp in temp_list:
 
-        load_file0 = f'../../../data_sets/gen_by_ML/lt0.1dpt100000_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb009_nsteps10000.pt'
-        print('data0 list', load_file0)
+    if dim == 2:
+        temp_list = [0.44, 0.46, 0.48, 0.5]
+        for temp in temp_list:
 
-        load_file1 = f'../../../data_sets/gen_by_MD/{dim}d/noML-metric-lt0.01every1t0.7t1000/n{npar}rho{rho}T{temp}/energy_gamma{gamma}_tmax1000.pt'
-        print('data1 list', load_file1)
+            load_file0 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.1dpt100000_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb009_nsteps10000.pt'
+            print('data0 list', load_file0)
 
-        load_file2 = f'../../../data_sets/gen_by_ML/lt0.1dpt{dpt}_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb{saved_model}_nsteps10000.pt'
-        print('data2 list', load_file2)
+            load_file1 = f'../../../data_sets/gen_by_MD/{dim}d/noML-metric-lt0.01every1t0.7t1000/n{npar}rho{rho}T{temp}/energy_gamma{gamma}_tmax1000.pt'
+            print('data1 list', load_file1)
 
-        data1_list.append(load_file1)
-        data2_list.append(load_file2)
-        if (npar == 64 or npar == 128) and region == 'lg' :#and temp != 0.5:
-            print('filename0 is ',temp)
-            data0_list.append(load_file0)
+            load_file2 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.1dpt{dpt}_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb{saved_model}_nsteps10000.pt'
+            print('data2 list', load_file2)
+
+            data1_list.append(load_file1)
+            data2_list.append(load_file2)
+
+            if (npar == 64 or npar == 128) and region == 'lg' :#and temp != 0.5:
+                print('filename0 is ',temp)
+                data0_list.append(load_file0)
+
+    elif dim == 3:
+        temp_list = [0.9]
+
+        for i in temp_list:
+
+            load_file1 = f'../../../data_sets/gen_by_MD/{dim}d/noML-metric-lt0.001every0.1t0.35t100/n{npar}rho{rho}T{i}/energy_gamma{gamma}_tmax100.pt'
+            print('data1 list', load_file1)
+
+            load_file2 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.05dpt{dpt}_{region}/n{npar}rho{rho}T{i}/energy_gamma{gamma}LUF{saved_model}_tmax100.pt'
+            print('data2 list', load_file2)
+
+            data1_list.append(load_file1)
+            data2_list.append(load_file2)
 
     nsamples = 1000
 
@@ -97,7 +98,7 @@ if __name__ == '__main__':
             cv_mu_mean0 = np.mean(
                 cv_mean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k])
             cv_mu_std0 = np.std(
-                cv_mean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k]) / np.sqrt(
+                cv_mean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k], ddof=1) / np.sqrt(
                 len(cv_mean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k]))
 
             cv_mu0.append(cv_mu_mean0)
@@ -139,13 +140,13 @@ if __name__ == '__main__':
     for k in range(len(temp_list)):
 
         cv_mu_mean1 = np.mean(cv_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k])
-        cv_mu_std1 = np.std(cv_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k]) / np.sqrt(
+        cv_mu_std1 = np.std(cv_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k], ddof=1) / np.sqrt(
                     len(cv_mean1_append[int(nsamples/n_split)*k:int(nsamples/n_split)+int(nsamples/n_split)*k]))
 
         # print('cv mean2',cv_mean2_append[int(1000/n_split)*k:int(1000/n_split)+int(1000/n_split)*k])
         cv_mu_mean2 = np.mean(cv_mean2_append[int(nsamples/n_split) * k : int(nsamples/n_split)+int(nsamples/n_split) * k])
         cv_mu_std2 = np.std(cv_mean2_append[int(nsamples/n_split) * k :
-                    int(nsamples/n_split)+int(nsamples/n_split)*k]) / np.sqrt(
+                    int(nsamples/n_split)+int(nsamples/n_split)*k], ddof=1) / np.sqrt(
                     len(cv_mean2_append[int(nsamples/n_split)*k:int(nsamples/n_split)+int(nsamples/n_split)*k]))
 
         cv_mu1.append(cv_mu_mean1)

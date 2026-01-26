@@ -5,26 +5,7 @@ class PWNet(nn.Module):
 
     # input is torch.cat(dq_sq, dp_sq)
 
-    """Class PWNet.
-    
-    Notes
-    -----
-    Pairwise network mapping distance features to vector contributions.
-    """
     def __init__(self,input_dim,output_dim,nnodes,init_weights):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        input_dim : Any
-            Input feature dimension.
-        output_dim : Any
-            Output feature dimension.
-        nnodes : Any
-            Hidden layer width.
-        init_weights : Any
-            Weight initialization scheme (e.g., "relu" or "tanh").
-        """
         super().__init__()
 
         hidden_nodes = nnodes
@@ -55,18 +36,6 @@ class PWNet(nn.Module):
         
 
     def init_weights_tanh(self,m): # m is layer that is nn.Linear
-        """Function init_weights_tanh.
-        
-        Parameters
-        ----------
-        m : Any
-            Layer module passed by PyTorch initialization hook.
-        
-        Returns
-        -------
-        None
-            None
-        """
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -77,18 +46,6 @@ class PWNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def init_weights_relu(self,m): # m is layer that is nn.Linear
-        """Function init_weights_relu.
-        
-        Parameters
-        ----------
-        m : Any
-            Layer module passed by PyTorch initialization hook.
-        
-        Returns
-        -------
-        None
-            None
-        """
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -98,63 +55,15 @@ class PWNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def relu(self,x):
-        """Function relu.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Elementwise ReLU activation output.
-        """
         return torch.relu(x)
 
     def tanh(self,x):
-        """Function tanh.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Elementwise tanh activation output.
-        """
         return torch.tanh(x)
 
     def factor(self,dq):
-        """Function factor.
-        
-        Parameters
-        ----------
-        dq : Any
-            Distance or displacement magnitude used for scaling.
-        
-        Returns
-        -------
-        Any
-            Distance-based scaling factor.
-        """
         return 1.0/( dq**self.inv_max_expon + self.inv_max_force )
 
     def forward(self,x):
-        """Function forward.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Pairwise output tensor scaled by distance factor.
-        """
         dq=x
         # pwnet input:[nsamples * nparticles * nparticles * ngrids, 1]
         for m in self.layers:

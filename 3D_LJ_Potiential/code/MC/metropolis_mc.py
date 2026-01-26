@@ -15,18 +15,13 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 class metropolis_mc:
-    """Metropolis Monte Carlo sampler for Lennard-Jones systems."""
+
+    ''' This is a Monte Carlo Simulation only used to generate initial positions and sample equilibrium states'''
 
     _obj_count = 0
 
-    def __init__(self, system_logs):
-        """Initialize the sampler and bind configuration/state.
+    def __init__(self,system_logs):
 
-        Parameters
-        ----------
-        system_logs : Any
-            Logger/monitor instance for system diagnostics.
-        """
         metropolis_mc._obj_count += 1
         assert (metropolis_mc._obj_count == 1), type(self).__name__ + " has more than one object"
 
@@ -36,7 +31,6 @@ class metropolis_mc:
         print('metropolis_mc initialized : boxsize ',self.boxsize, flush=True)
 
     def position_sampler(self):
-        """Dispatch to 2D/3D position sampler based on MC_parameters.DIM."""
         if MC_parameters.DIM==2:
             return self.position_sampler2d()
         elif MC_parameters.DIM==3:
@@ -46,13 +40,12 @@ class metropolis_mc:
 
 
     def position_sampler3d(self):
-        """Create an initial 3D lattice of particle positions.
 
-        Returns
-        -------
-        torch.Tensor
-            Tensor shaped [1, nparticle, 3] of positions in the box.
-        """
+        ''' function to create random particle positions that are always between -0.5 * boxsize and 0.5 * boxsize
+
+        return : torch.tensor
+        shape is [1, nparticle, DIM]
+        '''
 
         # pos = np.random.uniform(-0.5, 0.5, (MC_parameters.nparticle, MC_parameters.DIM))
         # pos = pos * self.boxsize
@@ -82,13 +75,12 @@ class metropolis_mc:
 
 
     def position_sampler2d(self):
-        """Create an initial 2D lattice of particle positions.
 
-        Returns
-        -------
-        torch.Tensor
-            Tensor shaped [1, nparticle, 2] of positions in the box.
-        """
+        ''' function to create random particle positions that are always between -0.5 * boxsize and 0.5 * boxsize
+
+        return : torch.tensor
+        shape is [1, nparticle, DIM]
+        '''
 
         # pos = np.random.uniform(-0.5, 0.5, (MC_parameters.nparticle, MC_parameters.DIM))
         # pos = pos * self.boxsize
@@ -111,13 +103,12 @@ class metropolis_mc:
         return torch.unsqueeze(torch.tensor(xy), dim=0)
 
     def momentum_dummy_sampler(self):
-        """Return zero momenta since MC does not use momentum.
 
-        Returns
-        -------
-        torch.Tensor
-            Tensor shaped [1, nparticle, DIM] of zeros.
-        """
+        ''' function to make momentum zeros because not use for mc simulation
+
+        return : torch.tensor
+        shape is [1, nparticle, DIM]
+        '''
 
         momentum = torch.zeros(MC_parameters.nparticle, MC_parameters.DIM)
         momentum = torch.unsqueeze(momentum, dim=0)
@@ -125,7 +116,19 @@ class metropolis_mc:
         return momentum
 
     def mcmove(self) :
-        """Attempt a single Metropolis move on a randomly chosen particle."""
+
+        ''' MC method. if accepted, move to the new state, but if rejected, remain in the old state.
+
+        parameter
+        ------------
+        curr_q : shape is [1, npaticle, DIM]
+        dq     : float
+                At low temperature, mostly reject not update new energy from Boltzmann factor.
+                mulitiply displacement to increase acceptance rate
+
+        enn_q  : update potential energy
+        eno_q  : old potential energy
+        '''
        # shape is [1, npaticle, DIM]
 
         boxsize = torch.zeros( self.set_q.shape)
@@ -159,19 +162,24 @@ class metropolis_mc:
 
 
     def step(self):
-        """Run MC sampling and return configurations and statistics.
+
+        ''' Implementation of integration for Monte Carlo simulation
+
+        parameter
+        ___________
+        phase space : contains q_list, p_list as input and contains boxsize also
+        DISCARD     : discard initial mc steps
+        niter       : iteration after discarded mc step
+        nsamples    : the number of samples for mc
 
         Returns
-        -------
-        q_list : torch.Tensor
-            Tensor shaped [nsamples, niter, nparticle, DIM].
-        U : torch.Tensor
-            Tensor shaped [nsamples, niter] of potential energies.
-        ACCRatio : torch.Tensor
-            Tensor shaped [nsamples] of acceptance ratios.
-        spec : torch.Tensor
-            Tensor shaped [nsamples] of specific heat estimates.
-        """
+        ___________
+        q_list      : shape is [nsample, nparticle, DIM]
+        U           : potential energy; shape is [nsamples, niter]
+        AccRatio    : acceptance rate to update new energy ; shape is [nsamples]
+        spec        : estimate specific heat from fluctuations of the potential energy; shape is [nsamples]
+
+       '''
 
         niter = MC_parameters.iterations - MC_parameters.DISCARD
 

@@ -5,8 +5,18 @@ __pycache__/
 #Ignore Zone.Identifier files from WSL
 *:Zone.Identifier
 
+# documentation
+.idea/
+
 # Ignore macOS files
 .DS_Store
+
+# Ignore log_ related files
+results/*/log_*
+
+# Ignore pdf related files
+*/code/analysis/3d/*/*/*pdf
+*/code/analysis/3d/*/*txt
 
 # Ignore NSCC related files
 out.txt

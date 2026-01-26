@@ -12,33 +12,10 @@ class loss:
 
     #def __init__(self,potential_function,poly_deg,rthrsh,ew,repw,repw2=0.01):
     # hk
-    """Class loss.
-    
-    Notes
-    -----
-    Computes training losses with energy and repulsive regularization terms.
-    """
     def __init__(self,poly_deg, rthrsh,ew,repw,window_sliding,repw2=0.01):
 
         # lj is use for calculating regularization on replusive force and conservation of energy
         #self.potential_function = potential_function
-        """Function __init__.
-        
-        Parameters
-        ----------
-        poly_deg : Any
-            Polynomial degree used for shaping the loss.
-        rthrsh : Any
-            Distance threshold for repulsive energy regularization.
-        ew : Any
-            Energy loss weight.
-        repw : Any
-            Repulsive regularization weight.
-        window_sliding : Any
-            Number of rollout steps per loss window.
-        repw2 : Any
-            Secondary repulsive regularization scale.
-        """
         self.potential_function = lennard_jones2d() # hk
 
         # HK20220426
@@ -69,32 +46,6 @@ class loss:
     # =============================================================
     def eval(self,q_list, p_list, q_label, p_label, q_init, p_init, l_list,weight):
 
-        """Function eval.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        q_label : Any
-            Target positions for supervision.
-        p_label : Any
-            Target momenta for supervision.
-        q_init : Any
-            Initial positions used for conservation losses.
-        p_init : Any
-            Initial momenta used for conservation losses.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        weight : Any
-            Scalar weight for the current window step.
-        
-        Returns
-        -------
-        Any
-            Weighted total loss scalar.
-        """
         self.nsamples = q_list.shape[0]
 
         # # To normalize along nparticle, divide mean of nsamples to nparticle
@@ -170,13 +121,6 @@ class loss:
     # =============================================================
     def clear(self):
         # HK20220426
-        """Function clear.
-        
-        Returns
-        -------
-        None
-            None
-        """
         self.loss_dict = { "total"  : [], 
                            "*qrmse" : [], "-qmse"  : [], "-qmae" : [],
                            "*prmse" : [], "-pmse"  : [], "-pmae" : [],
@@ -190,22 +134,6 @@ class loss:
     def verbose(self,e,lr,mode):
 
         #print(e)
-        """Function verbose.
-        
-        Parameters
-        ----------
-        e : Any
-            Epoch or step index.
-        lr : Any
-            Learning rate.
-        mode : Any
-            Label for logging output.
-        
-        Returns
-        -------
-        None
-            None
-        """
         for key,value in self.loss_dict.items():
             if len(value)==0:
                 print('empty list: key ',key,' value ',value)
@@ -232,48 +160,10 @@ class loss:
         # if rmse_mean_val>0.6: return max(self.poly_deg,3)
         # if rmse_mean_val>0.2: return max(self.poly_deg,4)
         # return max(self.poly_deg,5)
-        """Function calculate_poly.
-        
-        Parameters
-        ----------
-        qrmse_mean_value : Any
-            Mean position RMSE value.
-        prmse_mean_value : Any
-            Mean momentum RMSE value.
-        
-        Returns
-        -------
-        Any
-            Polynomial degree used for shaping the loss.
-        """
         return self.poly_deg
     # =============================================================
     def total_loss(self,qshape,pshape,eshape,mshape,rep,qrmse_mean_value,weight):
 
-        """Function total_loss.
-        
-        Parameters
-        ----------
-        qshape : Any
-            Position loss component.
-        pshape : Any
-            Momentum loss component.
-        eshape : Any
-            Energy loss component.
-        mshape : Any
-            Momentum conservation loss component.
-        rep : Any
-            Repulsive energy regularization term.
-        qrmse_mean_value : Any
-            Mean position RMSE value.
-        weight : Any
-            Scalar weight for the current window step.
-        
-        Returns
-        -------
-        Any
-            Scalar total loss value.
-        """
         self.loss_dict["qshape"].append(qshape.item())
         self.loss_dict["pshape"].append(pshape.item())
         self.loss_dict["eshape"].append(eshape.item())
@@ -287,18 +177,6 @@ class loss:
     # =============================================================
     def loss_shape_func(self,x):
 
-        """Function loss_shape_func.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Shaped loss values.
-        """
         loss  = x
         for d in range(2,self.poly_deg+1):
             xt = 2*d*x
@@ -308,22 +186,6 @@ class loss:
     # =============================================================
     def del_q_adjust(self,q_quantity, q_label, l_list):
 
-        """Function del_q_adjust.
-        
-        Parameters
-        ----------
-        q_quantity : Any
-            Predicted positions tensor.
-        q_label : Any
-            Target positions for supervision.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Position differences adjusted for periodic boundaries.
-        """
         dq = q_quantity - q_label
         # shape [nsamples, nparticle, DIM]
         pbc(dq, l_list)
@@ -333,22 +195,6 @@ class loss:
     # =============================================================
     def q_MSE_loss(self,q_quantity, q_label,l_list):
 
-        """Function q_MSE_loss.
-        
-        Parameters
-        ----------
-        q_quantity : Any
-            Predicted positions tensor.
-        q_label : Any
-            Target positions for supervision.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Per-sample position MSE values.
-        """
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
         d2 = torch.sum(dq * dq,dim=(2)) # shape is [nsamples, nparticle]
@@ -357,22 +203,6 @@ class loss:
     # =============================================================
     def q_RMSE_loss(self,q_quantity, q_label,l_list):
 
-        """Function q_RMSE_loss.
-        
-        Parameters
-        ----------
-        q_quantity : Any
-            Predicted positions tensor.
-        q_label : Any
-            Target positions for supervision.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Per-sample position RMSE values.
-        """
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
         d2 = torch.sqrt(torch.sum(dq * dq,dim=2)) # shape is [nsamples, nparticle]
@@ -381,22 +211,6 @@ class loss:
     # =============================================================
     def q_MAE_loss(self,q_quantity, q_label,l_list):
 
-        """Function q_MAE_loss.
-        
-        Parameters
-        ----------
-        q_quantity : Any
-            Predicted positions tensor.
-        q_label : Any
-            Target positions for supervision.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Per-sample position MAE values.
-        """
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
         d2 = torch.sum(torch.abs(dq),dim=2) # shape is [nsamples, nparticle]
@@ -406,20 +220,6 @@ class loss:
     # =============================================================
     def p_MSE_loss(self,p_list,p_label):
 
-        """Function p_MSE_loss.
-        
-        Parameters
-        ----------
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        p_label : Any
-            Target momenta for supervision.
-        
-        Returns
-        -------
-        Any
-            Per-sample momentum MSE values.
-        """
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
         dp2 = torch.sum(dp*dp, dim = 2) /nparticles  # shape [nsamples,nparticles]
@@ -428,20 +228,6 @@ class loss:
     # =============================================================
     def p_RMSE_loss(self,p_list,p_label):
 
-        """Function p_RMSE_loss.
-        
-        Parameters
-        ----------
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        p_label : Any
-            Target momenta for supervision.
-        
-        Returns
-        -------
-        Any
-            Per-sample momentum RMSE values.
-        """
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
         dp2 = torch.sqrt(torch.sum(dp*dp, dim = 2))  # shape [nsamples,nparticles]
@@ -450,20 +236,6 @@ class loss:
     # =============================================================
     def p_MAE_loss(self,p_list,p_label):
 
-        """Function p_MAE_loss.
-        
-        Parameters
-        ----------
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        p_label : Any
-            Target momenta for supervision.
-        
-        Returns
-        -------
-        Any
-            Per-sample momentum MAE values.
-        """
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
         dp2 = torch.sum(torch.abs(dp), dim = 2) /nparticles  # shape [nsamples,nparticles]
@@ -472,26 +244,6 @@ class loss:
     # =============================================================
     def conserve_MAE_eloss(self,q_list,p_list,q_init,p_init,l_list):
 
-        """Function conserve_MAE_eloss.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        q_init : Any
-            Initial positions used for conservation losses.
-        p_init : Any
-            Initial momenta used for conservation losses.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Per-sample energy MAE components.
-        """
         nparticles = p_list.shape[1]
         # shape [nsamples]
         pe_init  = self.potential_function.total_energy(q_init,l_list)
@@ -514,26 +266,6 @@ class loss:
     # =============================================================
     def conserve_RMSE_eloss(self,q_list,p_list,q_init,p_init,l_list):
 
-        """Function conserve_RMSE_eloss.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        q_init : Any
-            Initial positions used for conservation losses.
-        p_init : Any
-            Initial momenta used for conservation losses.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Per-sample energy RMSE components.
-        """
         nparticles = p_list.shape[1]
         # shape [nsamples]
         pe_init  = self.potential_function.total_energy(q_init,l_list)
@@ -557,20 +289,6 @@ class loss:
     # =============================================================
     def conserve_MAE_mloss(self,p_list,p_init):
 
-        """Function conserve_MAE_mloss.
-        
-        Parameters
-        ----------
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        p_init : Any
-            Initial momenta used for conservation losses.
-        
-        Returns
-        -------
-        Any
-            Per-sample momentum conservation error.
-        """
         nparticles = p_list.shape[1]
         pinit_sum = torch.sum(p_init,dim=1) # shape [nsamples,dim]
         pfinal_sum = torch.sum(p_list,dim=1) # shape [nsamples,dim]
@@ -581,20 +299,6 @@ class loss:
 
     def potential_rep(self, q_list,l_list):
 
-        """Function potential_rep.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Tuple of (relu-penalized energy, regularization term).
-        """
         rep_pe_max  = self.potential_function.repulsive_energy(q_list,l_list)
         relu_pe = self.m(rep_pe_max - self.pethrsh)
 

@@ -6,23 +6,8 @@ from utils.mydevice import mydevice
 class isocahedron:
 
     # we don't use angle for 3D. in 2D hexgrid we use angle offset
-    """Class isocahedron.
-    
-    Notes
-    -----
-    Builds a 3D icosahedron grid around each particle for feature sampling.
-    """
     def __init__(self, b_list, a_list=None):
 
-        """Function __init__.
-        
-        Parameters
-        ----------
-        b_list : Any
-            List of grid radii or lattice constants for grid layers.
-        a_list : Any
-            List of angular offsets (radians) for grid layers.
-        """
         assert len(b_list)==1,'only use one layer of grid'
         b = b_list[0]
 

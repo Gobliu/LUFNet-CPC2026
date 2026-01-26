@@ -5,30 +5,7 @@ from utils.mydevice import mydevice
 
 class MultiParticlesGraphNet(nn.Module):
 
-    """Class MultiParticlesGraphNet.
-    
-    Notes
-    -----
-    Graph neural network operating on particle embeddings and coordinates.
-    """
     def __init__(self, input_dim, output_dim, n_gnn_layers, act_fn=nn.GELU(), attention=False, residual=False):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        input_dim : Any
-            Input feature dimension.
-        output_dim : Any
-            Output feature dimension.
-        n_gnn_layers : Any
-            Number of GNN layers.
-        act_fn : Any
-            Activation function module.
-        attention : Any
-            Whether to use attention on edges.
-        residual : Any
-            Whether to use residual connections.
-        """
         print('!!!!! multi par graph net ', input_dim, output_dim, n_gnn_layers, 'attention', attention)
         super(MultiParticlesGraphNet, self).__init__()
 
@@ -47,32 +24,11 @@ class MultiParticlesGraphNet(nn.Module):
 
 
     def weight_range(self):
-        """Function weight_range.
-        
-        Returns
-        -------
-        None
-            None
-        """
         print('No weight range check for transformer')
 
     def forward(self, h, coord): #20230701 -- SJ
         # h.shape [nsample * nparticle, hidden_nf]
 
-        """Function forward.
-        
-        Parameters
-        ----------
-        h : Any
-            Node feature tensor.
-        coord : Any
-            Node coordinate tensor.
-        
-        Returns
-        -------
-        Any
-            Updated node feature tensor.
-        """
         edges, coord = generate_fc_edges_batch(coord) # coord.shape [nsample * nparticle, 2]
         # return edges[0] shape nsample * npar * (npar -1)
         # return coord shape [nsample * npar, dim]
@@ -90,31 +46,8 @@ class MultiParticlesGraphNet(nn.Module):
 
 class GNNLayer(nn.Module):
 
-    """Class GNNLayer.
-    
-    Notes
-    -----
-    Single message-passing layer with optional attention and residuals.
-    """
     def __init__(self, input_nf, output_nf, hidden_nf, act_fn, residual, attention):
 
-        """Function __init__.
-        
-        Parameters
-        ----------
-        input_nf : Any
-            Input node feature dimension.
-        output_nf : Any
-            Output node feature dimension.
-        hidden_nf : Any
-            Hidden node feature dimension.
-        act_fn : Any
-            Activation function module.
-        residual : Any
-            Whether to use residual connections.
-        attention : Any
-            Whether to use attention on edges.
-        """
         super(GNNLayer, self).__init__()
 
         self.layer_norm = nn.LayerNorm(input_nf) # input_nf = hidden_nf
@@ -146,22 +79,6 @@ class GNNLayer(nn.Module):
     def edge_model(self, source, target, coord_diff):
         # source, target, coord_diff => h[row], h[col], coord_diff
         #print('!!! edge model', source.shape, target.shape, coord_diff.shape)
-        """Function edge_model.
-        
-        Parameters
-        ----------
-        source : Any
-            Source node features for an edge.
-        target : Any
-            Target node features for an edge.
-        coord_diff : Any
-            Edge coordinate differences.
-        
-        Returns
-        -------
-        Any
-            Edge feature tensor.
-        """
         out = torch.cat([source, target, self.coord_mlp(coord_diff)], dim=1)
 
         out = self.edge_mlp(out)
@@ -175,22 +92,6 @@ class GNNLayer(nn.Module):
         # row.shape nsample * nparticle * (nparticle -1)
         # edge_feat.shape [nsample * nparticle * (nparticle - 1), hidden_nf]
 
-        """Function node_model.
-        
-        Parameters
-        ----------
-        h : Any
-            Node feature tensor.
-        row : Any
-            Row indices for source nodes.
-        edge_feat : Any
-            Edge feature tensor.
-        
-        Returns
-        -------
-        Any
-            Updated node feature tensor.
-        """
         agg = unsorted_segment_sum(edge_feat, row, num_segments=h.size(0))
         # agg.shape [nsample * nparticle, hidden_nf]
         agg = torch.cat([h, agg], dim=1)    # shape [nsample * nparticle, hidden_nf * 2]
@@ -203,22 +104,6 @@ class GNNLayer(nn.Module):
         # h.shape [nsample * nparticle, hidden_nf]
         # coord_diff.shape [nsample * nparticle * (nparticle - 1), dim]
 
-        """Function forward.
-        
-        Parameters
-        ----------
-        h : Any
-            Node feature tensor.
-        edge_index : Any
-            Edge index pair (row, col).
-        coord_diff : Any
-            Edge coordinate differences.
-        
-        Returns
-        -------
-        Any
-            Updated node feature tensor.
-        """
         h = self.layer_norm(h)
         row, col = edge_index
         # edge_index[0].shape nsample * nparticle * (nparticle -1)
@@ -236,22 +121,6 @@ def unsorted_segment_sum(src, index, num_segments):      # numerically checked
     # index = row shape [nsample * nparticle * (nparticle -1)] : the indices of elements to scatter
     # num_segments = h.size(0) [nsample * nparticle]
 
-    """Function unsorted_segment_sum.
-    
-    Parameters
-    ----------
-    src : Any
-        Source tensor to aggregate.
-    index : Any
-        Indices used to aggregate source rows.
-    num_segments : Any
-        Number of output segments.
-    
-    Returns
-    -------
-    Any
-        Aggregated tensor with shape (num_segments, feature_dim).
-    """
     tgt_shape = (num_segments, src.size(1))
     # shape [nsample * nparticle, hidden_nf]
     tgt = src.new_full(tgt_shape, 0)         # Init empty result tensor.
@@ -267,18 +136,6 @@ def unsorted_segment_sum(src, index, num_segments):      # numerically checked
 
 
 def generate_fc_edges(n_nodes):
-    """Function generate_fc_edges.
-    
-    Parameters
-    ----------
-    n_nodes : Any
-        Number of nodes per graph.
-    
-    Returns
-    -------
-    Any
-        Edge index list [rows, cols] for a fully connected graph.
-    """
     rows, cols = [], []
     for i in range(n_nodes):
         for j in range(n_nodes):
@@ -293,18 +150,6 @@ def generate_fc_edges(n_nodes):
 
 def generate_fc_edges_batch(coord):         # !!! no self loop
     # coord shape [batch_size, npar, dim]
-    """Function generate_fc_edges_batch.
-    
-    Parameters
-    ----------
-    coord : Any
-        Node coordinate tensor.
-    
-    Returns
-    -------
-    Any
-        Tuple of (edge indices, flattened coordinates).
-    """
     batch_size, n_nodes = coord.size(0), coord.size(1)
     edges = generate_fc_edges(n_nodes)
     edges = [torch.LongTensor(edges[0]), torch.LongTensor(edges[1])]

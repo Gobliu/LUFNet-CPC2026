@@ -5,20 +5,6 @@ import numpy as np
 # ======================================================
 def pbc(q_list,l_list):
     #print('pbc: q list shape ',q_list.shape)
-    """Function pbc.
-    
-    Parameters
-    ----------
-    q_list : Any
-        TODO: Describe q_list.
-    l_list : Any
-        TODO: Describe l_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     idx = torch.where(torch.abs(q_list)>0.5*l_list)
     #print('idx ',idx)
     q_list[idx] = q_list[idx] - torch.round(q_list[idx]/l_list[idx])*l_list[idx]
@@ -29,22 +15,6 @@ def pbc(q_list,l_list):
 
 def single_particle_dq_pbc(q_list0,q_list1,l_list):
 
-    """Function single_particle_dq_pbc.
-    
-    Parameters
-    ----------
-    q_list0 : Any
-        TODO: Describe q_list0.
-    q_list1 : Any
-        TODO: Describe q_list1.
-    l_list : Any
-        TODO: Describe l_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     dq = q_list0-q_list1
     #print('q list shape ',q_list0.shape,q_list1.shape)
     return pbc(dq,l_list)
@@ -54,20 +24,6 @@ def single_particle_dq_pbc(q_list0,q_list1,l_list):
 #
 def pairwise_dq_pbc(q_list, l_list):
 
-    """Function pairwise_dq_pbc.
-    
-    Parameters
-    ----------
-    q_list : Any
-        TODO: Describe q_list.
-    l_list : Any
-        TODO: Describe l_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     dq_list = _delta_state(q_list)
 
     llist0 = torch.unsqueeze(l_list, dim=1)
@@ -81,18 +37,6 @@ def pairwise_dq_pbc(q_list, l_list):
     return dq_list # shape = [nsamples,nparticles,nparticles,dim]
 # ======================================================
 def _delta_state(state_list):
-    """Function _delta_state.
-    
-    Parameters
-    ----------
-    state_list : Any
-        TODO: Describe state_list.
-    
-    Returns
-    -------
-    Any
-        TODO: Describe return value.
-    """
     state_len = state_list.shape[1]  # nparticle
     state0 = torch.unsqueeze(state_list, dim=1)
     # shape is [nsamples, 1, nparticle, DIM]
@@ -109,13 +53,6 @@ def _delta_state(state_list):
 # ======================================================
 
 def check_pairwise_dq_pbc():
-    """Function check_pairwise_dq_pbc.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     nsamples = 10  #100
     nparticles = 3
     dim = 2
@@ -158,13 +95,6 @@ def check_pairwise_dq_pbc():
 
 # ======================================================
 def check_pbc(): # for one particle
-    """Function check_pbc.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     nsamples = 1
     nparticles = 1
     dim = 2
@@ -214,13 +144,6 @@ def check_pbc(): # for one particle
 # ======================================================
 def check_single_particle_dq_pbc():
 
-    """Function check_single_particle_dq_pbc.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     nsamples = 100  #100
     nparticles = 16
     dim = 2

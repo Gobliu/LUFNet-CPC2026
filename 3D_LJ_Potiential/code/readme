@@ -1,9 +1,9 @@
-run code maintrain.py 
+run code maintrain09.py
 
 python maintrain09.py
 
 run code maintest_combined.py
 
-python maintest_combined.py
+python maintest_combined.py npar
 
 

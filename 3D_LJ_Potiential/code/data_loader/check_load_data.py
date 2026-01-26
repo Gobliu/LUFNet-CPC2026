@@ -6,23 +6,8 @@ import time
 
 class check_load_data:
 
-    """Class check_load_data.
-    
-    Notes
-    -----
-    TODO: Add class details.
-    """
     def __init__(self,qpl_list_init, qpl_list_final):
 
-        """Function __init__.
-        
-        Parameters
-        ----------
-        qpl_list_init : Any
-            TODO: Describe qpl_list_init.
-        qpl_list_final : Any
-            TODO: Describe qpl_list_final.
-        """
         self.q_list_init = qpl_list_init[:,0,:,:,:]
         # q_list_init.shape = [nsamples, trajectory, nparticles, DIM]
         self.p_list_init = qpl_list_init[:,1,:,:,:]
@@ -38,18 +23,6 @@ class check_load_data:
 
     # ==========================================================
     def check(self,tau_short):
-        """Function check.
-        
-        Parameters
-        ----------
-        tau_short : Any
-            TODO: Describe tau_short.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         self.check_distance()
         #self.check_force(tau_short)
         self.max_lj_energy()
@@ -60,34 +33,6 @@ class check_load_data:
     # ==========================================================
     def md_trajectory(self,q_init,p_init,q_final,p_final,l_list,label_idx,tau,nitr,append_strike):
 
-        """Function md_trajectory.
-        
-        Parameters
-        ----------
-        q_init : Any
-            TODO: Describe q_init.
-        p_init : Any
-            TODO: Describe p_init.
-        q_final : Any
-            TODO: Describe q_final.
-        p_final : Any
-            TODO: Describe p_final.
-        l_list : Any
-            TODO: Describe l_list.
-        label_idx : Any
-            TODO: Describe label_idx.
-        tau : Any
-            TODO: Describe tau.
-        nitr : Any
-            TODO: Describe nitr.
-        append_strike : Any
-            TODO: Describe append_strike.
-        
-        Returns
-        -------
-        Any
-            TODO: Describe return value.
-        """
         _, nsamples, nparticles, DIM = q_init.shape
         q_init = q_init.clone().detach()
         p_init = p_init.clone().detach()
@@ -118,24 +63,10 @@ class check_load_data:
         return True # for external assert
 
     def max_lj_energy(self):
-        """Function max_lj_energy.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         pe = self.potential_function.total_energy(self.q_list_final, self.l_list)
         print('maximum pe', torch.max(pe), 'element', torch.where(pe == torch.max(pe)))
 
     def check_distance(self):
-        """Function check_distance.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         print('check min pairwise distance ...')
         dr = self.potential_function.paired_distance(self.q_list_final, self.l_list)
         print('min distance {:.3f}'.format(torch.min(dr)))
@@ -143,18 +74,6 @@ class check_load_data:
         #torch.save(dr, 'dr_s{}.pt'.format(dr.shape[0]))
 
     def check_force(self,tau):
-        """Function check_force.
-        
-        Parameters
-        ----------
-        tau : Any
-            TODO: Describe tau.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         print('check force at initial... tau',tau)
         self.mdvv.one_step(self.q_list_init[:,0,:,:],self.p_list_init[:,0,:,:],self.l_list,tau)
         print('check force at final... tau', tau)
@@ -162,13 +81,6 @@ class check_load_data:
 
     def delta_total_energy(self):
 
-        """Function delta_total_energy.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         e_init = []
         for traj in range(self.trajectory):
             pe_init = self.potential_function.total_energy(self.q_list_init[:,traj,:,:], self.l_list)
@@ -191,13 +103,6 @@ class check_load_data:
 
     def delta_momentum(self):
 
-        """Function delta_momentum.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         p_init = torch.sum(self.p_list_init, dim=2) # [nsamples, trajectory, DIM]
         p_final = torch.sum(self.p_list_final, dim=1) # [nsamples, DIM]
         p_all = torch.cat((p_init, torch.unsqueeze(p_final,dim=1)),dim=1) # [nsamples, trajectory, DIM]
@@ -213,22 +118,6 @@ class check_load_data:
     def check_boxsize(self, q_init,p_init,l_init):
 
         # check that l_init is of square box
-        """Function check_boxsize.
-        
-        Parameters
-        ----------
-        q_init : Any
-            TODO: Describe q_init.
-        p_init : Any
-            TODO: Describe p_init.
-        l_init : Any
-            TODO: Describe l_init.
-        
-        Returns
-        -------
-        None
-            TODO: Describe return value.
-        """
         lx = l_init[:,:,0]
         ly = l_init[:,:,1]
         lxly = torch.eq(lx,ly)

@@ -3,42 +3,13 @@ from utils.mydevice import mydevice
 from utils.pbc import pbc
 class PsiFeatures:
 
-    """Class PsiFeatures.
-    
-    Notes
-    -----
-    Computes momentum-based (psi) features on grid points using inverse-distance weights.
-    """
     def __init__(self,grid_object): #b_list,a_list):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        grid_object : Any
-            Grid generator that returns grid points per particle.
-        """
         self.grid_object = grid_object
 
         self.dim = grid_object.dim # 20250807
 
     # ===================================================
     def __call__(self, q_list, p_list, l_list):  # make dqdp for n particles
-        """Function __call__.
-        
-        Parameters
-        ----------
-        q_list : Any
-            Particle positions tensor of shape (nsamples, nparticles, dim).
-        p_list : Any
-            Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Psi feature tensor of shape (nsamples, nparticles, ngrids * dim).
-        """
         uli_list = self.grid_object(q_list, l_list)  # position at grids
         # shape is [nsamples, nparticles * ngrids, DIM=(x,y,z)] # 20250807
 
@@ -55,26 +26,6 @@ class PsiFeatures:
     # ===================================================
     def gen_pvar(self, q, p, uli_list, l_list, ngrids):  # velocity fields
 
-        """Function gen_pvar.
-        
-        Parameters
-        ----------
-        q : Any
-            Positions tensor.
-        p : Any
-            Momenta/velocity tensor.
-        uli_list : Any
-            Grid point positions tensor for all particles.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        ngrids : Any
-            Number of grid points per particle.
-        
-        Returns
-        -------
-        Any
-            Relative momentum features per grid point.
-        """
         nsamples, nparticles, DIM = p.shape
 
         l_list = torch.unsqueeze(l_list, dim=2)
@@ -125,22 +76,6 @@ class PsiFeatures:
     def dpair_pbc_sq(self, q, uli_list, l_list):  #
 
         # all list dimensionless
-        """Function dpair_pbc_sq.
-        
-        Parameters
-        ----------
-        q : Any
-            Positions tensor.
-        uli_list : Any
-            Grid point positions tensor for all particles.
-        l_list : Any
-            Periodic box lengths tensor, broadcastable to positions.
-        
-        Returns
-        -------
-        Any
-            Tuple of (pairwise displacements, squared distances).
-        """
         q_state = torch.unsqueeze(q, dim=2)
         # shape is [nsamples, nparticles, 1, DIM=(x,y)]
 

@@ -20,23 +20,8 @@ from utils.checkpoint import checkpoint
 
 class trainer:
 
-    """Class trainer.
-    
-    Notes
-    -----
-    Builds networks and orchestrates training and evaluation steps.
-    """
     def __init__(self,train_dict,loss_dict):
 
-        """Function __init__.
-        
-        Parameters
-        ----------
-        train_dict : Any
-            Training configuration dictionary.
-        loss_dict : Any
-            Loss configuration dictionary.
-        """
         self.train_dict = train_dict
 
         # lj is use for calculating regularization on replusive force and conservation of energy
@@ -91,26 +76,6 @@ class trainer:
    # ==========================================================
     def one_step(self,q_traj,p_traj,q_label,p_label,l_init):
 
-        """Function one_step.
-        
-        Parameters
-        ----------
-        q_traj : Any
-            Trajectory positions tensor.
-        p_traj : Any
-            Trajectory momenta tensor.
-        q_label : Any
-            Target positions for supervision.
-        p_label : Any
-            Target momenta for supervision.
-        l_init : Any
-            Initial periodic box lengths tensor.
-        
-        Returns
-        -------
-        None
-            None
-        """
         self.opt.zero_grad()
 
         # need to mask out particle itself interaction at each pw-net
@@ -144,7 +109,6 @@ class trainer:
             q_input_list,p_input_list,q_predict,p_predict,l_init = self.mlvv.nsteps(q_input_list,p_input_list,q_cur,p_cur,
                                                      l_init)
 
-            print("ws step ", ws, " q_label ", q_label, " p_label ", p_label, "weights ", self.weights)
             loss_val += self.loss_obj.eval(q_predict,p_predict,q_label[:,ws],p_label[:,ws],q_traj_list[-1],p_traj_list[-1],l_init,self.weights[ws])
 
             q_cur = q_predict
@@ -160,26 +124,6 @@ class trainer:
     # ==========================================================
     def eval(self,q_traj,p_traj,q_label,p_label,l_init):
 
-        """Function eval.
-        
-        Parameters
-        ----------
-        q_traj : Any
-            Trajectory positions tensor.
-        p_traj : Any
-            Trajectory momenta tensor.
-        q_label : Any
-            Target positions for supervision.
-        p_label : Any
-            Target momenta for supervision.
-        l_init : Any
-            Initial periodic box lengths tensor.
-        
-        Returns
-        -------
-        None
-            None
-        """
         self.mlvv.eval()
 
         # need to mask out particle itself interaction at each pw-net
@@ -215,31 +159,12 @@ class trainer:
     
     # ==========================================================
     def checkpoint(self,filename):
-        """Function checkpoint.
-        
-        Parameters
-        ----------
-        filename : Any
-            Checkpoint file path.
-        
-        Returns
-        -------
-        None
-            None
-        """
         self.ckpt.save_checkpoint(filename)
         print('checkpint to file ',filename)
         self.verbose(0,'checkpoint values')
 
     # ==========================================================
     def load_models(self):
-        """Function load_models.
-        
-        Returns
-        -------
-        None
-            None
-        """
         load_file = self.train_dict["loadfile"]
         if load_file is not None:
             self.ckpt.load_checkpoint(load_file) 
@@ -247,20 +172,6 @@ class trainer:
     # ==========================================================
     def verbose(self,e,mode):
 
-        """Function verbose.
-        
-        Parameters
-        ----------
-        e : Any
-            Epoch or step index.
-        mode : Any
-            Label for logging output.
-        
-        Returns
-        -------
-        None
-            None
-        """
         print(e, mode, ' '.join('tau {} : {:2e}'.format(k, tau.item()) for k, tau in enumerate(self.tau_params)))
 
         if self.tau_params[0].grad is not None:
@@ -280,18 +191,6 @@ class trainer:
     # ==========================================================
     def net_builder(self,train_dict):
 
-        """Function net_builder.
-        
-        Parameters
-        ----------
-        train_dict : Any
-            Training configuration dictionary.
-        
-        Returns
-        -------
-        Any
-            Tuple of instantiated networks for training.
-        """
         ngrids = train_dict["ngrids"]
         pw4mb_dim    = train_dict["pw_output_dim"]
         psi_feature_dim = pw4mb_dim # 20250807

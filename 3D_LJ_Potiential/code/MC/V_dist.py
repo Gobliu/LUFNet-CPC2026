@@ -6,28 +6,8 @@ import glob
 import seaborn as sns
 from scipy.stats import gaussian_kde
 
-def mcsteps(u, start_step, npar, rho, temp, ylabel, mean=None, std=None):
-    """Plot per-sample MC energy traces with mean/std in titles.
-
-    Parameters
-    ----------
-    u : torch.Tensor
-        Tensor shaped [nsamples, nsteps] of energy values.
-    start_step : int
-        Offset for labeling the x-axis (currently unused).
-    npar : int
-        Number of particles for normalization.
-    rho : Any
-        Density label used in plot titles.
-    temp : Any
-        Temperature label used in plot titles.
-    ylabel : str
-        Y-axis label.
-    mean : array_like, optional
-        Per-sample mean values to display in titles.
-    std : array_like, optional
-        Per-sample std values to display in titles.
-    """
+def mcsteps(u,start_step, npar,rho,temp, ylabel, mean=None, std=None):
+    '''plot of potential energy at different temp or combined temp for nsamples ( train/ valid ) '''
     fig, axes = plt.subplots(1, u.shape[0], figsize=(16, 4))
     fig.suptitle(r'mc steps at npar={} $\rho$={} T={}'.format(npar,rho,temp), fontsize=15)
     for i, ax in enumerate(axes.flatten()):
@@ -46,20 +26,7 @@ def mcsteps(u, start_step, npar, rho, temp, ylabel, mean=None, std=None):
     plt.show()
 
 
-def dist(e, npar, rho, saved_dir):
-    """Plot energy distributions with histograms and KDE overlays.
-
-    Parameters
-    ----------
-    e : torch.Tensor
-        Tensor shaped [ntemps, nsamples, nsteps] of energies.
-    npar : int
-        Number of particles for labeling.
-    rho : Any
-        Density label used in the figure title.
-    saved_dir : str
-        Directory for saving outputs (currently unused).
-    """
+def dist(e, npar,rho, saved_dir):
     xmin=torch.min(e)
     xmax=torch.max(e)
 

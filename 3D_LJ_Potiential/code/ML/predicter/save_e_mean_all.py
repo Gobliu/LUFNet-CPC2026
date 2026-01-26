@@ -6,24 +6,9 @@ import torch
 import numpy as np
 from utils.system_logs              import system_logs
 from utils.mydevice                 import mydevice
-import matplotlib.pyplot as plt
 import os
 
 def de(e,npar):
-    """Function de.
-    
-    Parameters
-    ----------
-    e : Any
-        Epoch or step index.
-    npar : Any
-        Number of particles.
-    
-    Returns
-    -------
-    Any
-        Scalar normalized energy drift at the final time step.
-    """
     e = e.clone().detach().cpu().numpy()
     #shape = [trajectory, nsamples]
     mean_e = np.mean(e, axis=1)
@@ -31,7 +16,6 @@ def de(e,npar):
     return mean_e_shift[-1]
 
 if __name__ == '__main__':
-    # python plot_e_conserve.py 128 0.035 0.49  1000 1
 
     _ = mydevice()
     _ = system_logs(mydevice)
@@ -55,33 +39,47 @@ if __name__ == '__main__':
     npar = int(argv[1])
     rho = argv[2]
     dim = int(argv[3])
-    gamma = float(argv[4])
+    gamma = int(argv[4])
     saved_model = argv[5]
     dpt = int(argv[6])
     region = argv[7]
     n_split = int(argv[8])
 
-    if (gamma == 0.0) or (gamma == 1.0) or (gamma == 10.0) or (gamma == 20.0):
-        print('gamma {} float to int .... '.format(gamma))
-        gamma = int(gamma)
-
     data0_list = []
     data1_list = []
     data2_list = []
-    temp_list = [0.44, 0.46, 0.48, 0.5]
 
-    for i in temp_list:
-        data = {
-            "energy1": "../../../data_sets/gen_by_ML/lt0.1dpt100000_{}/n{}rho{}T{}/energy_gamma{}mb009_nsteps10000.pt".format(region, npar, rho, i, gamma),
-             "energy2" : "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(dim, npar,rho,i,gamma),
-             "energy3" : "../../../data_sets/gen_by_ML/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(dpt,region,npar,rho,i,gamma,saved_model)}
+    if dim == 2:
+        temp_list = [0.44, 0.46, 0.48, 0.5]
 
-        data1_list.append(data['energy2'])
-        data2_list.append(data['energy3'])
+        for i in temp_list:
+            data = {
+                "energy1": "../../../data_sets/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/energy_gamma{}mb009_nsteps10000.pt".format(
+                    dim, region, npar, rho, i, gamma),
+                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
+                    dim, npar, rho, i, gamma),
+                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(
+                    dim, dpt, region, npar, rho, i, gamma, saved_model)}
 
-        if (npar == 64 or npar ==128) and region == 'lg' : #and i != 0.5:
-            print('filename0 is ',i)
-            data0_list.append(data['energy1'])
+            data1_list.append(data['energy2'])
+            data2_list.append(data['energy3'])
+
+            if (npar == 64 or npar == 128) and region == 'lg':  # and i != 0.5:
+                print('filename0 is ', i)
+                data0_list.append(data['energy1'])
+
+    elif dim == 3:
+        temp_list = [0.9]
+
+        for i in temp_list:
+            data = {
+                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(
+                    dim, npar, rho, i, gamma),
+                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/energy_gamma{}LUF{}_tmax100.pt".format(
+                    dim, dpt, region, npar, rho, i, gamma, saved_model)}
+
+            data1_list.append(data['energy2'])
+            data2_list.append(data['energy3'])
 
 
     nsamples = 1000 # test set
@@ -109,7 +107,7 @@ if __name__ == '__main__':
             e_mu_mean0 = np.mean(
                 emean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k])
             e_mu_std0 = np.std(
-                emean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k]) / np.sqrt(
+                emean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k],ddof=1) / np.sqrt(
                 len(emean0_append[int(nsamples / n_split) * k : int(nsamples / n_split) + int(nsamples / n_split) * k]))
             e_mu0.append(e_mu_mean0)
             e_se0.append(e_mu_std0)
@@ -151,13 +149,13 @@ if __name__ == '__main__':
     for k in range(len(temp_list)):
 
         e_mu_mean1 = np.mean(e_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k])
-        e_mu_std1 = np.std(e_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k]) / np.sqrt(
+        e_mu_std1 = np.std(e_mean1_append[int(nsamples/n_split) * k : int(nsamples/n_split) + int(nsamples/n_split) * k],ddof=1) / np.sqrt(
                     len(e_mean1_append[int(nsamples/n_split)*k:int(nsamples/n_split)+int(nsamples/n_split)*k]))
 
         # print('cv mean2',cv_mean2_append[int(1000/n_split)*k:int(1000/n_split)+int(1000/n_split)*k])
         e_mu_mean2 = np.mean(e_mean2_append[int(nsamples/n_split) * k : int(nsamples/n_split)+int(nsamples/n_split) * k])
         e_mu_std2 = np.std(e_mean2_append[int(nsamples/n_split) * k :
-                    int(nsamples/n_split)+int(nsamples/n_split)*k]) / np.sqrt(
+                    int(nsamples/n_split)+int(nsamples/n_split)*k],ddof=1) / np.sqrt(
                     len(e_mean2_append[int(nsamples/n_split)*k:int(nsamples/n_split)+int(nsamples/n_split)*k]))
 
         e_mu1.append(e_mu_mean1)
@@ -165,10 +163,6 @@ if __name__ == '__main__':
         e_se1.append(e_mu_std1)
         e_se2.append(e_mu_std2)
         print(k, e_mu_mean1, e_mu_std1, e_mu_mean2, e_mu_std2)
-
-    fig, axes = plt.subplots(1, 1, figsize=(6, 5))
-
-    # plt.suptitle(r'npar={} $\rho$={} $\gamma$={}'.format(npar, rho, gamma)  , fontsize=15)
 
     saved_txtfile = f'../../analysis/{dim}d/npar{npar}rho{rho}gamma{gamma}_e.txt'
 

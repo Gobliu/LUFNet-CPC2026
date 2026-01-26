@@ -4,34 +4,7 @@ import torch
 
 class SingleParticleTransformerNet(nn.Module):
 
-    """Class SingleParticleTransformerNet.
-    
-    Notes
-    -----
-    Transformer encoder for per-particle trajectory features.
-    """
     def __init__(self, input_dim, output_dim, traj_len, ngrids, d_model, nhead, n_encoder_layers, p):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        input_dim : Any
-            Input feature dimension.
-        output_dim : Any
-            Output feature dimension.
-        traj_len : Any
-            Input trajectory length.
-        ngrids : Any
-            Number of grid points per particle.
-        d_model : Any
-            Transformer model dimension.
-        nhead : Any
-            Number of attention heads.
-        n_encoder_layers : Any
-            Number of encoder layers.
-        p : Any
-            Momenta/velocity tensor.
-        """
         super().__init__()
 
         self.traj_len = traj_len
@@ -56,31 +29,12 @@ class SingleParticleTransformerNet(nn.Module):
 
     @staticmethod
     def weight_range():
-        """Function weight_range.
-        
-        Returns
-        -------
-        None
-            None
-        """
         print('No weight range check for transformer')
 
     def forward(self, x):
         # input x.shape [nsample * nparticle, traj_len, ngrid * DIM * (q,p)]
         # q_prev shape [nsamples,nparticles,2]
 
-        """Function forward.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Output embedding tensor for each particle.
-        """
         x = self.feat_embedder(x)               # shape: [nsample * nparticle, traj_len, d_model]
         x = x + self.pos_embed                  # add position info, same shape as above
         x = torch.cat([x, self.next_pt.expand(x.size(0), -1, -1)], dim=1)  # shape: [nsamples * nparticles, traj_len+1, d_model]
@@ -90,35 +44,8 @@ class SingleParticleTransformerNet(nn.Module):
 
 class EncoderLayer(nn.Module):
 
-    """Class EncoderLayer.
-    
-    Notes
-    -----
-    Transformer encoder block with self-attention and MLP.
-    """
     def __init__(self, dim, nhead, p, mlp_ratio=4, qkv_bias=False, qk_norm=False,
                  act_fn=nn.GELU, norm_layer=nn.LayerNorm):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        dim : Any
-            Coordinate dimension (e.g., 2 or 3).
-        nhead : Any
-            Number of attention heads.
-        p : Any
-            Momenta/velocity tensor.
-        mlp_ratio : Any
-            Hidden expansion ratio for the MLP.
-        qkv_bias : Any
-            Whether to include bias in QKV projection.
-        qk_norm : Any
-            Whether to apply normalization to Q and K.
-        act_fn : Any
-            Activation function module.
-        norm_layer : Any
-            Normalization layer class.
-        """
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = MultiheadAttention(dim=dim, nhead=nhead, p=p, qkv_bias=qkv_bias,
@@ -133,18 +60,6 @@ class EncoderLayer(nn.Module):
                                  nn.Dropout(p))
 
     def forward(self, x):
-        """Function forward.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Transformed sequence tensor.
-        """
         x = x + self.attn(self.norm1(x))
         x = x + self.mlp(self.norm2(x))
         return x
@@ -152,30 +67,7 @@ class EncoderLayer(nn.Module):
 
 class MultiheadAttention(nn.Module):
 
-    """Class MultiheadAttention.
-    
-    Notes
-    -----
-    Multi-head self-attention module with optional QK normalization.
-    """
     def __init__(self, dim, nhead, p, qkv_bias, qk_norm, norm_layer):
-        """Function __init__.
-        
-        Parameters
-        ----------
-        dim : Any
-            Coordinate dimension (e.g., 2 or 3).
-        nhead : Any
-            Number of attention heads.
-        p : Any
-            Momenta/velocity tensor.
-        qkv_bias : Any
-            Whether to include bias in QKV projection.
-        qk_norm : Any
-            Whether to apply normalization to Q and K.
-        norm_layer : Any
-            Normalization layer class.
-        """
         super().__init__()
         assert dim % nhead == 0, 'dim should be divisible by num_heads'
         self.num_heads = nhead
@@ -190,18 +82,6 @@ class MultiheadAttention(nn.Module):
         self.proj_drop = nn.Dropout(p)
 
     def forward(self, x):
-        """Function forward.
-        
-        Parameters
-        ----------
-        x : Any
-            Input tensor.
-        
-        Returns
-        -------
-        Any
-            Attention output tensor.
-        """
         B, N, C = x.shape
         # shape: [nsamples * nparticles, traj_len+1, d_model]
         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, self.head_dim).permute(2, 0, 3, 1, 4) # 3 : qkv

@@ -13,14 +13,8 @@ import numpy  as np
 import yaml
 
 def main():
+    # python maintest_combined.py 256 >  log/n256rho0.85T0.9LUF065_tau0.05
 
-    """Function main.
-    
-    Returns
-    -------
-    None
-        TODO: Describe return value.
-    """
     _ = mydevice()
     _ = system_logs(mydevice)
     system_logs.print_start_logs()
@@ -28,11 +22,15 @@ def main():
     torch.set_default_dtype(torch.float64)
     torch.manual_seed(34952)
 
+    argv = sys.argv
+
+    npar = int(argv[1])
+
     net_type = args['net_type']
     single_parnet_type = args['single_parnet_type']
     multi_parnet_type = args['multi_parnet_type']
     readout_net_type = args['readout_net_type']
-    npar = args['npar']
+    #npar = args['npar']
     rho = args['rho']
     temp = args['temp']
     tau_long = args['tau_long']
@@ -84,7 +82,7 @@ def main():
                  }
 
     lossdict = { "polynomial_degree" : 4,
-                 "rthrsh"       : 0.7,
+                 "rthrsh"       : 0.67, #0.7 0.67
                  "e_weight"    : 1,
                  "reg_weight"    : 10}
 
@@ -97,7 +95,7 @@ def main():
              "train_pts" : 10,
              "vald_pts"  : 10,
              "test_pts"  : 1000,
-             "batch_size": 100}
+             "batch_size": 20}
     
     maindict = {
                  "save_dir"     : '../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region,npar,rho,temp)

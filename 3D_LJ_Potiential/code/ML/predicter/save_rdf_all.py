@@ -6,13 +6,12 @@ from utils.system_logs              import system_logs
 from utils.mydevice                 import mydevice
 import math
 from matplotlib.ticker import MaxNLocator
-import matplotlib.pyplot as plt
 import numpy as np
 import os
 
 if __name__ == '__main__':
-    # python save_rdf_all.py 128 0.3 0.1 10000 10 485 800000 lg 200
-
+    # python save_rdf_all.py 128 0.3 0.1 10 485 800000 lg 200 --2d
+    # python save_rdf_all.py 128 0.85 3 20 271 45000 l 200 -3d
     _ = mydevice()
     _ = system_logs(mydevice)
     system_logs.print_start_logs()
@@ -36,25 +35,39 @@ if __name__ == '__main__':
     data0_list = []
     data1_list = []
     data2_list = []
-    temp_list = [0.44, 0.46, 0.48, 0.5]
 
-    for temp in temp_list:
+    if dim == 2:
+        temp_list = [0.44, 0.46, 0.48, 0.5]
 
-        data = {
-                "filename0": '../../../data_sets/gen_by_ML/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(region, npar, rho, temp)
-                         + f'rij_gr_gamma{gamma}mb009',
-                "filename1" : '../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(dim, npar,rho,temp)
-                 + f'rij_gr_gamma{gamma}',
-                "filename2": '../../../data_sets/gen_by_ML/lt0.1dpt{}_{}/n{}rho{}T{}/'.format(dpt, region, npar, rho, temp)
-                + f'rij_gr_gamma{gamma}mb{saved_model}'
-                }
+        for temp in temp_list:
 
-        data1_list.append(data['filename1'])
-        data2_list.append(data['filename2'])
+            data = {
+                    "filename0": '../../../data_sets/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(dim, region, npar, rho, temp)
+                             + f'rij_gr_gamma{gamma}mb009',
+                    "filename1" : '../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(dim, npar,rho,temp)
+                     + f'rij_gr_gamma{gamma}',
+                    "filename2": '../../../data_sets/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/'.format(dim, dpt, region, npar, rho, temp)
+                    + f'rij_gr_gamma{gamma}mb{saved_model}'
+                    }
 
-        if (npar == 64 or npar == 128) and region == 'lg' : #and temp != 0.5:
-            print('filename0 is ',temp)
-            data0_list.append(data['filename0'])
+            data1_list.append(data['filename1'])
+            data2_list.append(data['filename2'])
+
+            if (npar == 64 or npar == 128) and region == 'lg' : #and temp != 0.5:
+                print('filename0 is ',temp)
+                data0_list.append(data['filename0'])
+
+    elif dim == 3:
+        temp_list = [0.9]
+
+        for i in temp_list:
+            data = {
+                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/rij_gr_gamma{}".format(
+                    dim, npar, rho, i, gamma),
+                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/rij_gr_gamma{}LUF{}".format(  dim, dpt, region, npar, rho, i, gamma,saved_model)}
+
+            data1_list.append(data['energy2'])
+            data2_list.append(data['energy3'])
 
     nsamples = 1000 # test set
 
@@ -141,19 +154,19 @@ if __name__ == '__main__':
         print(gr_first_mean1_append, flush=True)
 
         rmid_first_mu0 = np.mean(rmid_first_mean0_append)
-        rmid_first_se0 = np.std(rmid_first_mean0_append) / np.sqrt(len(rmid_first_mean0_append))
+        rmid_first_se0 = np.std(rmid_first_mean0_append,ddof=1) / np.sqrt(len(rmid_first_mean0_append))
         print('mc mean/std first rmid',rmid_first_mu0, rmid_first_se0)
 
         gr_first_mu0 = np.mean(gr_first_mean0_append)
-        gr_first_se0 = np.std(gr_first_mean0_append) / np.sqrt(len(gr_first_mean0_append))
+        gr_first_se0 = np.std(gr_first_mean0_append,ddof=1) / np.sqrt(len(gr_first_mean0_append))
         print('mc mean/std first gr', gr_first_mu0, gr_first_se0)
 
         rmid_first_mu1 = np.mean(rmid_first_mean1_append)
-        rmid_first_se1 = np.std(rmid_first_mean1_append) / np.sqrt(len(rmid_first_mean1_append))
+        rmid_first_se1 = np.std(rmid_first_mean1_append,ddof=1) / np.sqrt(len(rmid_first_mean1_append))
         print('vv mean/std first rmid',rmid_first_mu1, rmid_first_se1)
 
         gr_first_mu1 = np.mean(gr_first_mean1_append)
-        gr_first_se1 = np.std(gr_first_mean1_append) / np.sqrt(len(gr_first_mean1_append))
+        gr_first_se1 = np.std(gr_first_mean1_append,ddof=1) / np.sqrt(len(gr_first_mean1_append))
         print('vv mean/std first gr', gr_first_mu1, gr_first_se1)
 
         print('==== second peak over 5 groups .....=====')
@@ -161,19 +174,19 @@ if __name__ == '__main__':
         print(gr_second_mean1_append, flush=True)
 
         rmid_second_mu0 = np.mean(rmid_second_mean0_append)
-        rmid_second_se0 = np.std(rmid_second_mean0_append) / np.sqrt(len(rmid_second_mean0_append))
+        rmid_second_se0 = np.std(rmid_second_mean0_append,ddof=1) / np.sqrt(len(rmid_second_mean0_append))
         print('mc mean/std second rmid', rmid_second_mu0, rmid_second_se0)
 
         gr_second_mu0 = np.mean(gr_second_mean0_append)
-        gr_second_se0 = np.std(gr_second_mean0_append) / np.sqrt(len(gr_second_mean0_append))
+        gr_second_se0 = np.std(gr_second_mean0_append,ddof=1) / np.sqrt(len(gr_second_mean0_append))
         print('mc mean/std second gr', gr_second_mu0, gr_second_se0)
 
         rmid_second_mu1 = np.mean(rmid_second_mean1_append)
-        rmid_second_se1 = np.std(rmid_second_mean1_append) / np.sqrt(len(rmid_second_mean1_append))
+        rmid_second_se1 = np.std(rmid_second_mean1_append,ddof=1) / np.sqrt(len(rmid_second_mean1_append))
         print('vv mean/std second rmid',rmid_second_mu1, rmid_second_se1)
 
         gr_second_mu1 = np.mean(gr_second_mean1_append)
-        gr_second_se1 = np.std(gr_second_mean1_append) / np.sqrt(len(gr_second_mean1_append))
+        gr_second_se1 = np.std(gr_second_mean1_append,ddof=1) / np.sqrt(len(gr_second_mean1_append))
         print('vv mean/std second gr',gr_second_mu1, gr_second_se1)
 
         rmid_1st_mu0_all.append(rmid_first_mu0)
@@ -256,22 +269,22 @@ if __name__ == '__main__':
         print(gr_first_mean2_append, flush=True)
 
         rmid_first_mu2 = np.mean(rmid_first_mean2_append)
-        rmid_first_se2 = np.std(rmid_first_mean2_append) / np.sqrt(len(rmid_first_mean2_append))
+        rmid_first_se2 = np.std(rmid_first_mean2_append,ddof=1) / np.sqrt(len(rmid_first_mean2_append))
         print('ml mean/std first rmid',rmid_first_mu2, rmid_first_se2)
 
         gr_first_mu2 = np.mean(gr_first_mean2_append)
-        gr_first_se2 = np.std(gr_first_mean2_append) / np.sqrt(len(gr_first_mean2_append))
+        gr_first_se2 = np.std(gr_first_mean2_append,ddof=1) / np.sqrt(len(gr_first_mean2_append))
         print('ml mean/std first gr', gr_first_mu2, gr_first_se2)
 
         print('==== second peak over 5 groups .....=====')
         print(gr_second_mean2_append, flush=True)
 
         rmid_second_mu2 = np.mean(rmid_second_mean2_append)
-        rmid_second_se2 = np.std(rmid_second_mean2_append) / np.sqrt(len(rmid_second_mean2_append))
+        rmid_second_se2 = np.std(rmid_second_mean2_append,ddof=1) / np.sqrt(len(rmid_second_mean2_append))
         print('ml mean/std second rmid',rmid_second_mu2, rmid_second_se2)
 
         gr_second_mu2 = np.mean(gr_second_mean2_append)
-        gr_second_se2 = np.std(gr_second_mean2_append) / np.sqrt(len(gr_second_mean2_append))
+        gr_second_se2 = np.std(gr_second_mean2_append,ddof=1) / np.sqrt(len(gr_second_mean2_append))
         print('ml mean/std second gr', gr_second_mu2, gr_second_se2)
 
         rmid_1st_mu2_all.append(rmid_first_mu2)
@@ -346,22 +359,22 @@ if __name__ == '__main__':
             print(gr_first_mean3_append, flush=True)
 
             rmid_first_mu3 = np.mean(rmid_first_mean3_append)
-            rmid_first_se3 = np.std(rmid_first_mean3_append) / np.sqrt(len(rmid_first_mean3_append))
+            rmid_first_se3 = np.std(rmid_first_mean3_append,ddof=1) / np.sqrt(len(rmid_first_mean3_append))
             print('ml128 mean/std first rmid', rmid_first_mu3, rmid_first_se3)
 
             gr_first_mu3 = np.mean(gr_first_mean3_append)
-            gr_first_se3 = np.std(gr_first_mean3_append) / np.sqrt(len(gr_first_mean3_append))
+            gr_first_se3 = np.std(gr_first_mean3_append,ddof=1) / np.sqrt(len(gr_first_mean3_append))
             print('ml128 mean/std first gr', gr_first_mu3, gr_first_se3)
 
             print('==== second peak over 5 groups .....=====')
             print(gr_second_mean3_append, flush=True)
 
             rmid_second_mu3 = np.mean(rmid_second_mean3_append)
-            rmid_second_se3 = np.std(rmid_second_mean3_append) / np.sqrt(len(rmid_second_mean3_append))
+            rmid_second_se3 = np.std(rmid_second_mean3_append,ddof=1) / np.sqrt(len(rmid_second_mean3_append))
             print('ml128 mean/std second rmid', rmid_second_mu3, rmid_second_se3)
 
             gr_second_mu3 = np.mean(gr_second_mean3_append)
-            gr_second_se3 = np.std(gr_second_mean3_append) / np.sqrt(len(gr_second_mean3_append))
+            gr_second_se3 = np.std(gr_second_mean3_append,ddof=1) / np.sqrt(len(gr_second_mean3_append))
             print('ml128 mean/std second gr',gr_second_mu3, gr_second_se3)
 
             rmid_1st_mu3_all.append(rmid_first_mu3)
@@ -455,4 +468,4 @@ if __name__ == '__main__':
                            f'{ml_2nd_rmid_mu} {ml_2nd_rmid_se} {ml_2nd_gr_mu} {ml_2nd_gr_se} \n')
 
 
-    print(len(data0_list),len(data1_list),len(data2_list),len(data2_list))
+    print(len(data0_list),len(data1_list),len(data2_list))

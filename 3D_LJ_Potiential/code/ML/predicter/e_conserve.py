@@ -10,20 +10,6 @@ from hamiltonian.lennard_jones2d    import lennard_jones2d
 
 def pack_data(qpl_list, idx):
 
-    """Function pack_data.
-    
-    Parameters
-    ----------
-    qpl_list : Any
-        Tensor containing concatenated (q, p, boxsize) trajectories.
-    idx : Any
-        Trajectory time index to slice.
-    
-    Returns
-    -------
-    Any
-        Tuple of extracted q, p, and box-size tensors.
-    """
     q_init = qpl_list[:,0,idx,:,:].clone().detach()
     p_init = qpl_list[:,1,idx,:,:].clone().detach()
     l_init = qpl_list[:,2,idx,:,:].clone().detach()
@@ -35,31 +21,14 @@ def pack_data(qpl_list, idx):
     return q_init,p_init,l_init
 
 def total_energy(potential_function, q_list, p_list, l_list):
-    """Function total_energy.
-    
-    Parameters
-    ----------
-    potential_function : Any
-        Potential energy model (e.g., Lennard-Jones).
-    q_list : Any
-        Particle positions tensor of shape (nsamples, nparticles, dim).
-    p_list : Any
-        Particle momenta/velocities tensor of shape (nsamples, nparticles, dim).
-    l_list : Any
-        Periodic box lengths tensor, broadcastable to positions.
-    
-    Returns
-    -------
-    Any
-        Tuple of (kinetic energy, potential energy) tensors.
-    """
     pe = potential_function.total_energy(q_list, l_list)
     ke = torch.sum(p_list * p_list, dim=(1, 2)) * 0.5
     return ke, pe
 
 
 if __name__ == '__main__':
-    # python e_conserve.py 16 0.025 0.48 40 g
+    # md : python e_conserve.py 64 0.85 0.9 3 0.001 1000 20 None 1000 l
+    # ml : python e_conserve.py 64 0.85 0.9 3 0.05 1000 20 065 180000 l
 
     _ = mydevice()
     _ = system_logs(mydevice)
@@ -74,29 +43,50 @@ if __name__ == '__main__':
     torch.manual_seed(34952)
 
     argv = sys.argv
-    if len(argv) != 9:
-        print('usage <programe> <npar> <rho> <temp> <nsteps> <gamma> <saved_model> <dpt> <region>' )
+    if len(argv) != 11:
+        print('usage <programe> <npar> <rho> <temp> <dim> <tau_long> <saved_tp> <gamma> <saved_model> <dpt> <region>' )
         quit()
 
     npar = argv[1]
     rho = argv[2]
     T = argv[3]
-    nstep = int(argv[4])
-    gamma = int(argv[5])
-    saved_model = argv[6]
-    dpt = int(argv[7])
-    region = argv[8]
+    dim = int(argv[4])
+    tau_long = float(argv[5])
+    saved_tp = int(argv[6])
+    gamma = int(argv[7])
+    saved_model = argv[8]
+    dpt = int(argv[9])
+    region = argv[10]
 
-    data = { 
-             #"filename": '../../../data_sets/gen_by_MD/noML-metric-st1e-4every0.1t100/n{}rho{}T{}/'.format(npar,rho,T) + 'n{}rho{}T{}.pt'.format(npar,rho,T)}
-             #"filename" : '../../../data_sets/gen_by_MD/noML-metric-lt0.01every0.1t0.7t100/n{}rho{}T{}/'.format(npar,rho,T) +
-             #               'n{}rho{}T{}gamma{}.pt'.format(npar,rho,T,gamma)}
-             "filename" : '../../../data_sets/gen_by_ML/lt0.1dpt{}_{}/n{}rho{}T{}/'.format(dpt,region,npar,rho,T) + 'pred_n{}len08ws08gamma{}mb{}_tau0.1.pt'.format(npar,gamma,saved_model) }
+    if saved_model.strip() == "None":
+       saved_model = None
+    else:
+       saved_model = saved_model.strip()
+
+    if saved_model is None:
+        if dim == 2:
+            print('load md data on 2d .......')
+            data = {
+                     "filename" : '../../../data_sets/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
+                     'n{}rho{}T{}gamma{}.pt'.format(npar,rho,T,gamma),
+                     "save_dir": "../../../data_sets/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( tau_long,
+                      npar, rho, T, gamma)}
+
+        elif dim ==3:
+            print('load md data on 3d .......')
+            data = {
+                     "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
+                            'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),  # 3d
+                      "save_dir": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( dim, tau_long,
+                    npar, rho, T, gamma) }
 
 
-    maindict = { #"save_dir" : "../../../data_sets/gen_by_MD/noML-metric-st1e-4every0.1t100/n{}rho{}T{}/energytmax100.pt".format(npar,rho,T)
-                 #"save_dir" : "../../../data_sets/gen_by_MD/noML-metric-lt0.01every0.1t0.7t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(npar,rho,T,gamma)}
-                 "save_dir" : "../../../data_sets/gen_by_ML/lt0.1dpt{}_{}/n{}rho{}T{}/".format(dpt,region,npar,rho,T) + 'energy_gamma{}mb{}_nsteps{}.pt'.format(gamma,saved_model,nstep)}
+    else:
+        print(f'load ml data on {dim}d .......')
+        data = {
+                 "filename" : '../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt,region,npar,rho,T) + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format(npar,gamma,saved_model,tau_long) ,
+                 "save_dir": "../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/".format(tau_long,dpt, region, npar, rho, T) + 'energy_gamma{}LUF{}_tmax100.pt'.format(
+                 gamma, saved_model, saved_tp)}
 
     print(data)
     lj = lennard_jones2d()
@@ -125,6 +115,6 @@ if __name__ == '__main__':
     tot_e_append = torch.stack(tot_e_append,dim=0) # shape [trajectory, nsamples]
     print(torch.min(tot_u_append).item(), torch.max(tot_u_append).item())
 
-    torch.save({'pe':tot_u_append, 'ke':tot_k_append, 'energy': tot_e_append},maindict["save_dir"])
-    print('save dir ..', maindict["save_dir"])
+    torch.save({'pe':tot_u_append, 'ke':tot_k_append, 'energy': tot_e_append},data["save_dir"])
+    print('save dir ..', data["save_dir"])
 
