@@ -14,6 +14,9 @@ __pycache__/
 # Ignore log_ related files
 results/*/log_*
 
+# Ignore model checkpoints
+*.pth
+
 # Ignore pdf related files
 */code/analysis/3d/*/*/*pdf
 */code/analysis/3d/*/*txt

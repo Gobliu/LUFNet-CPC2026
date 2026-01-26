@@ -5,13 +5,13 @@
 - `data_loader/`: dataset loading utilities and data wrappers.
 - `hamiltonian/`, `MD/`, `MC/`: physics/MD/MC-related modules.
 - `utils/`: shared helpers (logging, device setup, parameter checks).
-- Top-level entrypoints: `maintrain09.py` (training) and `maintest_combined.py` (evaluation).
+- Top-level entrypoints: `train_main.py` (training) and `maintest_combined.py` (evaluation).
 - Configuration files: `main_config.yaml`, `maintest_config.yaml`.
 - Scripts and analysis: `run.sh`, `show_results.sh`, `plot_output_pwnet.py`, `plot_tau.py`.
 - Outputs typically land under `results/` (created at runtime).
 
 ## Build, Test, and Development Commands
-- `python maintrain09.py`: run training; uses parameters loaded from `main_config.yaml` (edit this for experiments).
+- `python train_main.py`: run training; uses parameters loaded from `main_config.yaml` (edit this for experiments).
 - `python maintest_combined.py`: run evaluation/inference using checkpoints referenced in `maintest_config.yaml`.
 - `bash run.sh`: batch post-processing of logs in `results/` and summary generation via `show_results.sh`.
 - `bash show_results.sh <logfile>`: summarize a single log file.

@@ -4,7 +4,7 @@ This folder contains the 3D Lennard-Jones (LJ) workflow used in this project, in
 
 ## Structure
 - `code/`: training, evaluation, and analysis scripts.
-  - Entry points: `maintrain09.py` (training) and `maintest_combined.py` (evaluation).
+  - Entry points: `train_main.py` (training) and `maintest_combined.py` (evaluation).
   - Configs: `main_config.yaml`, `maintest_config.yaml`.
   - Utilities: `utils/`, `data_loader/`, `ML/`, `hamiltonian/`, `MD/`, `MC/`.
 - `data_sets/`: sample datasets for MD/MC and training/validation.
@@ -13,7 +13,7 @@ This folder contains the 3D Lennard-Jones (LJ) workflow used in this project, in
 From `3D_LJ_Potiential/code`:
 
 ```bash
-python maintrain09.py
+python train_main.py
 python maintest_combined.py
 ```
 
