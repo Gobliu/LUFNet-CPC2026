@@ -10,11 +10,18 @@ from utils.pbc import _delta_state
 # import matplotlib.pyplot as plt # 20250809 nscc no module ...
 
 class PrepareData(nn.Module):
+    """Prepare LLUF grid-based features for q and p trajectories.
+
+    Args:
+        net (nn.Module): Network used for phi feature extraction.
+        grid_object: Grid generator object (e.g., SingleGrid, HexGrids).
+    """
 
     # grid_object is the object to make grid center at every particle
     # e.g. HexGrids for making multiple layers of hexagonal grids
     # e.g. SingleGrid for making only one grid at each particle center
     def __init__(self, net, grid_object):
+        """Initialize feature preparation modules."""
         super().__init__()
         # net : mb4pw -- use to extract features for position variable of grid point
         self.net = net
@@ -24,6 +31,16 @@ class PrepareData(nn.Module):
 
     # ===================================================
     def cat_qp(self,q_input_list,p_input_list):
+        """Concatenate q and p feature lists along the channel dimension.
+
+        Args:
+            q_input_list (list[torch.Tensor]): Position features across time.
+            p_input_list (list[torch.Tensor]): Momentum features across time.
+
+        Returns:
+            torch.Tensor: Concatenated tensor of shape
+                (nsamples, nparticles, traj_len, ngrids * DIM * (q,p)).
+        """
         # # q_input_list : mb net [phi0, phi1, phi2, ...] # phi0=(phi0x,phi0y)
         # # phi shape [nsamples, nparticles, ngrids * DIM]
         # # p_input_list : mb net [pi0, pi1, pi2, ...] # pi0=(pi0x,pi0y)
@@ -47,11 +64,30 @@ class PrepareData(nn.Module):
 
     # ===================================================
     def prepare_q_feature_input(self, q_list, l_list):  # make dqdp for n particles
+        """Generate phi features from positions.
+
+        Args:
+            q_list (list[torch.Tensor]): Position trajectory list.
+            l_list (list[torch.Tensor]): Box size list per sample.
+
+        Returns:
+            torch.Tensor: Phi features for q.
+        """
         ret = self.phi_features(q_list,l_list)
         # print('phi feature shape',ret.shape) # 20250803: print shape
         return ret
     # ===================================================
     def prepare_p_feature_input(self, q_list, p_list, l_list):  # make dqdp for n particles
+        """Generate psi features from positions and momenta.
+
+        Args:
+            q_list (list[torch.Tensor]): Position trajectory list.
+            p_list (list[torch.Tensor]): Momentum trajectory list.
+            l_list (list[torch.Tensor]): Box size list per sample.
+
+        Returns:
+            torch.Tensor: Psi features for p.
+        """
         ret = self.psi_features(q_list,p_list,l_list)
         # print('psi feature shape',ret.shape) # 20250803: print shape
         return ret

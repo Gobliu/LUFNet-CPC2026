@@ -5,10 +5,17 @@ from utils.pbc import pbc
 import matplotlib.pyplot as plt
 
 class HexGrids:
+    """Generate multi-layer hexagonal grids around each particle.
+
+    Args:
+        b_list (list[float]): Radii for each hex layer.
+        a_list (list[float]): Angular offsets for each hex layer.
+    """
 
     # b_list = list of grid distance
     # a_list = list of grid off set angle
     def __init__(self,b_list,a_list):
+        """Initialize hex grid points for all layers."""
         self.b = b_list
         nlayers = len(b_list)
         grids = []
@@ -25,6 +32,15 @@ class HexGrids:
     # b = grid distance
     # a = angle offset
     def hex_grids_list(self,b,a):
+        """Build a single hexagon layer.
+
+        Args:
+            b (float): Radius for the hexagon.
+            a (float): Angular offset.
+
+        Returns:
+            torch.Tensor: Tensor of shape (6, 2) with hex vertices.
+        """
 
         dt = 2*np.pi/6.0
         grids = []
@@ -41,7 +57,15 @@ class HexGrids:
     # return all the grid points of all particles
     #
     def __call__(self,q,l_list):
-        '''make_grids function to shift 6 grids points at (0,0) to each particle position as center'''
+        """Shift hex grid points to each particle position.
+
+        Args:
+            q (torch.Tensor): Positions of shape (nsamples, nparticles, 2).
+            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, 2).
+
+        Returns:
+            torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, 2).
+        """
 
         l_list = torch.unsqueeze(l_list, dim=2)
         # l_list.shape is [nsamples, nparticles, 1, DIM]
@@ -66,6 +90,14 @@ class HexGrids:
     # ===================================================
 
     def show_grids_nparticles(self, q_list, uli_list, boxsize, name):
+        """Visualize grid points and particles for debugging.
+
+        Args:
+            q_list (torch.Tensor): Positions of shape (nsamples, nparticles, 2).
+            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles, ngrids, 2).
+            boxsize (torch.Tensor): Box size tensor of shape (2,).
+            name (str): Title prefix for the plot.
+        """
 
         bs = boxsize.detach().numpy()
 
@@ -80,7 +112,6 @@ class HexGrids:
                      linestyle='none', markersize=12)
             plt.show()
             plt.close()
-
 
 
 

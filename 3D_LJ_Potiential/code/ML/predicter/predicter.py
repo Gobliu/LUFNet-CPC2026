@@ -2,14 +2,22 @@ import time
 import torch
 
 class predicter:
+    """Prediction helper for rolling out LLUF dynamics.
+
+    Args:
+        prepare_data_obj (nn.Module): Data preparation module.
+        mlvv (nn.Module): LLUF integrator model.
+    """
 
     def __init__(self, prepare_data_obj, mlvv):
+        """Initialize the prediction helper."""
         self.prepare_data_obj = prepare_data_obj
         self.mlvv = mlvv
 
         #self.mlvv.eval()
     # ==========================================================
     def prepare_input_list(self,q_traj,p_traj,l_init):
+        """Prepare feature lists and current state from trajectories."""
 
         nsamples,nparticles,_ = l_init.shape
 
@@ -28,6 +36,7 @@ class predicter:
         return q_input_list,p_input_list,q_cur,p_cur
     # ==========================================================
     def eval(self,q_input_list,p_input_list,q_cur,p_cur,l_init,window_sliding, gamma, temp):
+        """Run a single prediction step and report timing."""
 
         start_time = time.time()
         q_input_list,p_input_list,q_predict,p_predict,l_init = self.mlvv.one_step(q_input_list,p_input_list,q_cur,p_cur,l_init, gamma, temp)

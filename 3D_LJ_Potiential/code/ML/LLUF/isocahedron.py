@@ -4,9 +4,16 @@ from utils.pbc import pbc
 from utils.mydevice import mydevice
 
 class isocahedron:
+    """Generate icosahedron grid points around each particle center.
+
+    Args:
+        b_list (list[float]): Radius list; only one layer is supported.
+        a_list (list[float] | None): Unused (kept for interface compatibility).
+    """
 
     # we don't use angle for 3D. in 2D hexgrid we use angle offset
     def __init__(self, b_list, a_list=None):
+        """Initialize icosahedron vertices at the given radius."""
 
         assert len(b_list)==1,'only use one layer of grid'
         b = b_list[0]
@@ -35,7 +42,15 @@ class isocahedron:
         self.ngrids = 12
 
     def __call__(self,q,l_list):
-        '''make_grids function to shift 6 grids points at (0,0) to each particle position as center'''
+        """Shift icosahedron vertices to each particle position.
+
+        Args:
+            q (torch.Tensor): Positions of shape (nsamples, nparticles, 3).
+            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, 3).
+
+        Returns:
+            torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, 3).
+        """
 
         l_list = torch.unsqueeze(l_list, dim=2)
         # l_list.shape is [nsamples, nparticles, 1, DIM=3]
@@ -57,5 +72,4 @@ class isocahedron:
         grids_ncenter = grids_ncenter.view(-1, q.shape[1] * self.all_grids.shape[0], q.shape[2])
         # shape is [nsamples, nparticles * ngrids, DIM=(x,y,z)]
         return grids_ncenter
-
 

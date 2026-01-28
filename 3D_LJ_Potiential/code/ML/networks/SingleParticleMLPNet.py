@@ -2,8 +2,18 @@ import torch.nn as nn
 import torch
 
 class SingleParticleMLPNet(nn.Module):
+    """MLP for per-particle trajectory embeddings.
+
+    Args:
+        input_dim (int): Input feature dimension.
+        output_dim (int): Output feature dimension.
+        nnodes (int): Hidden layer width.
+        init_weights (str): Weight initialization type ("tanh" or "relu").
+        p (float): Dropout probability.
+    """
 
     def __init__(self,input_dim,output_dim,nnodes,init_weights,p):
+        """Initialize the single-particle MLP."""
         print('!!!!! single par mlp_net', input_dim, output_dim, nnodes, init_weights, p)
         super().__init__()
 
@@ -24,6 +34,7 @@ class SingleParticleMLPNet(nn.Module):
             self.mlp.apply(self.init_weights_relu)
 
     def init_weights_tanh(self,m): # m is layer that is nn.Linear
+        """Initialize linear layers with Xavier normal for tanh."""
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -34,6 +45,7 @@ class SingleParticleMLPNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def init_weights_relu(self,m): # m is layer that is nn.Linear
+        """Initialize linear layers with Kaiming normal for ReLU."""
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -43,6 +55,15 @@ class SingleParticleMLPNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def forward(self,x):
+        """Forward pass.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape
+                (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
+
+        Returns:
+            torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
+        """
         # input x.shape [nsample * nparticle, traj_len, ngrid * DIM * (q,p)]
         x = x.reshape(x.size(0), -1)
         x = self.mlp(x)

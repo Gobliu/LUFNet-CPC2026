@@ -2,14 +2,30 @@ import torch
 from utils.mydevice import mydevice
 from utils.pbc import pbc
 class PsiFeatures:
+    """Compute grid-based psi (momentum) features.
+
+    Args:
+        grid_object: Grid generator with `.ngrids` and `.dim`.
+    """
 
     def __init__(self,grid_object): #b_list,a_list):
+        """Initialize the feature builder."""
         self.grid_object = grid_object
 
         self.dim = grid_object.dim # 20250807
 
     # ===================================================
     def __call__(self, q_list, p_list, l_list):  # make dqdp for n particles
+        """Compute psi features for positions and momenta.
+
+        Args:
+            q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+            p_list (torch.Tensor): Momenta of shape (nsamples, nparticles, dim).
+            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+
+        Returns:
+            torch.Tensor: Psi features of shape (nsamples, nparticles, ngrids * dim).
+        """
         uli_list = self.grid_object(q_list, l_list)  # position at grids
         # shape is [nsamples, nparticles * ngrids, DIM=(x,y,z)] # 20250807
 
@@ -25,6 +41,19 @@ class PsiFeatures:
 
     # ===================================================
     def gen_pvar(self, q, p, uli_list, l_list, ngrids):  # velocity fields
+        """Generate relative momentum fields on grid points.
+
+        Args:
+            q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+            p (torch.Tensor): Momenta of shape (nsamples, nparticles, dim).
+            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
+            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+            ngrids (int): Number of grids per particle.
+
+        Returns:
+            torch.Tensor: Relative momentum features of shape
+                (nsamples, nparticles, ngrids * dim).
+        """
 
         nsamples, nparticles, DIM = p.shape
 
@@ -74,6 +103,17 @@ class PsiFeatures:
 
     # ===================================================
     def dpair_pbc_sq(self, q, uli_list, l_list):  #
+        """Compute pairwise squared distances with periodic boundaries.
+
+        Args:
+            q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
+            l_list (torch.Tensor): Box sizes broadcastable to paired grid positions.
+
+        Returns:
+            tuple[torch.Tensor, torch.Tensor]: Pairwise displacement vectors and
+            squared distances.
+        """
 
         # all list dimensionless
         q_state = torch.unsqueeze(q, dim=2)
@@ -91,4 +131,3 @@ class PsiFeatures:
         # dd.shape is [nsamples, nparticles, nparticles * ngrids]
 
         return paired_grid_q, dd
-

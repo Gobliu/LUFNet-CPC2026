@@ -3,8 +3,21 @@ import torch.nn as nn
 import torch
 
 class SingleParticleTransformerNet(nn.Module):
+    """Transformer encoder for per-particle trajectory embeddings.
+
+    Args:
+        input_dim (int): Input feature dimension.
+        output_dim (int): Output feature dimension.
+        traj_len (int): Trajectory length.
+        ngrids (int): Number of grids per particle.
+        d_model (int): Transformer model dimension.
+        nhead (int): Number of attention heads.
+        n_encoder_layers (int): Number of encoder layers.
+        p (float): Dropout probability.
+    """
 
     def __init__(self, input_dim, output_dim, traj_len, ngrids, d_model, nhead, n_encoder_layers, p):
+        """Initialize the transformer network."""
         super().__init__()
 
         self.traj_len = traj_len
@@ -29,9 +42,19 @@ class SingleParticleTransformerNet(nn.Module):
 
     @staticmethod
     def weight_range():
+        """Placeholder for weight range checks."""
         print('No weight range check for transformer')
 
     def forward(self, x):
+        """Forward pass.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape
+                (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
+
+        Returns:
+            torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
+        """
         # input x.shape [nsample * nparticle, traj_len, ngrid * DIM * (q,p)]
         # q_prev shape [nsamples,nparticles,2]
 
@@ -43,9 +66,11 @@ class SingleParticleTransformerNet(nn.Module):
         return x
 
 class EncoderLayer(nn.Module):
+    """Transformer encoder layer with MHA and MLP."""
 
     def __init__(self, dim, nhead, p, mlp_ratio=4, qkv_bias=False, qk_norm=False,
                  act_fn=nn.GELU, norm_layer=nn.LayerNorm):
+        """Initialize the encoder layer."""
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = MultiheadAttention(dim=dim, nhead=nhead, p=p, qkv_bias=qkv_bias,
@@ -60,14 +85,17 @@ class EncoderLayer(nn.Module):
                                  nn.Dropout(p))
 
     def forward(self, x):
+        """Forward pass for the encoder layer."""
         x = x + self.attn(self.norm1(x))
         x = x + self.mlp(self.norm2(x))
         return x
 
 
 class MultiheadAttention(nn.Module):
+    """Multi-head self-attention block."""
 
     def __init__(self, dim, nhead, p, qkv_bias, qk_norm, norm_layer):
+        """Initialize the attention block."""
         super().__init__()
         assert dim % nhead == 0, 'dim should be divisible by num_heads'
         self.num_heads = nhead
@@ -82,6 +110,14 @@ class MultiheadAttention(nn.Module):
         self.proj_drop = nn.Dropout(p)
 
     def forward(self, x):
+        """Forward pass for attention.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch, seq_len, dim).
+
+        Returns:
+            torch.Tensor: Output tensor of shape (batch, seq_len, dim).
+        """
         B, N, C = x.shape
         # shape: [nsamples * nparticles, traj_len+1, d_model]
         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, self.head_dim).permute(2, 0, 3, 1, 4) # 3 : qkv

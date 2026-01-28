@@ -9,6 +9,16 @@ from utils.mydevice                 import mydevice
 from hamiltonian.lennard_jones2d    import lennard_jones2d
 
 def pack_data(qpl_list, idx):
+    """Extract q/p/l snapshots at a given time index.
+
+    Args:
+        qpl_list (torch.Tensor): Trajectory tensor of shape
+            (nsamples, 3, traj_len, nparticles, dim).
+        idx (int): Time index to extract.
+
+    Returns:
+        tuple[torch.Tensor, torch.Tensor, torch.Tensor]: q_init, p_init, l_init.
+    """
 
     q_init = qpl_list[:,0,idx,:,:].clone().detach()
     p_init = qpl_list[:,1,idx,:,:].clone().detach()
@@ -21,6 +31,17 @@ def pack_data(qpl_list, idx):
     return q_init,p_init,l_init
 
 def total_energy(potential_function, q_list, p_list, l_list):
+    """Compute kinetic and potential energy for a batch.
+
+    Args:
+        potential_function: Object with a `total_energy` method.
+        q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        p_list (torch.Tensor): Momenta of shape (nsamples, nparticles, dim).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+
+    Returns:
+        tuple[torch.Tensor, torch.Tensor]: Kinetic and potential energies per sample.
+    """
     pe = potential_function.total_energy(q_list, l_list)
     ke = torch.sum(p_list * p_list, dim=(1, 2)) * 0.5
     return ke, pe
@@ -117,4 +138,3 @@ if __name__ == '__main__':
 
     torch.save({'pe':tot_u_append, 'ke':tot_k_append, 'energy': tot_e_append},data["save_dir"])
     print('save dir ..', data["save_dir"])
-

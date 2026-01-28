@@ -29,13 +29,13 @@ CUBLAS_WORKSPACE_CONFIG=:4096:8 python train_main.py
 Checkpoint comparison (recommended if you might change stdout formatting later):
 
 ```bash
-python compare_runs.py --ckpt-a /path/to/baseline.pth --ckpt-b /path/to/new.pth
+python compare_ckpt.py --ckpt-a /path/to/baseline.pth --ckpt-b /path/to/new.pth
 ```
-`compare_runs.py` only supports checkpoint comparison via `--ckpt-a` and `--ckpt-b`.
+`compare_ckpt.py` only supports checkpoint comparison via `--ckpt-a` and `--ckpt-b`.
 
 For convenience, `code/compare_with_baseline.py` will run training once, then compare the checkpoint
 at a fixed epoch (default 20) in `results/baseline_run/` with the new run's checkpoint under
-`results/` (excluding the baseline folder) using `compare_runs.py`.
+`results/` (excluding the baseline folder) using `compare_ckpt.py`.
 From `3D_LJ_Potiential/code`:
 
 ```bash
@@ -44,7 +44,7 @@ python compare_with_baseline.py
 
 ## Baseline + refactor comparison
 Use `code/compare_with_baseline.py` to run training once and compare the baseline checkpoint
-against the new run's checkpoint with `compare_runs.py`.
+against the new run's checkpoint with `compare_ckpt.py`.
 
 ## Outputs
 Training and evaluation logs and checkpoints are written under `code/results/` at runtime. Post-processing helpers live in:

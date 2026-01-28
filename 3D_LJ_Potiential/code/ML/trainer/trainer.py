@@ -19,8 +19,15 @@ from MD.LLUF_Lengavin import LLUF_Lengavin
 from utils.checkpoint import checkpoint
 
 class trainer:
+    """Training helper that builds networks and runs optimization steps.
+
+    Args:
+        train_dict (dict): Training configuration.
+        loss_dict (dict): Loss configuration.
+    """
 
     def __init__(self,train_dict,loss_dict):
+        """Initialize models, optimizer, and loss state."""
 
         self.train_dict = train_dict
 
@@ -75,6 +82,7 @@ class trainer:
 
    # ==========================================================
     def one_step(self,q_traj,p_traj,q_label,p_label,l_init):
+        """Run a single optimization step on a batch."""
 
         self.opt.zero_grad()
 
@@ -123,6 +131,7 @@ class trainer:
 
     # ==========================================================
     def eval(self,q_traj,p_traj,q_label,p_label,l_init):
+        """Run a forward evaluation pass without optimizer updates."""
 
         self.mlvv.eval()
 
@@ -159,18 +168,21 @@ class trainer:
     
     # ==========================================================
     def checkpoint(self,filename):
+        """Save model and optimizer checkpoint to file."""
         self.ckpt.save_checkpoint(filename)
         print('checkpint to file ',filename)
         self.verbose(0,'checkpoint values')
 
     # ==========================================================
     def load_models(self):
+        """Load model and optimizer state if configured."""
         load_file = self.train_dict["loadfile"]
         if load_file is not None:
             self.ckpt.load_checkpoint(load_file) 
 
     # ==========================================================
     def verbose(self,e,mode):
+        """Print training diagnostics and reset running metrics."""
 
         print(e, mode, ' '.join('tau {} : {:2e}'.format(k, tau.item()) for k, tau in enumerate(self.tau_params)))
 
@@ -190,6 +202,7 @@ class trainer:
 
     # ==========================================================
     def net_builder(self,train_dict):
+        """Construct networks based on training configuration."""
 
         ngrids = train_dict["ngrids"]
         pw4mb_dim    = train_dict["pw_output_dim"]
@@ -284,4 +297,3 @@ class trainer:
             readout_step_mlp_net_list.append(mydevice.load(ReadoutStepMLPNet(**readout_step_mlp_kwargs)))
 
         return prepare_data_net, single_particle_net_list, multi_particle_gnn_net_list, readout_step_mlp_net_list
-

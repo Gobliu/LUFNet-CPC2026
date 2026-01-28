@@ -2,10 +2,19 @@ import torch.nn as nn
 import torch
 
 class PWNet(nn.Module):
+    """Pairwise MLP for distance-based interactions.
+
+    Args:
+        input_dim (int): Input feature dimension.
+        output_dim (int): Output dimension.
+        nnodes (int): Hidden layer width.
+        init_weights (str): Weight initialization type ("tanh" or "relu").
+    """
 
     # input is torch.cat(dq_sq, dp_sq)
 
     def __init__(self,input_dim,output_dim,nnodes,init_weights):
+        """Initialize the pairwise network."""
         super().__init__()
 
         hidden_nodes = nnodes
@@ -36,6 +45,7 @@ class PWNet(nn.Module):
         
 
     def init_weights_tanh(self,m): # m is layer that is nn.Linear
+        """Initialize linear layers with Xavier normal for tanh."""
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -46,6 +56,7 @@ class PWNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def init_weights_relu(self,m): # m is layer that is nn.Linear
+        """Initialize linear layers with Kaiming normal for ReLU."""
         if type(m) == nn.Linear:
             # set the xavier_gain neither too much bigger than 1, nor too much less than 1
             # recommended gain value for the given nonlinearity function
@@ -55,15 +66,33 @@ class PWNet(nn.Module):
             m.bias.data.fill_(0.0)
 
     def relu(self,x):
+        """Apply ReLU."""
         return torch.relu(x)
 
     def tanh(self,x):
+        """Apply tanh."""
         return torch.tanh(x)
 
     def factor(self,dq):
+        """Compute a distance-based scaling factor.
+
+        Args:
+            dq (torch.Tensor): Distance tensor.
+
+        Returns:
+            torch.Tensor: Scaling factor tensor.
+        """
         return 1.0/( dq**self.inv_max_expon + self.inv_max_force )
 
     def forward(self,x):
+        """Forward pass.
+
+        Args:
+            x (torch.Tensor): Input distances of shape (batch, input_dim).
+
+        Returns:
+            torch.Tensor: Output tensor of shape (batch, output_dim).
+        """
         dq=x
         # pwnet input:[nsamples * nparticles * nparticles * ngrids, 1]
         for m in self.layers:

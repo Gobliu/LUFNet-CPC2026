@@ -9,10 +9,21 @@ from utils.mydevice import mydevice
 from hamiltonian.lennard_jones2d import lennard_jones2d  # hk
 
 class loss:
+    """Loss utilities for trajectory prediction with physics regularizers.
+
+    Args:
+        poly_deg (int): Polynomial degree for shaping terms.
+        rthrsh (float): Distance threshold for repulsive energy.
+        ew (float): Energy loss weight.
+        repw (float): Repulsive regularization weight.
+        window_sliding (int): Window size for logging averages.
+        repw2 (float, optional): Secondary repulsive weight.
+    """
 
     #def __init__(self,potential_function,poly_deg,rthrsh,ew,repw,repw2=0.01):
     # hk
     def __init__(self,poly_deg, rthrsh,ew,repw,window_sliding,repw2=0.01):
+        """Initialize loss configuration and bookkeeping."""
 
         # lj is use for calculating regularization on replusive force and conservation of energy
         #self.potential_function = potential_function
@@ -45,6 +56,21 @@ class loss:
                 self.window_sliding)
     # =============================================================
     def eval(self,q_list, p_list, q_label, p_label, q_init, p_init, l_list,weight):
+        """Compute total weighted loss and record metrics.
+
+        Args:
+            q_list (torch.Tensor): Predicted positions.
+            p_list (torch.Tensor): Predicted momenta.
+            q_label (torch.Tensor): Target positions.
+            p_label (torch.Tensor): Target momenta.
+            q_init (torch.Tensor): Initial positions.
+            p_init (torch.Tensor): Initial momenta.
+            l_list (torch.Tensor): Box sizes.
+            weight (float): Scalar loss weight.
+
+        Returns:
+            torch.Tensor: Weighted total loss.
+        """
 
         self.nsamples = q_list.shape[0]
 
@@ -120,6 +146,7 @@ class loss:
 
     # =============================================================
     def clear(self):
+        """Reset stored loss metrics."""
         # HK20220426
         self.loss_dict = { "total"  : [], 
                            "*qrmse" : [], "-qmse"  : [], "-qmae" : [],
@@ -132,6 +159,7 @@ class loss:
                             "rep": [], "poly"   : [] }
     # =============================================================
     def verbose(self,e,lr,mode):
+        """Print averaged loss metrics for a training window."""
 
         #print(e)
         for key,value in self.loss_dict.items():
@@ -155,6 +183,7 @@ class loss:
     # =============================================================
         # HK20220426
     def calculate_poly(self,qrmse_mean_value,prmse_mean_value):
+        """Return polynomial degree for shaping (currently fixed)."""
         # rmse_mean_val = max(qrmse_mean_value,prmse_mean_value)
         # if rmse_mean_val>1.0: return max(self.poly_deg,2)
         # if rmse_mean_val>0.6: return max(self.poly_deg,3)
@@ -163,6 +192,7 @@ class loss:
         return self.poly_deg
     # =============================================================
     def total_loss(self,qshape,pshape,eshape,mshape,rep,qrmse_mean_value,weight):
+        """Combine weighted loss components into a total loss."""
 
         self.loss_dict["qshape"].append(qshape.item())
         self.loss_dict["pshape"].append(pshape.item())
@@ -176,6 +206,7 @@ class loss:
 
     # =============================================================
     def loss_shape_func(self,x):
+        """Apply polynomial shaping to a loss vector."""
 
         loss  = x
         for d in range(2,self.poly_deg+1):
@@ -185,6 +216,7 @@ class loss:
 
     # =============================================================
     def del_q_adjust(self,q_quantity, q_label, l_list):
+        """Compute position residuals with periodic boundary correction."""
 
         dq = q_quantity - q_label
         # shape [nsamples, nparticle, DIM]
@@ -194,6 +226,7 @@ class loss:
 
     # =============================================================
     def q_MSE_loss(self,q_quantity, q_label,l_list):
+        """Compute per-sample MSE for positions."""
 
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
@@ -202,6 +235,7 @@ class loss:
         return qloss
     # =============================================================
     def q_RMSE_loss(self,q_quantity, q_label,l_list):
+        """Compute per-sample RMSE for positions."""
 
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
@@ -210,6 +244,7 @@ class loss:
         return qloss
     # =============================================================
     def q_MAE_loss(self,q_quantity, q_label,l_list):
+        """Compute per-sample MAE for positions."""
 
         nsamples, nparticle, DIM = q_label.shape
         dq = self.del_q_adjust(q_quantity,q_label, l_list) # shape is [nsamples, nparticle, DIM]
@@ -219,6 +254,7 @@ class loss:
 
     # =============================================================
     def p_MSE_loss(self,p_list,p_label):
+        """Compute per-sample MSE for momenta."""
 
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
@@ -227,6 +263,7 @@ class loss:
  
     # =============================================================
     def p_RMSE_loss(self,p_list,p_label):
+        """Compute per-sample RMSE for momenta."""
 
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
@@ -235,6 +272,7 @@ class loss:
     
     # =============================================================
     def p_MAE_loss(self,p_list,p_label):
+        """Compute per-sample MAE for momenta."""
 
         nparticles = p_list.shape[1]
         dp = p_list - p_label # shape [nsamples,nparticles,dim]
@@ -243,6 +281,7 @@ class loss:
 
     # =============================================================
     def conserve_MAE_eloss(self,q_list,p_list,q_init,p_init,l_list):
+        """Compute MAE energy conservation losses."""
 
         nparticles = p_list.shape[1]
         # shape [nsamples]
@@ -265,6 +304,7 @@ class loss:
    
     # =============================================================
     def conserve_RMSE_eloss(self,q_list,p_list,q_init,p_init,l_list):
+        """Compute RMSE energy conservation losses."""
 
         nparticles = p_list.shape[1]
         # shape [nsamples]
@@ -288,6 +328,7 @@ class loss:
 
     # =============================================================
     def conserve_MAE_mloss(self,p_list,p_init):
+        """Compute MAE momentum conservation loss."""
 
         nparticles = p_list.shape[1]
         pinit_sum = torch.sum(p_init,dim=1) # shape [nsamples,dim]
@@ -298,6 +339,7 @@ class loss:
         return torch.abs(dp) / nparticles
 
     def potential_rep(self, q_list,l_list):
+        """Compute repulsive potential penalties."""
 
         rep_pe_max  = self.potential_function.repulsive_energy(q_list,l_list)
         relu_pe = self.m(rep_pe_max - self.pethrsh)

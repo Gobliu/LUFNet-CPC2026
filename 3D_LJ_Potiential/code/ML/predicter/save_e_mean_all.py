@@ -9,6 +9,15 @@ from utils.mydevice                 import mydevice
 import os
 
 def de(e,npar):
+    """Compute final mean energy drift per particle.
+
+    Args:
+        e (torch.Tensor): Energy tensor of shape (trajectory, nsamples).
+        npar (int): Number of particles.
+
+    Returns:
+        float: Final drift value per particle.
+    """
     e = e.clone().detach().cpu().numpy()
     #shape = [trajectory, nsamples]
     mean_e = np.mean(e, axis=1)
