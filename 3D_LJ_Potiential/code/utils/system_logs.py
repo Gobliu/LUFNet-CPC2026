@@ -8,7 +8,7 @@ import sys
 import os
 import platform
 import numpy as np
-#import psutil
+# import psutil
 from datetime import datetime
 
 class system_logs(object):
@@ -46,9 +46,9 @@ class system_logs(object):
 
     @staticmethod
     def record_memory_usage(t):
-        #mem_use = psutil.virtual_memory()[2]
-        #system_logs.__instance.memory_usage.append(mem_use)
-        #print('memory usage :',mem_use,' at t=',t)
+        # mem_use = psutil.virtual_memory()[2]
+        # system_logs.__instance.memory_usage.append(mem_use)
+        # print('memory usage :',mem_use,' at t=',t)
         print(' at t=',t)
 
     @staticmethod
@@ -63,8 +63,8 @@ class system_logs(object):
         run_duration = now - system_logs.__instance.start_time
         print('run time ',run_duration)
 
-        mean_memory = np.mean(system_logs.__instance.memory_usage)
-        std_memory = np.std(system_logs.__instance.memory_usage)
-        print('mean mem : ', mean_memory, ', std mem : ', std_memory )
+        # mean_memory = np.mean(system_logs.__instance.memory_usage)
+        # std_memory = np.std(system_logs.__instance.memory_usage)
+        # print('mean mem : ', mean_memory, ', std mem : ', std_memory )
 
 

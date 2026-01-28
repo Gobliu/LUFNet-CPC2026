@@ -2,6 +2,9 @@ net_type: api0lw8421ew1repw10poly4l  # part of save filename
 single_parnet_type: transformer_type # single particle neural network type
 multi_parnet_type: gnn_identity # multi particle neural network type
 readout_net_type: mlp_type # readout neural network type
+seed: 34952
+deterministic: true
+force_cuda: true
 rho: 0.85
 temp: 0.9
 region: l # phase region we are interested

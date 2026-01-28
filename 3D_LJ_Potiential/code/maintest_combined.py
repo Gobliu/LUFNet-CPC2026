@@ -6,6 +6,7 @@ from ML.predicter.predicter      import predicter
 from utils                       import check_param_dict
 from utils                       import utils
 from utils.system_logs           import system_logs
+from utils.seed                  import set_global_seed
 from utils.mydevice              import mydevice
 from data_loader.data_loader import data_loader
 from data_loader.data_loader import my_data
@@ -15,12 +16,15 @@ import yaml
 def main():
     # python maintest_combined.py 256 >  log/n256rho0.85T0.9LUF065_tau0.05
 
-    _ = mydevice()
+    force_cuda = args.get('force_cuda', True)
+    _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)
     system_logs.print_start_logs()
 
     torch.set_default_dtype(torch.float64)
-    torch.manual_seed(34952)
+    seed = args.get('seed', 34952)
+    deterministic = args.get('deterministic', True)
+    set_global_seed(seed, deterministic)
 
     argv = sys.argv
 
@@ -127,7 +131,7 @@ def main():
                        traindict["tau_long"],traindict["window_sliding"],traindict["saved_pair_steps"],
                        traindict["tau_traj_len"],data["train_pts"],data["vald_pts"],data["test_pts"])  # 20250912
 
-    loader = data_loader(data_set, data["batch_size"])
+    loader = data_loader(data_set, data["batch_size"], seed=seed)
 
     train = trainer(traindict,lossdict)
     train.load_models()
@@ -201,6 +205,4 @@ if __name__=='__main__':
     with open(yaml_config_path, 'r') as f:
         args = yaml.load(f, Loader=yaml.Loader)
     main()
-
-
 

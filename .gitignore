@@ -20,6 +20,8 @@ results/*/log_*
 # Ignore pdf related files
 */code/analysis/3d/*/*/*pdf
 */code/analysis/3d/*/*txt
+analysis/3d/*/*/*pdf
+analysis/3d/*/*txt
 
 # Ignore NSCC related files
 out.txt

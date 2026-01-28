@@ -15,8 +15,13 @@ class mydevice(object):
             mydevice.__instance = object.__new__(cls)
         return mydevice.__instance
 
-    def __init__(self):
+    def __init__(self, force_cuda=True):
         use_cuda = torch.cuda.is_available()
+        if force_cuda and not use_cuda:
+            raise RuntimeError(
+                "CUDA is required but not available. Set force_cuda: false in main_config.yaml/maintest_config.yaml "
+                "to allow CPU fallback."
+            )
         mydevice.__instance.value = torch.device("cuda" if use_cuda else "cpu")
         print('device singleton constructed for ',mydevice.__instance.value)
         
@@ -44,5 +49,3 @@ def verify_device(specified_device):
     # this is to test if loading to GPU will throw an error
     a = torch.tensor([1])
     mydevice.load(a)
-
-

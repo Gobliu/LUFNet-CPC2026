@@ -2,6 +2,7 @@ import torch
 from data_loader.data_io import data_io
 from torch.utils.data import Dataset
 from data_loader.check_load_data import check_load_data
+from utils.seed import seed_worker
 
 # qp_list.shape = [nsamples, (q,p,l)=3, trajectory=2 (input,label), nparticle, DIM]
 # ===========================================================
@@ -107,23 +108,34 @@ class my_data:
 # ===========================================================
 class data_loader:
     #  data loader upon this custom dataset
-    def __init__(self,data_set, batch_size):
+    def __init__(self, data_set, batch_size, seed=None):
 
         self.data_set = data_set
         self.batch_size = batch_size
+        self.seed = seed
 
         use_cuda = torch.cuda.is_available()
         kwargs = {'num_workers': 8, 'pin_memory': True} if use_cuda else {}
         # num_workers: the number of processes that generate batches in parallel.
         print('kwargs ',kwargs, 'batch_size ', batch_size)
 
+        generator = None
+        worker_init_fn = None
+        if seed is not None:
+            generator = torch.Generator()
+            generator.manual_seed(seed)
+            worker_init_fn = seed_worker
+
         self.train_loader = torch.utils.data.DataLoader(self.data_set.train_set,
-                            batch_size=batch_size, shuffle=True, **kwargs)
+                            batch_size=batch_size, shuffle=True,
+                            generator=generator, worker_init_fn=worker_init_fn, **kwargs)
 
         self.val_loader   = torch.utils.data.DataLoader(self.data_set.val_set,
-                            batch_size=batch_size, shuffle=True, **kwargs)
+                            batch_size=batch_size, shuffle=True,
+                            generator=generator, worker_init_fn=worker_init_fn, **kwargs)
 
         self.test_loader  = torch.utils.data.DataLoader(self.data_set.test_set,
-                            batch_size=batch_size, shuffle=False, **kwargs)
+                            batch_size=batch_size, shuffle=False,
+                            generator=generator, worker_init_fn=worker_init_fn, **kwargs)
 
 

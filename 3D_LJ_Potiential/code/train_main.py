@@ -5,21 +5,24 @@ import yaml
 from ML.trainer.trainer import trainer
 from utils import utils, check_param_dict
 from utils.system_logs import system_logs
+from utils.seed import set_global_seed
 from utils.mydevice import mydevice
 from data_loader.data_loader import data_loader
 from data_loader.data_loader import my_data
 
 def main():
 
-    _ = mydevice()
+    force_cuda = args.get('force_cuda', True)
+    _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)
     system_logs.print_start_logs()
 
     torch.set_default_dtype(torch.float64)
     #torch.autograd.set_detect_anomaly(True)
 
-    torch.manual_seed(34952)
-    np.random.seed(34952)
+    seed = args.get('seed', 34952)
+    deterministic = args.get('deterministic', True)
+    set_global_seed(seed, deterministic)
 
     net_type = args['net_type']
     single_parnet_type = args['single_parnet_type']
@@ -46,6 +49,7 @@ def main():
     dpt_train = args['dpt_train']
     dpt_valid = args['dpt_valid']
     start_epoch = args['start_epoch']
+    end_epoch = args.get('end_epoch', 20)
     loadfile = args['loadfile']
 
     traindict = {"loadfile"     : loadfile,  # to load previously trained model
@@ -97,8 +101,8 @@ def main():
              "window_sliding"   : traindict["window_sliding"] }
 
     maindict = { "start_epoch"     : start_epoch,
-                 "end_epoch"       : 2,
-                  "save_dir"        : './results/traj_len08ws0{}tau{}ngrid{}{}_dpt{}'.format(window_sliding,traindict["tau_long"],ngrid,net_type,dpt_train),
+                 "end_epoch"       : end_epoch,
+                 "save_dir"        : './results/baseline_run', # directory to save trained models
                  "tau_short"       : 1e-4,
                  "nitr"            : nitr, # for check md trajectories # 1000 for ai tau 0.1; 100 for ai tau 0.01
                  "append_strike"   : nitr, # for check md trajectories e.g. based on ground truth tau 0.0001, 100 for tau=0.01, 1000 for tau=0.1
@@ -121,7 +125,7 @@ def main():
     data_set = my_data(data["train_file"],data["valid_file"],data["test_file"],
                        traindict["tau_long"],traindict["window_sliding"],traindict["saved_pair_steps"],
                        traindict["tau_traj_len"],data["train_pts"],data["vald_pts"],data["test_pts"])
-    loader = data_loader(data_set, data["batch_size"])  # 20250908
+    loader = data_loader(data_set, data["batch_size"], seed=seed)  # 20250908
 
     #utils.check_data(loader,data_set,traindict["tau_traj_len"],
     #           traindict["tau_long"],maindict["tau_short"],
