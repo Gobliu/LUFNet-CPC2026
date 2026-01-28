@@ -16,11 +16,11 @@ def pack_data(qpl_list):
     """Split q/p/boxsize trajectories from a packed tensor.
 
     Args:
-        qpl_list (torch.Tensor): Tensor of shape
-            (nsamples, 3, trajectory, nparticles, dim) with (q, p, l).
+    qpl_list (torch.Tensor): Tensor of shape
+    (nsamples, 3, trajectory, nparticles, dim) with (q, p, l).
 
     Returns:
-        tuple[torch.Tensor, torch.Tensor, torch.Tensor]: q_traj, p_traj, l_init.
+    tuple[torch.Tensor, torch.Tensor, torch.Tensor]: q_traj, p_traj, l_init.
     """
     # shape = [nsamples, (q,p,boxsize), trajetory,  nparticles, DIM]
     q_traj = qpl_list[:, 0, :, :, :].clone().detach()
@@ -34,10 +34,10 @@ def l_max_distance(l_list):
     """Compute maximum distance within a periodic box.
 
     Args:
-        l_list (torch.Tensor): Box sizes of shape (..., dim).
+    l_list (torch.Tensor): Box sizes of shape (..., dim).
 
     Returns:
-        tuple[torch.Tensor, float]: Mean box size and maximum distance.
+    tuple[torch.Tensor, float]: Mean box size and maximum distance.
     """
     boxsize = torch.mean(l_list)
     L_h = boxsize / 2.
@@ -60,13 +60,13 @@ def pairDistributionFunction(grdelta, grbinmax, q_list, l_list):
     """Generate a pair-distribution (radial distribution) histogram.
 
     Args:
-        grdelta (float): Bin width.
-        grbinmax (int): Maximum number of bins.
-        q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+    grdelta (float): Bin width.
+    grbinmax (int): Maximum number of bins.
+    q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+    l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
 
     Returns:
-        tuple[list[int], list[float]]: Bin indices and average counts per sample.
+    tuple[list[int], list[float]]: Bin indices and average counts per sample.
     """
 
     # q_list shape [nsample, nparticle, dim]

@@ -13,12 +13,12 @@ class HalfStepUpdate(nn.Module):
     """Half-step update module for LLUF dynamics.
 
     Args:
-        prepare_data_obj (nn.Module): Data preparation module.
-        single_particle_net (nn.Module): Per-particle feature network.
-        multi_particle_net (nn.Module): Multi-particle interaction network.
-        readout_step_net (nn.Module): Readout network for updates.
-        t_init (float): Initial time-step scale.
-        nnet (int, optional): Number of independent tau parameters.
+    prepare_data_obj (nn.Module): Data preparation module.
+    single_particle_net (nn.Module): Per-particle feature network.
+    multi_particle_net (nn.Module): Multi-particle interaction network.
+    readout_step_net (nn.Module): Readout network for updates.
+    t_init (float): Initial time-step scale.
+    nnet (int, optional): Number of independent tau parameters.
     """
 
     def __init__(self, prepare_data_obj, single_particle_net, multi_particle_net, readout_step_net, t_init, nnet=1):
@@ -41,12 +41,12 @@ class HalfStepUpdate(nn.Module):
         """Compute the half-step update from trajectory inputs.
 
         Args:
-            q_input_list (list[torch.Tensor]): Position features across time.
-            p_input_list (list[torch.Tensor]): Momentum features across time.
-            q_prev (torch.Tensor): Previous positions of shape (nsample, nparticle, dim).
+        q_input_list (list[torch.Tensor]): Position features across time.
+        p_input_list (list[torch.Tensor]): Momentum features across time.
+        q_prev (torch.Tensor): Previous positions of shape (nsample, nparticle, dim).
 
         Returns:
-            torch.Tensor: Update step of shape (nsample, nparticle, dim).
+        torch.Tensor: Update step of shape (nsample, nparticle, dim).
         """
         x = self.prepare_data.cat_qp(q_input_list,p_input_list)
         # shape [nsamples, nparticles, traj_len, ngrids * DIM * (q,p)]

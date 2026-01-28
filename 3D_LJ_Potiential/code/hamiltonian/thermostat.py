@@ -6,13 +6,13 @@ def thermostat(p_list,gamma,temp,tau):
     # p_list shape [nsamples,nparticles,dim]
     """thermostat function.
 
-Args:
+    Args:
     p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
     gamma (float): Friction coefficient.
     temp (float): Temperature.
     tau (float): Time step.
 
-Returns:
+    Returns:
     torch.Tensor: Updated momenta.
     """
     c1 = math.exp(-gamma * 0.5* tau) # weight of the rescaling factor
@@ -25,13 +25,13 @@ def thermostat_ML(p_list,gamma,temp,tau):
     # p_list shape [nsamples,nparticles,dim]
     """thermostat_ML function.
 
-Args:
+    Args:
     p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
     gamma (float): Friction coefficient.
     temp (float): Temperature.
     tau (float): Time step.
 
-Returns:
+    Returns:
     torch.Tensor: Updated momenta.
     """
     c1 = math.exp(-gamma *  tau) # weight of the rescaling factor

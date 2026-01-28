@@ -6,14 +6,14 @@ class SingleParticleTransformerNet(nn.Module):
     """Transformer encoder for per-particle trajectory embeddings.
 
     Args:
-        input_dim (int): Input feature dimension.
-        output_dim (int): Output feature dimension.
-        traj_len (int): Trajectory length.
-        ngrids (int): Number of grids per particle.
-        d_model (int): Transformer model dimension.
-        nhead (int): Number of attention heads.
-        n_encoder_layers (int): Number of encoder layers.
-        p (float): Dropout probability.
+    input_dim (int): Input feature dimension.
+    output_dim (int): Output feature dimension.
+    traj_len (int): Trajectory length.
+    ngrids (int): Number of grids per particle.
+    d_model (int): Transformer model dimension.
+    nhead (int): Number of attention heads.
+    n_encoder_layers (int): Number of encoder layers.
+    p (float): Dropout probability.
     """
 
     def __init__(self, input_dim, output_dim, traj_len, ngrids, d_model, nhead, n_encoder_layers, p):
@@ -49,11 +49,11 @@ class SingleParticleTransformerNet(nn.Module):
         """Forward pass.
 
         Args:
-            x (torch.Tensor): Input tensor of shape
-                (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
+        x (torch.Tensor): Input tensor of shape
+        (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
 
         Returns:
-            torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
+        torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
         """
         # input x.shape [nsample * nparticle, traj_len, ngrid * DIM * (q,p)]
         # q_prev shape [nsamples,nparticles,2]
@@ -113,10 +113,10 @@ class MultiheadAttention(nn.Module):
         """Forward pass for attention.
 
         Args:
-            x (torch.Tensor): Input tensor of shape (batch, seq_len, dim).
+        x (torch.Tensor): Input tensor of shape (batch, seq_len, dim).
 
         Returns:
-            torch.Tensor: Output tensor of shape (batch, seq_len, dim).
+        torch.Tensor: Output tensor of shape (batch, seq_len, dim).
         """
         B, N, C = x.shape
         # shape: [nsamples * nparticles, traj_len+1, d_model]

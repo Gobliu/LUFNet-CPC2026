@@ -11,10 +11,10 @@ class check_load_data:
 
         """__init__ function.
 
-Args:
-    qpl_list_init (torch.Tensor): Initial trajectory, shape [nsamples, 3, traj, nparticles, dim].
-    qpl_list_final (torch.Tensor): Final state, shape [nsamples, 3, nparticles, dim].
-    """
+        Args:
+        qpl_list_init (torch.Tensor): Initial trajectory, shape [nsamples, 3, traj, nparticles, dim].
+        qpl_list_final (torch.Tensor): Final state, shape [nsamples, 3, nparticles, dim].
+        """
         self.q_list_init = qpl_list_init[:,0,:,:,:]
         # q_list_init.shape = [nsamples, trajectory, nparticles, DIM]
         self.p_list_init = qpl_list_init[:,1,:,:,:]
@@ -32,12 +32,12 @@ Args:
     def check(self,tau_short):
         """check function.
 
-Args:
-    tau_short (float): Short timestep for optional force check.
+        Args:
+        tau_short (float): Short timestep for optional force check.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         self.check_distance()
         #self.check_force(tau_short)
         self.max_lj_energy()
@@ -50,20 +50,20 @@ Returns:
 
         """md_trajectory function.
 
-Args:
-    q_init (torch.Tensor): Initial positions over trajectory.
-    p_init (torch.Tensor): Initial momenta over trajectory.
-    q_final (torch.Tensor): Final positions.
-    p_final (torch.Tensor): Final momenta.
-    l_list (torch.Tensor): Box sizes.
-    label_idx (int): Label index to check against.
-    tau (float): Time step.
-    nitr (int): Number of integration steps.
-    append_strike (int): Snapshot stride.
+        Args:
+        q_init (torch.Tensor): Initial positions over trajectory.
+        p_init (torch.Tensor): Initial momenta over trajectory.
+        q_final (torch.Tensor): Final positions.
+        p_final (torch.Tensor): Final momenta.
+        l_list (torch.Tensor): Box sizes.
+        label_idx (int): Label index to check against.
+        tau (float): Time step.
+        nitr (int): Number of integration steps.
+        append_strike (int): Snapshot stride.
 
-Returns:
-    bool: True if checks pass.
-    """
+        Returns:
+        bool: True if checks pass.
+        """
         _, nsamples, nparticles, DIM = q_init.shape
         q_init = q_init.clone().detach()
         p_init = p_init.clone().detach()
@@ -96,18 +96,18 @@ Returns:
     def max_lj_energy(self):
         """max_lj_energy function.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         pe = self.potential_function.total_energy(self.q_list_final, self.l_list)
         print('maximum pe', torch.max(pe), 'element', torch.where(pe == torch.max(pe)))
 
     def check_distance(self):
         """check_distance function.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         print('check min pairwise distance ...')
         dr = self.potential_function.paired_distance(self.q_list_final, self.l_list)
         print('min distance {:.3f}'.format(torch.min(dr)))
@@ -117,12 +117,12 @@ Returns:
     def check_force(self,tau):
         """check_force function.
 
-Args:
-    tau (float): Time step.
+        Args:
+        tau (float): Time step.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         print('check force at initial... tau',tau)
         self.mdvv.one_step(self.q_list_init[:,0,:,:],self.p_list_init[:,0,:,:],self.l_list,tau)
         print('check force at final... tau', tau)
@@ -132,9 +132,9 @@ Returns:
 
         """delta_total_energy function.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         e_init = []
         for traj in range(self.trajectory):
             pe_init = self.potential_function.total_energy(self.q_list_init[:,traj,:,:], self.l_list)
@@ -159,9 +159,9 @@ Returns:
 
         """delta_momentum function.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         p_init = torch.sum(self.p_list_init, dim=2) # [nsamples, trajectory, DIM]
         p_final = torch.sum(self.p_list_final, dim=1) # [nsamples, DIM]
         p_all = torch.cat((p_init, torch.unsqueeze(p_final,dim=1)),dim=1) # [nsamples, trajectory, DIM]
@@ -179,13 +179,13 @@ Returns:
         # check that l_init is of square box
         """check_boxsize function.
 
-Args:
-    q_init (torch.Tensor): Positions over trajectory.
-    p_init (torch.Tensor): Momenta over trajectory.
-    l_init (torch.Tensor): Box sizes.
+        Args:
+        q_init (torch.Tensor): Positions over trajectory.
+        p_init (torch.Tensor): Momenta over trajectory.
+        l_init (torch.Tensor): Box sizes.
 
-Returns:
-    None
+        Returns:
+        None
         """
         lx = l_init[:,:,0]
         ly = l_init[:,:,1]

@@ -14,17 +14,17 @@ class get_paired_distance_indices:
     def get_indices(s):
 
         ''' function to obtain indices of non-zero values that do not consider interactions
-            btw themself ex) q_1x, q_1x or q_1y, q_1y or q_2x, q_2x ....
+        btw themself ex) q_1x, q_1x or q_1y, q_1y or q_2x, q_2x ....
 
         parameters
         ----------
         s : torch.tensor
-                dq list shape
-                shape is [nsamples, nparticle, nparticle, DIM]
-		DIM = 2 for 2D LJ models
+        dq list shape
+        shape is [nsamples, nparticle, nparticle, DIM]
+        DIM = 2 for 2D LJ models
         n : nparticle
         m : torch.tensor
-                make 1 all of pw-n4T0.35-hard1 shape and then become 0 when consider interactions btw themself
+        make 1 all of pw-n4T0.35-hard1 shape and then become 0 when consider interactions btw themself
         Returns
         ----------
         indices of non-zero values in m
@@ -55,10 +55,10 @@ class get_paired_distance_indices:
         parameters
         ----------
         delta : torch.tensor
-                pass shape is [nsamples, nparticle, nparticle, DIM]
-                distances between particle interactions ex) q_1x - q_1x, q_1x - q_2x, ..., q_ny - q_ny
+        pass shape is [nsamples, nparticle, nparticle, DIM]
+        distances between particle interactions ex) q_1x - q_1x, q_1x - q_2x, ..., q_ny - q_ny
         indices :
-                is return of get_indices
+        is return of get_indices
 
         Returns
         ----------

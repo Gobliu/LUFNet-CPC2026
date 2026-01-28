@@ -5,11 +5,11 @@ class SingleParticleMLPNet(nn.Module):
     """MLP for per-particle trajectory embeddings.
 
     Args:
-        input_dim (int): Input feature dimension.
-        output_dim (int): Output feature dimension.
-        nnodes (int): Hidden layer width.
-        init_weights (str): Weight initialization type ("tanh" or "relu").
-        p (float): Dropout probability.
+    input_dim (int): Input feature dimension.
+    output_dim (int): Output feature dimension.
+    nnodes (int): Hidden layer width.
+    init_weights (str): Weight initialization type ("tanh" or "relu").
+    p (float): Dropout probability.
     """
 
     def __init__(self,input_dim,output_dim,nnodes,init_weights,p):
@@ -58,11 +58,11 @@ class SingleParticleMLPNet(nn.Module):
         """Forward pass.
 
         Args:
-            x (torch.Tensor): Input tensor of shape
-                (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
+        x (torch.Tensor): Input tensor of shape
+        (nsamples * nparticles, traj_len, ngrid * dim * (q,p)).
 
         Returns:
-            torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
+        torch.Tensor: Output embeddings of shape (nsamples * nparticles, output_dim).
         """
         # input x.shape [nsample * nparticle, traj_len, ngrid * DIM * (q,p)]
         x = x.reshape(x.size(0), -1)

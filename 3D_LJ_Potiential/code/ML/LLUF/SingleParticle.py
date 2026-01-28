@@ -5,7 +5,7 @@ class SingleParticle(nn.Module):
     """Apply a per-particle network to trajectory inputs.
 
     Args:
-        net (nn.Module): Network applied to each particle trajectory.
+    net (nn.Module): Network applied to each particle trajectory.
     """
 
     # two networks first one for updating p
@@ -24,11 +24,11 @@ class SingleParticle(nn.Module):
         """Compute per-particle embeddings.
 
         Args:
-            x (torch.Tensor): Input tensor of shape
-                (nsample, nparticle, traj_len, ngrid * DIM * (q,p)).
+        x (torch.Tensor): Input tensor of shape
+        (nsample, nparticle, traj_len, ngrid * DIM * (q,p)).
 
         Returns:
-            torch.Tensor: Output tensor of shape (nsample, nparticle, embed_dim).
+        torch.Tensor: Output tensor of shape (nsample, nparticle, embed_dim).
         """
         nsample,nparticle,traj_len,_ = x.shape
         x = x.reshape(nsample*nparticle,traj_len,-1)

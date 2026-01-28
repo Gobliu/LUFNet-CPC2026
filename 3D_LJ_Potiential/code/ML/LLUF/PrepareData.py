@@ -13,8 +13,8 @@ class PrepareData(nn.Module):
     """Prepare LLUF grid-based features for q and p trajectories.
 
     Args:
-        net (nn.Module): Network used for phi feature extraction.
-        grid_object: Grid generator object (e.g., SingleGrid, HexGrids).
+    net (nn.Module): Network used for phi feature extraction.
+    grid_object: Grid generator object (e.g., SingleGrid, HexGrids).
     """
 
     # grid_object is the object to make grid center at every particle
@@ -34,12 +34,12 @@ class PrepareData(nn.Module):
         """Concatenate q and p feature lists along the channel dimension.
 
         Args:
-            q_input_list (list[torch.Tensor]): Position features across time.
-            p_input_list (list[torch.Tensor]): Momentum features across time.
+        q_input_list (list[torch.Tensor]): Position features across time.
+        p_input_list (list[torch.Tensor]): Momentum features across time.
 
         Returns:
-            torch.Tensor: Concatenated tensor of shape
-                (nsamples, nparticles, traj_len, ngrids * DIM * (q,p)).
+        torch.Tensor: Concatenated tensor of shape
+        (nsamples, nparticles, traj_len, ngrids * DIM * (q,p)).
         """
         # # q_input_list : mb net [phi0, phi1, phi2, ...] # phi0=(phi0x,phi0y)
         # # phi shape [nsamples, nparticles, ngrids * DIM]
@@ -67,11 +67,11 @@ class PrepareData(nn.Module):
         """Generate phi features from positions.
 
         Args:
-            q_list (list[torch.Tensor]): Position trajectory list.
-            l_list (list[torch.Tensor]): Box size list per sample.
+        q_list (list[torch.Tensor]): Position trajectory list.
+        l_list (list[torch.Tensor]): Box size list per sample.
 
         Returns:
-            torch.Tensor: Phi features for q.
+        torch.Tensor: Phi features for q.
         """
         ret = self.phi_features(q_list,l_list)
         # print('phi feature shape',ret.shape) # 20250803: print shape
@@ -81,12 +81,12 @@ class PrepareData(nn.Module):
         """Generate psi features from positions and momenta.
 
         Args:
-            q_list (list[torch.Tensor]): Position trajectory list.
-            p_list (list[torch.Tensor]): Momentum trajectory list.
-            l_list (list[torch.Tensor]): Box size list per sample.
+        q_list (list[torch.Tensor]): Position trajectory list.
+        p_list (list[torch.Tensor]): Momentum trajectory list.
+        l_list (list[torch.Tensor]): Box size list per sample.
 
         Returns:
-            torch.Tensor: Psi features for p.
+        torch.Tensor: Psi features for p.
         """
         ret = self.psi_features(q_list,p_list,l_list)
         # print('psi feature shape',ret.shape) # 20250803: print shape

@@ -22,8 +22,8 @@ class PhiFeatures:
     """Compute grid-based phi features for position inputs.
 
     Args:
-        grid_object: Grid generator with `.ngrids` and `.dim`.
-        net (nn.Module): Pairwise network applied to squared distances.
+    grid_object: Grid generator with `.ngrids` and `.dim`.
+    net (nn.Module): Pairwise network applied to squared distances.
     """
 
     def __init__(self,grid_object,net): #b_list,a_list,net):
@@ -41,11 +41,11 @@ class PhiFeatures:
         """Compute phi features for a batch of particle positions.
 
         Args:
-            q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+        q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
 
         Returns:
-            torch.Tensor: Phi features of shape (nsamples, nparticles, ngrids * dim).
+        torch.Tensor: Phi features of shape (nsamples, nparticles, ngrids * dim).
         """
         # q_list shape [nsamples, nparticles, DIM = 2 or 3] # 20250807 now we only implement 3d system.
         # l_list shape [nsamples, nparticles, DIM = 2 or 3]
@@ -62,12 +62,12 @@ class PhiFeatures:
         """Create a mask to zero out self-interactions.
 
         Args:
-            nsamples (int): Number of samples.
-            nparticles (int): Number of particles.
-            dim (int): Spatial dimension.
+        nsamples (int): Number of samples.
+        nparticles (int): Number of particles.
+        dim (int): Spatial dimension.
 
         Returns:
-            torch.Tensor: Mask tensor of shape (nsamples, nparticles, nparticles, dim).
+        torch.Tensor: Mask tensor of shape (nsamples, nparticles, nparticles, dim).
         """
         # mask to mask out only centered at i-th particle
         # and then use to make zero of pair-wise which interact with itself
@@ -80,14 +80,14 @@ class PhiFeatures:
         """Generate flattened q-variables from grid points.
 
         Args:
-            q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
-            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
-            pwnet (nn.Module): Pairwise network.
-            ngrids (int): Number of grids per particle.
+        q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+        uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
+        pwnet (nn.Module): Pairwise network.
+        ngrids (int): Number of grids per particle.
 
         Returns:
-            torch.Tensor: Flattened q variables of shape (nsamples, nparticles, ngrids * dim).
+        torch.Tensor: Flattened q variables of shape (nsamples, nparticles, ngrids * dim).
         """
         # uli_list.shape is [nsamples, nparticles * ngrids, DIM=2 or 3] # 20250807 now we only implement 3d system.
         nsamples, nparticles, DIM = q_list.shape
@@ -102,14 +102,14 @@ class PhiFeatures:
         """Compute q variables at grid points using pairwise distances.
 
         Args:
-            q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
-            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
-            pwnet (nn.Module): Pairwise network.
-            ngrids (int): Number of grids per particle.
+        q_list (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+        uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
+        pwnet (nn.Module): Pairwise network.
+        ngrids (int): Number of grids per particle.
 
         Returns:
-            torch.Tensor: q variables of shape (nsamples, nparticles * ngrids, dim).
+        torch.Tensor: q variables of shape (nsamples, nparticles * ngrids, dim).
         """
         # uli_list.shape is [nsamples, nparticles * ngrids, DIM=2 or 3] # 20250807 now we only implement 3d system.
 
@@ -156,13 +156,13 @@ class PhiFeatures:
         """Compute pairwise squared distances with periodic boundaries.
 
         Args:
-            q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-            uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
-            l_list (torch.Tensor): Box sizes broadcastable to paired grid positions.
+        q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        uli_list (torch.Tensor): Grid centers of shape (nsamples, nparticles * ngrids, dim).
+        l_list (torch.Tensor): Box sizes broadcastable to paired grid positions.
 
         Returns:
-            tuple[torch.Tensor, torch.Tensor]: Pairwise displacement vectors and
-            squared distances.
+        tuple[torch.Tensor, torch.Tensor]: Pairwise displacement vectors and
+        squared distances.
         """
 
         # all list dimensionless

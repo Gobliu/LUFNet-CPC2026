@@ -29,12 +29,12 @@ class MC_parameters:
     def load_dict(json_filename):
         """load_dict function.
 
-Args:
-    json_filename (str): Path to MC config JSON.
+        Args:
+        json_filename (str): Path to MC config JSON.
 
-Returns:
-    None
-    """
+        Returns:
+        None
+        """
         with open(json_filename) as f:
             data = json.load(f)
 

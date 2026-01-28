@@ -5,7 +5,7 @@ def check_maindict(dict):
     """Validate main training dictionary constraints.
 
     Args:
-        dict (dict): Training config dictionary.
+    dict (dict): Training config dictionary.
     """
     tau_long = dict['tau_long']
     tau_traj_len_max = 64*tau_long # 64 steps times tau_long
@@ -30,7 +30,7 @@ def check_datadict(dict):
     """Validate dataset dictionary constraints.
 
     Args:
-        dict (dict): Data config dictionary with batch_size/train/val counts.
+    dict (dict): Data config dictionary with batch_size/train/val counts.
     """
     batch_size=dict['batch_size']
     assert (dict['train_pts'] >= batch_size), 'ERROR: batch_size request more than data points'
@@ -41,8 +41,8 @@ def check_traindict(dict,tau_long):
     """Validate training-loop dictionary constraints.
 
     Args:
-        dict (dict): Training loop config dictionary.
-        tau_long (float): Long time step size.
+    dict (dict): Training loop config dictionary.
+    tau_long (float): Long time step size.
     """
     nitr=dict['nitr']
     tau_short=dict['tau_short']
@@ -56,7 +56,7 @@ def check_testdict(maindict):
     """Validate evaluation dictionary constraints.
 
     Args:
-        maindict (dict): Evaluation config dictionary.
+    maindict (dict): Evaluation config dictionary.
     """
     tau_traj_len = maindict["tau_traj_len"]
 

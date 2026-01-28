@@ -5,10 +5,10 @@ class PWNet(nn.Module):
     """Pairwise MLP for distance-based interactions.
 
     Args:
-        input_dim (int): Input feature dimension.
-        output_dim (int): Output dimension.
-        nnodes (int): Hidden layer width.
-        init_weights (str): Weight initialization type ("tanh" or "relu").
+    input_dim (int): Input feature dimension.
+    output_dim (int): Output dimension.
+    nnodes (int): Hidden layer width.
+    init_weights (str): Weight initialization type ("tanh" or "relu").
     """
 
     # input is torch.cat(dq_sq, dp_sq)
@@ -77,10 +77,10 @@ class PWNet(nn.Module):
         """Compute a distance-based scaling factor.
 
         Args:
-            dq (torch.Tensor): Distance tensor.
+        dq (torch.Tensor): Distance tensor.
 
         Returns:
-            torch.Tensor: Scaling factor tensor.
+        torch.Tensor: Scaling factor tensor.
         """
         return 1.0/( dq**self.inv_max_expon + self.inv_max_force )
 
@@ -88,10 +88,10 @@ class PWNet(nn.Module):
         """Forward pass.
 
         Args:
-            x (torch.Tensor): Input distances of shape (batch, input_dim).
+        x (torch.Tensor): Input distances of shape (batch, input_dim).
 
         Returns:
-            torch.Tensor: Output tensor of shape (batch, output_dim).
+        torch.Tensor: Output tensor of shape (batch, output_dim).
         """
         dq=x
         # pwnet input:[nsamples * nparticles * nparticles * ngrids, 1]

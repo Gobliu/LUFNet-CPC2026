@@ -5,10 +5,10 @@ class mockPWnet(nn.Module):
     """Simple mock pairwise network for testing.
 
     Args:
-        input_dim (int): Input feature dimension (unused).
-        output_dim (int): Output dimension; must be 2.
-        nnodes (int): Hidden width (unused).
-        init_weights (str): Initialization type (unused).
+    input_dim (int): Input feature dimension (unused).
+    output_dim (int): Output dimension; must be 2.
+    nnodes (int): Hidden width (unused).
+    init_weights (str): Initialization type (unused).
     """
 
     # input is torch.cat(dq_sq, dp_sq)
@@ -23,10 +23,10 @@ class mockPWnet(nn.Module):
         """Compute a deterministic two-channel transform.
 
         Args:
-            x (torch.Tensor): Input tensor of shape (batch, 1).
+        x (torch.Tensor): Input tensor of shape (batch, 1).
 
         Returns:
-            torch.Tensor: Output tensor of shape (batch, 2).
+        torch.Tensor: Output tensor of shape (batch, 2).
         """
         s1 = x*x + 3.2
         s2 = x*(x+1) - .2

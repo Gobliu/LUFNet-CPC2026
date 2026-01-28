@@ -19,12 +19,12 @@ class LLUF_Lengavin(nn.Module):
         """Initialize the LLUF Langevin stepper.
 
         Args:
-            prepare_data: Helper to build feature inputs for q/p.
-            LLUF_update_p: Model to update p given features.
-            LLUF_update_q: Model to update q given features.
-            tau_long (float): Long time step size.
-            t_init (float): Initial scale for learned tau.
-            nnet (int): Number of learned tau values.
+        prepare_data: Helper to build feature inputs for q/p.
+        LLUF_update_p: Model to update p given features.
+        LLUF_update_q: Model to update q given features.
+        tau_long (float): Long time step size.
+        t_init (float): Initial scale for learned tau.
+        nnet (int): Number of learned tau values.
         """
         super().__init__()
 
@@ -47,17 +47,17 @@ class LLUF_Lengavin(nn.Module):
         """Advance one learned Langevin step.
 
         Args:
-            q_input_list (list[torch.Tensor]): Q feature history list.
-            p_input_list (list[torch.Tensor]): P feature history list.
-            q_pre (torch.Tensor): Previous q, shape [nsamples*nparticles, dim].
-            p_pre (torch.Tensor): Previous p, shape [nsamples*nparticles, dim].
-            l_list (torch.Tensor): Box sizes, shape [nsamples*nparticles, dim].
-            gamma (float): Friction coefficient.
-            temp (float): Temperature.
+        q_input_list (list[torch.Tensor]): Q feature history list.
+        p_input_list (list[torch.Tensor]): P feature history list.
+        q_pre (torch.Tensor): Previous q, shape [nsamples*nparticles, dim].
+        p_pre (torch.Tensor): Previous p, shape [nsamples*nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples*nparticles, dim].
+        gamma (float): Friction coefficient.
+        temp (float): Temperature.
 
         Returns:
-            Tuple[list[torch.Tensor], list[torch.Tensor], torch.Tensor, torch.Tensor, torch.Tensor]:
-            Updated (q_input_list, p_input_list, q_cur, p_cur, l_list).
+        Tuple[list[torch.Tensor], list[torch.Tensor], torch.Tensor, torch.Tensor, torch.Tensor]:
+        Updated (q_input_list, p_input_list, q_cur, p_cur, l_list).
         """
 
         # q_input_list [phi0,phi1,phi2,...]  -- over time point
@@ -88,15 +88,15 @@ class LLUF_Lengavin(nn.Module):
         """Apply one chained update step (single-step wrapper).
 
         Args:
-            q_input_list (list[torch.Tensor]): Q feature history list.
-            p_input_list (list[torch.Tensor]): P feature history list.
-            q_pre (torch.Tensor): Previous q, shape [nsamples*nparticles, dim].
-            p_pre (torch.Tensor): Previous p, shape [nsamples*nparticles, dim].
-            l_list (torch.Tensor): Box sizes, shape [nsamples*nparticles, dim].
+        q_input_list (list[torch.Tensor]): Q feature history list.
+        p_input_list (list[torch.Tensor]): P feature history list.
+        q_pre (torch.Tensor): Previous q, shape [nsamples*nparticles, dim].
+        p_pre (torch.Tensor): Previous p, shape [nsamples*nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples*nparticles, dim].
 
         Returns:
-            Tuple[list[torch.Tensor], list[torch.Tensor], torch.Tensor, torch.Tensor, torch.Tensor]:
-            Updated (q_input_list, p_input_list, q_cur, p_cur, l_list).
+        Tuple[list[torch.Tensor], list[torch.Tensor], torch.Tensor, torch.Tensor, torch.Tensor]:
+        Updated (q_input_list, p_input_list, q_cur, p_cur, l_list).
         """
 
         #assert(n_chain==1),'MD/velocity_verletx,py: error only n_chain = 1 is implemented '

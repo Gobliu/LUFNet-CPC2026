@@ -23,12 +23,12 @@ class checkpoint:
     def load_checkpoint(self, load_filename):
 
         ''' function to load saved models
-            remember to first initialize the models and optimizer, then load the dictionary
+        remember to first initialize the models and optimizer, then load the dictionary
 
         Parameters
         ----------
         load_filename : string
-                load saved models. if not, quit
+        load saved models. if not, quit
         '''
 
         full_name = load_filename

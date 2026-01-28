@@ -28,10 +28,10 @@ class mydevice(object):
         """Move tensor to the configured device.
 
         Args:
-            x (torch.Tensor): Tensor to move.
+        x (torch.Tensor): Tensor to move.
 
         Returns:
-            torch.Tensor: Tensor on the configured device.
+        torch.Tensor: Tensor on the configured device.
         """
         return x.to(mydevice.__instance.value)
 
@@ -52,7 +52,7 @@ def verify_device(specified_device):
     """Verify the active device matches a requested device string.
 
     Args:
-        specified_device (str): Device string (e.g., "cpu", "cuda").
+    specified_device (str): Device string (e.g., "cpu", "cuda").
     """
     target = torch.device(specified_device)
 

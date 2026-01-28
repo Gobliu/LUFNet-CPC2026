@@ -10,12 +10,12 @@ def Specific_heat(pe, npar,T):
     """Compute specific heat per particle from potential energy.
 
     Args:
-        pe (np.ndarray): Potential energy of shape (trajectory, nsamples).
-        npar (int): Number of particles.
-        T (float): Temperature.
+    pe (np.ndarray): Potential energy of shape (trajectory, nsamples).
+    npar (int): Number of particles.
+    T (float): Temperature.
 
     Returns:
-        float: Shifted specific heat at the final time point.
+    float: Shifted specific heat at the final time point.
     """
 
     # pe shape [trajectory,nsamples]

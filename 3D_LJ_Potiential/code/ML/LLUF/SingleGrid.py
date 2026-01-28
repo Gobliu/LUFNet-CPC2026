@@ -19,11 +19,11 @@ class SingleGrid:
         """Shift a single grid point to each particle position.
 
         Args:
-            q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
-            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
+        q (torch.Tensor): Positions of shape (nsamples, nparticles, dim).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, dim).
 
         Returns:
-            torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, dim).
+        torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, dim).
         """
 
         l_list = torch.unsqueeze(l_list, dim=2)

@@ -3,7 +3,7 @@ import torch
 def check_pbc():
     """check_pbc function.
 
-Returns:
+    Returns:
     None
     """
     nsamples = 1
@@ -53,11 +53,11 @@ Returns:
 def pbc(q_list,l_list):
     """pbc function.
 
-Args:
+    Args:
     q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
     l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Positions wrapped into the periodic box.
     """
     idx = torch.where(torch.abs(q_list)>0.5*l_list)
@@ -68,13 +68,13 @@ def delta_pbc(q_list, l_list):
 
     """delta_pbc function.
 
-Args:
+    Args:
     q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
     l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Pairwise displacement vectors under PBC,
-        shape [nsamples, nparticles, nparticles, dim].
+    shape [nsamples, nparticles, nparticles, dim].
     """
     dq_list = delta_state(q_list)
 
@@ -91,10 +91,10 @@ Returns:
 def delta_state(state_list):
     """delta_state function.
 
-Args:
+    Args:
     state_list (torch.Tensor): State tensor, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Pairwise state differences, shape [nsamples, nparticles, nparticles, dim].
     """
     state_len = state_list.shape[1]  # nparticle
@@ -115,7 +115,7 @@ Returns:
 def check_delta_pbc():
     """check_delta_pbc function.
 
-Returns:
+    Returns:
     None
     """
     nsamples = 10  #100

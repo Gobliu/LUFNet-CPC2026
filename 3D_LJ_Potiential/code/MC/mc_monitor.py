@@ -8,7 +8,7 @@ import matplotlib.ticker as ticker
 def split_mcsteps(u,npar,rho,temp, ylabel,start=0, mean=None, std=None):
     """split_mcsteps function.
 
-Args:
+    Args:
     u (Sequence[np.ndarray]): MC energy series list.
     npar (int): Number of particles.
     rho (str): Density label.
@@ -18,7 +18,7 @@ Args:
     mean: Optional mean values (unused).
     std: Optional std values (unused).
 
-Returns:
+    Returns:
     None
     """
     print(len(u))

@@ -13,11 +13,11 @@ def de(e,npar):
     """Compute mean energy drift per particle.
 
     Args:
-        e (torch.Tensor): Energy tensor of shape (trajectory, nsamples).
-        npar (int): Number of particles.
+    e (torch.Tensor): Energy tensor of shape (trajectory, nsamples).
+    npar (int): Number of particles.
 
     Returns:
-        tuple[np.ndarray, np.ndarray]: Mean drift and standard error arrays.
+    tuple[np.ndarray, np.ndarray]: Mean drift and standard error arrays.
     """
     #shape = [trajectory, nsamples]
     e = e.clone().detach().cpu().numpy()

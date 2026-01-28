@@ -6,7 +6,7 @@ class momentum_sampler:
     """Sample particle momenta consistent with a Boltzmann distribution.
 
     Args:
-        nsamples (int): Number of samples (trajectories) to generate.
+    nsamples (int): Number of samples (trajectories) to generate.
     """
 
     _obj_count = 0
@@ -15,7 +15,7 @@ class momentum_sampler:
         """Initialize sampler state.
 
         Args:
-            nsamples (int): Number of samples (trajectories) to generate.
+        nsamples (int): Number of samples (trajectories) to generate.
         """
 
         momentum_sampler._obj_count += 1
@@ -28,10 +28,10 @@ class momentum_sampler:
         """Generate momentum samples with Maxwell-Boltzmann statistics.
 
         Args:
-            mass (float): Particle mass used to scale momenta.
+        mass (float): Particle mass used to scale momenta.
 
         Returns:
-            torch.Tensor: Momentum samples, shape [nsamples, nparticle, DIM].
+        torch.Tensor: Momentum samples, shape [nsamples, nparticle, DIM].
         """
         # 'generate': 'maxwell'
         sigma = np.sqrt( MC_parameters.temperature )  # sqrt(kT/m)

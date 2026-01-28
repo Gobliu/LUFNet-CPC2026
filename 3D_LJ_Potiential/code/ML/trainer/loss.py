@@ -12,12 +12,12 @@ class loss:
     """Loss utilities for trajectory prediction with physics regularizers.
 
     Args:
-        poly_deg (int): Polynomial degree for shaping terms.
-        rthrsh (float): Distance threshold for repulsive energy.
-        ew (float): Energy loss weight.
-        repw (float): Repulsive regularization weight.
-        window_sliding (int): Window size for logging averages.
-        repw2 (float, optional): Secondary repulsive weight.
+    poly_deg (int): Polynomial degree for shaping terms.
+    rthrsh (float): Distance threshold for repulsive energy.
+    ew (float): Energy loss weight.
+    repw (float): Repulsive regularization weight.
+    window_sliding (int): Window size for logging averages.
+    repw2 (float, optional): Secondary repulsive weight.
     """
 
     #def __init__(self,potential_function,poly_deg,rthrsh,ew,repw,repw2=0.01):
@@ -59,17 +59,17 @@ class loss:
         """Compute total weighted loss and record metrics.
 
         Args:
-            q_list (torch.Tensor): Predicted positions.
-            p_list (torch.Tensor): Predicted momenta.
-            q_label (torch.Tensor): Target positions.
-            p_label (torch.Tensor): Target momenta.
-            q_init (torch.Tensor): Initial positions.
-            p_init (torch.Tensor): Initial momenta.
-            l_list (torch.Tensor): Box sizes.
-            weight (float): Scalar loss weight.
+        q_list (torch.Tensor): Predicted positions.
+        p_list (torch.Tensor): Predicted momenta.
+        q_label (torch.Tensor): Target positions.
+        p_label (torch.Tensor): Target momenta.
+        q_init (torch.Tensor): Initial positions.
+        p_init (torch.Tensor): Initial momenta.
+        l_list (torch.Tensor): Box sizes.
+        weight (float): Scalar loss weight.
 
         Returns:
-            torch.Tensor: Weighted total loss.
+        torch.Tensor: Weighted total loss.
         """
 
         self.nsamples = q_list.shape[0]

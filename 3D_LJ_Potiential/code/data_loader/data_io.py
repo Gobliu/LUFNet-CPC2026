@@ -34,14 +34,14 @@ class data_io:
         nparticle : int
         boxsize  : float
         qpl_trajectory : torch.tensor
-                  tensor of (q,p, boxsize) states
-                  two kinds of shapes:
-                  shape is [nsamples, (q, p, boxsize), trajectory length, nparticle, DIM]
-                  OR
-                  shape is [nsamples, (q, p, boxsize), 1, nparticle, DIM]
+        tensor of (q,p, boxsize) states
+        two kinds of shapes:
+        shape is [nsamples, (q, p, boxsize), trajectory length, nparticle, DIM]
+        OR
+        shape is [nsamples, (q, p, boxsize), 1, nparticle, DIM]
         tau_short tau_long : float or int
-                  default is negative values for MC output
-                  positive values for MD output
+        default is negative values for MC output
+        positive values for MD output
         returns
         save multiple components, organize them in a dictionary
         '''
@@ -106,12 +106,12 @@ class data_io:
         """Randomly shuffle trajectories along the sample axis.
 
         Args:
-            qpl_list (torch.Tensor): Trajectory tensor [nsamples, 3, traj, nparticles, dim].
-            tau_long (float): Long timestep (unused; kept for API).
-            tau_short (float): Short timestep (unused; kept for API).
+        qpl_list (torch.Tensor): Trajectory tensor [nsamples, 3, traj, nparticles, dim].
+        tau_long (float): Long timestep (unused; kept for API).
+        tau_short (float): Short timestep (unused; kept for API).
 
         Returns:
-            torch.Tensor: Shuffled trajectory tensor.
+        torch.Tensor: Shuffled trajectory tensor.
         """
         nsamples = qpl_list.shape[0]
         rand_idx = torch.randperm(nsamples)

@@ -5,8 +5,8 @@ class predicter:
     """Prediction helper for rolling out LLUF dynamics.
 
     Args:
-        prepare_data_obj (nn.Module): Data preparation module.
-        mlvv (nn.Module): LLUF integrator model.
+    prepare_data_obj (nn.Module): Data preparation module.
+    mlvv (nn.Module): LLUF integrator model.
     """
 
     def __init__(self, prepare_data_obj, mlvv):

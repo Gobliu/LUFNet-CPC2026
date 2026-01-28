@@ -13,12 +13,12 @@ def de(e,npar):
     """Compute mean and standard error of energy per particle over time.
 
     Args:
-        e (torch.Tensor): Energy trajectory, shape [trajectory, nsamples].
-        npar (int): Number of particles for normalization.
+    e (torch.Tensor): Energy trajectory, shape [trajectory, nsamples].
+    npar (int): Number of particles for normalization.
 
     Returns:
-        Tuple[np.ndarray, np.ndarray]: Mean energy per particle and standard error,
-        each of shape [trajectory].
+    Tuple[np.ndarray, np.ndarray]: Mean energy per particle and standard error,
+    each of shape [trajectory].
     """
     #shape = [trajectory, nsamples]
     e_shift = (e - e[0])/npar

@@ -7,11 +7,11 @@ def pbc(q_list,l_list):
     #print('pbc: q list shape ',q_list.shape)
     """pbc function.
 
-Args:
+    Args:
     q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
     l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Positions wrapped into the periodic box.
     """
     idx = torch.where(torch.abs(q_list)>0.5*l_list)
@@ -26,12 +26,12 @@ def single_particle_dq_pbc(q_list0,q_list1,l_list):
 
     """single_particle_dq_pbc function.
 
-Args:
+    Args:
     q_list0 (torch.Tensor): Positions A, shape [nsamples, nparticles, dim].
     q_list1 (torch.Tensor): Positions B, shape [nsamples, nparticles, dim].
     l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Minimum-image displacement vectors.
     """
     dq = q_list0-q_list1
@@ -45,13 +45,13 @@ def pairwise_dq_pbc(q_list, l_list):
 
     """pairwise_dq_pbc function.
 
-Args:
+    Args:
     q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
     l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Pairwise displacement vectors under PBC,
-        shape [nsamples, nparticles, nparticles, dim].
+    shape [nsamples, nparticles, nparticles, dim].
     """
     dq_list = _delta_state(q_list)
 
@@ -68,10 +68,10 @@ Returns:
 def _delta_state(state_list):
     """_delta_state function.
 
-Args:
+    Args:
     state_list (torch.Tensor): State tensor, shape [nsamples, nparticles, dim].
 
-Returns:
+    Returns:
     torch.Tensor: Pairwise state differences, shape [nsamples, nparticles, nparticles, dim].
     """
     state_len = state_list.shape[1]  # nparticle
@@ -92,7 +92,7 @@ Returns:
 def check_pairwise_dq_pbc():
     """check_pairwise_dq_pbc function.
 
-Returns:
+    Returns:
     None
     """
     nsamples = 10  #100
@@ -139,7 +139,7 @@ Returns:
 def check_pbc(): # for one particle
     """check_pbc function.
 
-Returns:
+    Returns:
     None
     """
     nsamples = 1
@@ -193,7 +193,7 @@ def check_single_particle_dq_pbc():
 
     """check_single_particle_dq_pbc function.
 
-Returns:
+    Returns:
     None
     """
     nsamples = 100  #100

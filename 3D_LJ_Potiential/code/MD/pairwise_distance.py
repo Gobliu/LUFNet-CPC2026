@@ -13,12 +13,12 @@ def pair_dq(q_list,l_list):
     """Compute pairwise distances between particles with PBC.
 
     Args:
-        q_list (torch.Tensor): Positions at a single time point,
-            shape [batch, nparticles, dim].
-        l_list (torch.Tensor): Box sizes, shape [batch, nparticles, dim].
+    q_list (torch.Tensor): Positions at a single time point,
+    shape [batch, nparticles, dim].
+    l_list (torch.Tensor): Box sizes, shape [batch, nparticles, dim].
 
     Returns:
-        torch.Tensor: Pairwise distances, shape [batch, nparticles, nparticles - 1].
+    torch.Tensor: Pairwise distances, shape [batch, nparticles, nparticles - 1].
     """
 
     nsamples, nparticle, dim = q_list.shape
@@ -37,10 +37,10 @@ def plot_pairs(dd,npar,rho, boxsize):
     """Plot pairwise distance distribution and KDE.
 
     Args:
-        dd (torch.Tensor): Pairwise distances, shape [batch, nparticles, nparticles - 1].
-        npar (int): Number of particles.
-        rho (str): Density label used for title/legend.
-        boxsize (torch.Tensor): Box size scalar tensor.
+    dd (torch.Tensor): Pairwise distances, shape [batch, nparticles, nparticles - 1].
+    npar (int): Number of particles.
+    rho (str): Density label used for title/legend.
+    boxsize (torch.Tensor): Box size scalar tensor.
     """
 
     # plot compare square pair-wise distance

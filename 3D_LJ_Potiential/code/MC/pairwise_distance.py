@@ -13,10 +13,10 @@ def pair_dq(q_list,l_list):
     '''
     # pair_dq(q_list):
 
-        use to compute the pair distance between particles
+    use to compute the pair distance between particles
 
-        :param q_list: with only time point , shape = [batch,nparticles,dim=2 or 3]
-        :return: square pair distance
+    :param q_list: with only time point , shape = [batch,nparticles,dim=2 or 3]
+    :return: square pair distance
     '''
 
     nsamples, nparticle, dim = q_list.shape
@@ -36,13 +36,13 @@ def plot_pairs(dd,npar,rho, boxsize):
     # plot compare square pair-wise distance
     """plot_pairs function.
 
-Args:
+    Args:
     dd (torch.Tensor): Pairwise distances, shape [ntemp, nsamples, nparticles, nparticles - 1].
     npar (int): Number of particles.
     rho (str): Density label.
     boxsize (torch.Tensor): Box size scalar tensor.
 
-Returns:
+    Returns:
     None
     """
     temp_list = [0.01, 0.1, 0.2, 0.4, 0.6]

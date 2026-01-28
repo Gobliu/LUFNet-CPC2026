@@ -28,7 +28,7 @@ class Langevin_MD:
         """Initialize the integrator.
 
         Args:
-            lennard_jones2d: Potential object providing derivative(q, l).
+        lennard_jones2d: Potential object providing derivative(q, l).
         """
         self.lennard_jones2d = lennard_jones2d
         print(' velocity verlet MD')
@@ -42,15 +42,15 @@ class Langevin_MD:
         """Advance one Langevin step.
 
         Args:
-            q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-            p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
-            l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
-            tau (float): Time step.
-            gamma (float): Friction coefficient.
-            temp (float): Temperature.
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        tau (float): Time step.
+        gamma (float): Friction coefficient.
+        temp (float): Temperature.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: Updated (q, p, l).
+        Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: Updated (q, p, l).
         """
 
         p_plus = thermostat(p_list, gamma, temp, tau)
@@ -72,17 +72,17 @@ class Langevin_MD:
         """Run multiple integration steps and collect trajectory snapshots.
 
         Args:
-            q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-            p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
-            l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
-            tau (float): Time step.
-            nitr (int): Number of integration steps.
-            append_strike (int): Interval for saving snapshots.
-            gamma (float): Friction coefficient.
-            temp (float): Temperature.
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        tau (float): Time step.
+        nitr (int): Number of integration steps.
+        append_strike (int): Interval for saving snapshots.
+        gamma (float): Friction coefficient.
+        temp (float): Temperature.
 
         Returns:
-            List[torch.Tensor]: List of stacked (q, p, l) snapshots.
+        List[torch.Tensor]: List of stacked (q, p, l) snapshots.
         """
 
         assert (nitr % append_strike == 0), 'incompatible strike and nitr'

@@ -5,11 +5,11 @@ class ReadoutStepMLPNet(nn.Module):
     """MLP readout head for per-particle updates.
 
     Args:
-        input_dim (int): Input feature dimension.
-        output_dim (int): Output dimension.
-        nnodes (int): Hidden layer width.
-        p (float): Dropout probability.
-        readout (bool, optional): If False, use identity mapping.
+    input_dim (int): Input feature dimension.
+    output_dim (int): Output dimension.
+    nnodes (int): Hidden layer width.
+    p (float): Dropout probability.
+    readout (bool, optional): If False, use identity mapping.
     """
 
     def __init__(self,input_dim,output_dim,nnodes,p,readout=True):
@@ -30,10 +30,10 @@ class ReadoutStepMLPNet(nn.Module):
         """Forward pass.
 
         Args:
-            x (torch.Tensor): Input tensor of shape (nsamples * nparticles, input_dim).
+        x (torch.Tensor): Input tensor of shape (nsamples * nparticles, input_dim).
 
         Returns:
-            torch.Tensor: Output tensor of shape (nsamples * nparticles, output_dim).
+        torch.Tensor: Output tensor of shape (nsamples * nparticles, output_dim).
         """
         # x shape [nsamples * nparticles, embed_dim]
         x = self.mlp(x)

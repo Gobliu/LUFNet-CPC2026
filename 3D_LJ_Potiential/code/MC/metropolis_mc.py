@@ -24,9 +24,9 @@ class metropolis_mc:
 
         """__init__ function.
 
-Args:
-    system_logs: Logger utility for timing/metadata.
-    """
+        Args:
+        system_logs: Logger utility for timing/metadata.
+        """
         metropolis_mc._obj_count += 1
         assert (metropolis_mc._obj_count == 1), type(self).__name__ + " has more than one object"
 
@@ -38,9 +38,9 @@ Args:
     def position_sampler(self):
         """position_sampler function.
 
-Returns:
-    torch.Tensor: Positions, shape [1, nparticle, DIM].
-    """
+        Returns:
+        torch.Tensor: Positions, shape [1, nparticle, DIM].
+        """
         if MC_parameters.DIM==2:
             return self.position_sampler2d()
         elif MC_parameters.DIM==3:
@@ -133,8 +133,8 @@ Returns:
         ------------
         curr_q : shape is [1, npaticle, DIM]
         dq     : float
-                At low temperature, mostly reject not update new energy from Boltzmann factor.
-                mulitiply displacement to increase acceptance rate
+        At low temperature, mostly reject not update new energy from Boltzmann factor.
+        mulitiply displacement to increase acceptance rate
 
         enn_q  : update potential energy
         eno_q  : old potential energy
@@ -189,7 +189,7 @@ Returns:
         AccRatio    : acceptance rate to update new energy ; shape is [nsamples]
         spec        : estimate specific heat from fluctuations of the potential energy; shape is [nsamples]
 
-       '''
+        '''
 
         niter = MC_parameters.iterations - MC_parameters.DISCARD
 

@@ -22,8 +22,8 @@ class trainer:
     """Training helper that builds networks and runs optimization steps.
 
     Args:
-        train_dict (dict): Training configuration.
-        loss_dict (dict): Loss configuration.
+    train_dict (dict): Training configuration.
+    loss_dict (dict): Loss configuration.
     """
 
     def __init__(self,train_dict,loss_dict):

@@ -5,7 +5,7 @@ class MultiParticles(nn.Module):
     """Apply a multi-particle network to per-particle embeddings.
 
     Args:
-        net (nn.Module): Network that consumes flattened embeddings and positions.
+    net (nn.Module): Network that consumes flattened embeddings and positions.
     """
 
     def __init__(self, net):
@@ -22,13 +22,13 @@ class MultiParticles(nn.Module):
         """Compute updated embeddings from particle features and positions.
 
         Args:
-            x (torch.Tensor): Per-particle embeddings of shape
-                (nsample, nparticle, embed_dim).
-            q_previous (torch.Tensor): Previous positions of shape
-                (nsample, nparticle, dim).
+        x (torch.Tensor): Per-particle embeddings of shape
+        (nsample, nparticle, embed_dim).
+        q_previous (torch.Tensor): Previous positions of shape
+        (nsample, nparticle, dim).
 
         Returns:
-            torch.Tensor: Updated embeddings of shape (nsample, nparticle, embed_dim).
+        torch.Tensor: Updated embeddings of shape (nsample, nparticle, embed_dim).
         """
         nsample, nparticle, embed_dim = x.shape
         x = x.reshape(nsample * nparticle, embed_dim)

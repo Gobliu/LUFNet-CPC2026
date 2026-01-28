@@ -4,7 +4,7 @@ class ReadoutStep(nn.Module):
     """Readout network applied to per-particle embeddings.
 
     Args:
-        net (nn.Module): Network that maps embeddings to outputs (e.g., updates).
+    net (nn.Module): Network that maps embeddings to outputs (e.g., updates).
     """
 
     def __init__(self, net):
@@ -20,10 +20,10 @@ class ReadoutStep(nn.Module):
         """Compute per-particle readout.
 
         Args:
-            x (torch.Tensor): Embeddings of shape (nsample, nparticle, embed_dim).
+        x (torch.Tensor): Embeddings of shape (nsample, nparticle, embed_dim).
 
         Returns:
-            torch.Tensor: Readout tensor of shape (nsample, nparticle, dim).
+        torch.Tensor: Readout tensor of shape (nsample, nparticle, dim).
         """
         nsample,nparticle,embed_dim = x.shape
         x = x.reshape(nsample*nparticle,embed_dim)

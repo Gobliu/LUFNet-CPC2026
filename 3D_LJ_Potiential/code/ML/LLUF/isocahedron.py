@@ -7,8 +7,8 @@ class isocahedron:
     """Generate icosahedron grid points around each particle center.
 
     Args:
-        b_list (list[float]): Radius list; only one layer is supported.
-        a_list (list[float] | None): Unused (kept for interface compatibility).
+    b_list (list[float]): Radius list; only one layer is supported.
+    a_list (list[float] | None): Unused (kept for interface compatibility).
     """
 
     # we don't use angle for 3D. in 2D hexgrid we use angle offset
@@ -45,11 +45,11 @@ class isocahedron:
         """Shift icosahedron vertices to each particle position.
 
         Args:
-            q (torch.Tensor): Positions of shape (nsamples, nparticles, 3).
-            l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, 3).
+        q (torch.Tensor): Positions of shape (nsamples, nparticles, 3).
+        l_list (torch.Tensor): Box sizes of shape (nsamples, nparticles, 3).
 
         Returns:
-            torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, 3).
+        torch.Tensor: Grid centers of shape (nsamples, nparticles * ngrids, 3).
         """
 
         l_list = torch.unsqueeze(l_list, dim=2)

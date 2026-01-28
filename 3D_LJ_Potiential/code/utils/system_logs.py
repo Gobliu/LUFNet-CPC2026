@@ -26,7 +26,7 @@ class system_logs(object):
         """Initialize system logging context.
 
         Args:
-            mydevice: Device singleton providing device_name().
+        mydevice: Device singleton providing device_name().
         """
         system_logs.__instance.pid = os.getpid()
         system_logs.__instance.uname = platform.uname()
@@ -49,7 +49,7 @@ class system_logs(object):
         """Print elapsed time since start and last checkpoint.
 
         Args:
-            t (int): Epoch or step index.
+        t (int): Epoch or step index.
         """
         now = datetime.now()
         system_logs.__instance.time_usage.append(now)
@@ -65,7 +65,7 @@ class system_logs(object):
         """Print a placeholder memory usage line.
 
         Args:
-            t (int): Epoch or step index.
+        t (int): Epoch or step index.
         """
         print(' at t=',t)
 

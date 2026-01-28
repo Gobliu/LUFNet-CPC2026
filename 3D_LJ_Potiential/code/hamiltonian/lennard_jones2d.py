@@ -11,10 +11,10 @@ class lennard_jones2d:
 
         """__init__ function.
 
-Args:
-    epsilon (float): Lennard-Jones epsilon parameter.
-    sigma (float): Lennard-Jones sigma parameter.
-    """
+        Args:
+        epsilon (float): Lennard-Jones epsilon parameter.
+        sigma (float): Lennard-Jones sigma parameter.
+        """
         self.epsilon = epsilon
         self.s06      = sigma**6
         self.s12     = sigma**12
@@ -24,13 +24,13 @@ Args:
 
         """derivative function.
 
-Args:
-    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        Args:
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
-    torch.Tensor: Force/gradient, shape [nsamples, nparticles, dim].
-    """
+        Returns:
+        torch.Tensor: Force/gradient, shape [nsamples, nparticles, dim].
+        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -55,13 +55,13 @@ Returns:
 
         """total_energy function.
 
-Args:
-    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        Args:
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
-    torch.Tensor: Total energy per sample, shape [nsamples].
-    """
+        Returns:
+        torch.Tensor: Total energy per sample, shape [nsamples].
+        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -81,12 +81,12 @@ Returns:
 
         """paired_energy function.
 
-Args:
-    r (torch.Tensor): Pairwise distances.
+        Args:
+        r (torch.Tensor): Pairwise distances.
 
-Returns:
-    torch.Tensor: Pairwise LJ energy values.
-    """
+        Returns:
+        torch.Tensor: Pairwise LJ energy values.
+        """
         pair06 = (self.s06  / (r**6  + self.eps))
         pair12 = (self.s12 / (r**12 + self.eps))
 
@@ -97,13 +97,13 @@ Returns:
 
         """paired_distance function.
 
-Args:
-    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        Args:
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
-    torch.Tensor: Pairwise distances, shape [nsamples, nparticles, nparticles - 1].
-    """
+        Returns:
+        torch.Tensor: Pairwise distances, shape [nsamples, nparticles, nparticles - 1].
+        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]
@@ -119,13 +119,13 @@ Returns:
 
         """repulsive_energy function.
 
-Args:
-    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
-    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        Args:
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
 
-Returns:
-    torch.Tensor: Max repulsive energy over samples.
-    """
+        Returns:
+        torch.Tensor: Max repulsive energy over samples.
+        """
         nsample = q_list.shape[0]
         nparticle = q_list.shape[1]
         dim = q_list.shape[2]

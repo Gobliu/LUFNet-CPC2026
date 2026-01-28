@@ -7,12 +7,12 @@ class MultiParticlesGraphNet(nn.Module):
     """Graph network for multi-particle embeddings.
 
     Args:
-        input_dim (int): Node feature dimension.
-        output_dim (int): Output feature dimension.
-        n_gnn_layers (int): Number of GNN layers.
-        act_fn (nn.Module, optional): Activation function.
-        attention (bool, optional): Whether to use edge attention.
-        residual (bool, optional): Whether to use residual connections.
+    input_dim (int): Node feature dimension.
+    output_dim (int): Output feature dimension.
+    n_gnn_layers (int): Number of GNN layers.
+    act_fn (nn.Module, optional): Activation function.
+    attention (bool, optional): Whether to use edge attention.
+    residual (bool, optional): Whether to use residual connections.
     """
 
     def __init__(self, input_dim, output_dim, n_gnn_layers, act_fn=nn.GELU(), attention=False, residual=False):
@@ -42,11 +42,11 @@ class MultiParticlesGraphNet(nn.Module):
         """Forward pass.
 
         Args:
-            h (torch.Tensor): Node features of shape (nsamples * nparticles, hidden_nf).
-            coord (torch.Tensor): Coordinates of shape (nsamples, nparticles, dim).
+        h (torch.Tensor): Node features of shape (nsamples * nparticles, hidden_nf).
+        coord (torch.Tensor): Coordinates of shape (nsamples, nparticles, dim).
 
         Returns:
-            torch.Tensor: Updated node features of shape (nsamples * nparticles, hidden_nf).
+        torch.Tensor: Updated node features of shape (nsamples * nparticles, hidden_nf).
         """
         # h.shape [nsample * nparticle, hidden_nf]
 
@@ -146,12 +146,12 @@ def unsorted_segment_sum(src, index, num_segments):      # numerically checked
     """Sum segments of `src` according to `index`.
 
     Args:
-        src (torch.Tensor): Source tensor of shape (n_edges, hidden_nf).
-        index (torch.Tensor): Segment indices of shape (n_edges,).
-        num_segments (int): Number of segments.
+    src (torch.Tensor): Source tensor of shape (n_edges, hidden_nf).
+    index (torch.Tensor): Segment indices of shape (n_edges,).
+    num_segments (int): Number of segments.
 
     Returns:
-        torch.Tensor: Aggregated tensor of shape (num_segments, hidden_nf).
+    torch.Tensor: Aggregated tensor of shape (num_segments, hidden_nf).
     """
     # src = edge_feat shape [nsample * nparticle * (nparticle - 1), hidden_nf] : the source tensor
     # index = row shape [nsample * nparticle * (nparticle -1)] : the indices of elements to scatter
@@ -175,10 +175,10 @@ def generate_fc_edges(n_nodes):
     """Generate fully connected edges without self-loops.
 
     Args:
-        n_nodes (int): Number of nodes.
+    n_nodes (int): Number of nodes.
 
     Returns:
-        list[list[int]]: Row/column index lists for edges.
+    list[list[int]]: Row/column index lists for edges.
     """
     rows, cols = [], []
     for i in range(n_nodes):
@@ -196,10 +196,10 @@ def generate_fc_edges_batch(coord):         # !!! no self loop
     """Generate fully connected edges for a batch of coordinates.
 
     Args:
-        coord (torch.Tensor): Coordinates of shape (batch_size, n_nodes, dim).
+    coord (torch.Tensor): Coordinates of shape (batch_size, n_nodes, dim).
 
     Returns:
-        tuple[list[torch.Tensor], torch.Tensor]: Edge indices and flattened coords.
+    tuple[list[torch.Tensor], torch.Tensor]: Edge indices and flattened coords.
     """
     # coord shape [batch_size, npar, dim]
     batch_size, n_nodes = coord.size(0), coord.size(1)

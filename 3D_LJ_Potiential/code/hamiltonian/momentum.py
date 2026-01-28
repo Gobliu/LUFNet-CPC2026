@@ -6,10 +6,10 @@ def total_momentum(p_list):
     """Compute total momentum per sample.
 
     Args:
-        p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+    p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
 
     Returns:
-        torch.Tensor: Total momentum, shape [nsamples, dim].
+    torch.Tensor: Total momentum, shape [nsamples, dim].
     """
     p_total = torch.sum(p_list,dim=1)
     return p_total

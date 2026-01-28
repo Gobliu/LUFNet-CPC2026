@@ -29,7 +29,7 @@ class force_stat:
         """clear function.
 
         Returns:
-            None
+        None
         """
         self.force_mean  = np.zeros(self.dim) # make zero
         self.force_stdd  = np.zeros(self.dim)
@@ -41,8 +41,8 @@ class force_stat:
         """print function.
 
         Args:
-            e (int): Step/epoch index.
-            label (str): Label for the stats line.
+        e (int): Step/epoch index.
+        label (str): Label for the stats line.
         """
         print(e, label, 'update function  cntr ' , self.cntr)
 
