@@ -1,6 +1,11 @@
 import torch
 
 def check_pbc():
+    """check_pbc function.
+
+Returns:
+    None
+    """
     nsamples = 1
     nparticles = 1
     dim = 2
@@ -46,12 +51,31 @@ def check_pbc():
   
 # ======================================================
 def pbc(q_list,l_list):
+    """pbc function.
+
+Args:
+    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+
+Returns:
+    torch.Tensor: Positions wrapped into the periodic box.
+    """
     idx = torch.where(torch.abs(q_list)>0.5*l_list)
     q_list[idx] = q_list[idx] - torch.round(q_list[idx]/l_list[idx])*l_list[idx]
     return q_list
 # ======================================================
 def delta_pbc(q_list, l_list):
 
+    """delta_pbc function.
+
+Args:
+    q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+    l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+
+Returns:
+    torch.Tensor: Pairwise displacement vectors under PBC,
+        shape [nsamples, nparticles, nparticles, dim].
+    """
     dq_list = delta_state(q_list)
 
     llist0 = torch.unsqueeze(l_list, dim=1)
@@ -65,6 +89,14 @@ def delta_pbc(q_list, l_list):
     return dq_list
 # ======================================================
 def delta_state(state_list):
+    """delta_state function.
+
+Args:
+    state_list (torch.Tensor): State tensor, shape [nsamples, nparticles, dim].
+
+Returns:
+    torch.Tensor: Pairwise state differences, shape [nsamples, nparticles, nparticles, dim].
+    """
     state_len = state_list.shape[1]  # nparticle
     state0 = torch.unsqueeze(state_list, dim=1)
     # shape is [nsamples, 1, nparticle, DIM]
@@ -81,6 +113,11 @@ def delta_state(state_list):
 # ======================================================
 
 def check_delta_pbc():
+    """check_delta_pbc function.
+
+Returns:
+    None
+    """
     nsamples = 10  #100
     nparticles = 2
     dim = 2
@@ -125,4 +162,3 @@ if __name__=='__main__':
     torch.manual_seed(23841)
     #check_pbc()
     check_delta_pbc()
-

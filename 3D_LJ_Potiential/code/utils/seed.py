@@ -6,6 +6,15 @@ import torch
 
 
 def set_global_seed(seed, deterministic=False):
+    """Seed Python, NumPy, and PyTorch RNGs.
+
+    Args:
+        seed (int | None): Seed value; if None, do nothing.
+        deterministic (bool): Enable deterministic algorithms where possible.
+
+    Returns:
+        int | None: The seed value if set, else None.
+    """
     if seed is None:
         return None
 
@@ -30,6 +39,11 @@ def set_global_seed(seed, deterministic=False):
 
 def seed_worker(_worker_id):
     # Use the base seed set by the DataLoader's generator for per-worker RNG.
+    """Seed NumPy and random for a DataLoader worker.
+
+    Args:
+        _worker_id (int): Worker index (unused).
+    """
     worker_seed = torch.initial_seed() % 2**32
     np.random.seed(worker_seed)
     random.seed(worker_seed)

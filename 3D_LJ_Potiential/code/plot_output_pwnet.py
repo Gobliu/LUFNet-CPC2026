@@ -10,6 +10,14 @@ import matplotlib.pyplot as plt
 
 def plot_pw_graph(r, features, ncols, fig_filename):
 
+        """Plot pairwise feature curves against distance.
+
+        Args:
+            r (np.ndarray): Distance samples for the x-axis.
+            features (np.ndarray): Feature values, shape [len(r), ncols].
+            ncols (int): Number of feature columns to plot.
+            fig_filename (str): Title string for the figure.
+        """
         fig, ax = plt.subplots(nrows=1, ncols=ncols, figsize=(10, 6))
         for i in range(ncols):
             ax[i].plot(r, features[:,i],'o',label='feature {}'.format(i+1))
@@ -32,6 +40,14 @@ def plot_pw_graph(r, features, ncols, fig_filename):
         #fig.savefig(fig_filename + '_par{}_{}.pdf'.format(i+1,k+1), bbox_inches='tight', dpi=200)
 
 def l_max_distance(l_list):
+    """Compute mean box size and max 2D diagonal distance.
+
+    Args:
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+
+    Returns:
+        Tuple[torch.Tensor, float]: Mean box size tensor and max distance.
+    """
     boxsize = torch.mean(l_list)
     L_h = boxsize / 2.
     q_max = math.sqrt(L_h * L_h + L_h * L_h)
@@ -139,6 +155,5 @@ if __name__ == '__main__':
     pair_wise = train.mlvv.prepare_data.net(r)
 
     plot_pw_graph(r.detach().cpu().numpy(), pair_wise.detach().cpu().numpy(), pw_output_dim, title)
-
 
 

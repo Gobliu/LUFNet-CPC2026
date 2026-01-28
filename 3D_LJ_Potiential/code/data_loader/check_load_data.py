@@ -6,8 +6,15 @@ import time
 
 class check_load_data:
 
+    """check_load_data class."""
     def __init__(self,qpl_list_init, qpl_list_final):
 
+        """__init__ function.
+
+Args:
+    qpl_list_init (torch.Tensor): Initial trajectory, shape [nsamples, 3, traj, nparticles, dim].
+    qpl_list_final (torch.Tensor): Final state, shape [nsamples, 3, nparticles, dim].
+    """
         self.q_list_init = qpl_list_init[:,0,:,:,:]
         # q_list_init.shape = [nsamples, trajectory, nparticles, DIM]
         self.p_list_init = qpl_list_init[:,1,:,:,:]
@@ -23,6 +30,14 @@ class check_load_data:
 
     # ==========================================================
     def check(self,tau_short):
+        """check function.
+
+Args:
+    tau_short (float): Short timestep for optional force check.
+
+Returns:
+    None
+    """
         self.check_distance()
         #self.check_force(tau_short)
         self.max_lj_energy()
@@ -33,6 +48,22 @@ class check_load_data:
     # ==========================================================
     def md_trajectory(self,q_init,p_init,q_final,p_final,l_list,label_idx,tau,nitr,append_strike):
 
+        """md_trajectory function.
+
+Args:
+    q_init (torch.Tensor): Initial positions over trajectory.
+    p_init (torch.Tensor): Initial momenta over trajectory.
+    q_final (torch.Tensor): Final positions.
+    p_final (torch.Tensor): Final momenta.
+    l_list (torch.Tensor): Box sizes.
+    label_idx (int): Label index to check against.
+    tau (float): Time step.
+    nitr (int): Number of integration steps.
+    append_strike (int): Snapshot stride.
+
+Returns:
+    bool: True if checks pass.
+    """
         _, nsamples, nparticles, DIM = q_init.shape
         q_init = q_init.clone().detach()
         p_init = p_init.clone().detach()
@@ -63,10 +94,20 @@ class check_load_data:
         return True # for external assert
 
     def max_lj_energy(self):
+        """max_lj_energy function.
+
+Returns:
+    None
+    """
         pe = self.potential_function.total_energy(self.q_list_final, self.l_list)
         print('maximum pe', torch.max(pe), 'element', torch.where(pe == torch.max(pe)))
 
     def check_distance(self):
+        """check_distance function.
+
+Returns:
+    None
+    """
         print('check min pairwise distance ...')
         dr = self.potential_function.paired_distance(self.q_list_final, self.l_list)
         print('min distance {:.3f}'.format(torch.min(dr)))
@@ -74,6 +115,14 @@ class check_load_data:
         #torch.save(dr, 'dr_s{}.pt'.format(dr.shape[0]))
 
     def check_force(self,tau):
+        """check_force function.
+
+Args:
+    tau (float): Time step.
+
+Returns:
+    None
+    """
         print('check force at initial... tau',tau)
         self.mdvv.one_step(self.q_list_init[:,0,:,:],self.p_list_init[:,0,:,:],self.l_list,tau)
         print('check force at final... tau', tau)
@@ -81,6 +130,11 @@ class check_load_data:
 
     def delta_total_energy(self):
 
+        """delta_total_energy function.
+
+Returns:
+    None
+    """
         e_init = []
         for traj in range(self.trajectory):
             pe_init = self.potential_function.total_energy(self.q_list_init[:,traj,:,:], self.l_list)
@@ -103,6 +157,11 @@ class check_load_data:
 
     def delta_momentum(self):
 
+        """delta_momentum function.
+
+Returns:
+    None
+    """
         p_init = torch.sum(self.p_list_init, dim=2) # [nsamples, trajectory, DIM]
         p_final = torch.sum(self.p_list_final, dim=1) # [nsamples, DIM]
         p_all = torch.cat((p_init, torch.unsqueeze(p_final,dim=1)),dim=1) # [nsamples, trajectory, DIM]
@@ -118,6 +177,16 @@ class check_load_data:
     def check_boxsize(self, q_init,p_init,l_init):
 
         # check that l_init is of square box
+        """check_boxsize function.
+
+Args:
+    q_init (torch.Tensor): Positions over trajectory.
+    p_init (torch.Tensor): Momenta over trajectory.
+    l_init (torch.Tensor): Box sizes.
+
+Returns:
+    None
+        """
         lx = l_init[:,:,0]
         ly = l_init[:,:,1]
         lxly = torch.eq(lx,ly)
@@ -130,4 +199,3 @@ class check_load_data:
         p_max = 1e3
         for traj in range(self.trajectory):
             assert torch.any(torch.abs(p_init[:,traj,:,:])<p_max),'momentum out of range'
-

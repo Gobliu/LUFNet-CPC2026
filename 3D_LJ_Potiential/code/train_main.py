@@ -12,6 +12,7 @@ from data_loader.data_loader import my_data
 
 def main():
 
+    """Run training using parameters from main_config.yaml."""
     force_cuda = args.get('force_cuda', True)
     _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)

@@ -13,14 +13,21 @@ from datetime import datetime
 
 class system_logs(object):
 
+    """system_logs class."""
     __instance = None
 
     def __new__(cls, *args, **kwargs):
+        """Create or return the singleton instance."""
         if not system_logs.__instance:
             system_logs.__instance = object.__new__(cls)
         return system_logs.__instance
 
     def __init__(self,mydevice):
+        """Initialize system logging context.
+
+        Args:
+            mydevice: Device singleton providing device_name().
+        """
         system_logs.__instance.pid = os.getpid()
         system_logs.__instance.uname = platform.uname()
         system_logs.__instance.mydevice = mydevice
@@ -31,6 +38,7 @@ class system_logs(object):
 
     @staticmethod
     def print_start_logs():
+        """Print pid, host info, start time, and device name."""
         print('pid : ', system_logs.__instance.pid)
         print('uname : ', system_logs.__instance.uname)
         print('code run start time ',system_logs.__instance.start_time.strftime("%Y%m%d, %H:%M:%S"))
@@ -38,6 +46,11 @@ class system_logs(object):
 
     @staticmethod
     def record_time_usage(t):
+        """Print elapsed time since start and last checkpoint.
+
+        Args:
+            t (int): Epoch or step index.
+        """
         now = datetime.now()
         system_logs.__instance.time_usage.append(now)
         run_duration = now - system_logs.__instance.start_time
@@ -49,14 +62,21 @@ class system_logs(object):
         # mem_use = psutil.virtual_memory()[2]
         # system_logs.__instance.memory_usage.append(mem_use)
         # print('memory usage :',mem_use,' at t=',t)
+        """Print a placeholder memory usage line.
+
+        Args:
+            t (int): Epoch or step index.
+        """
         print(' at t=',t)
 
     @staticmethod
     def argv1():
+        """Return the first CLI argument."""
         return sys.argv[1]
 
     @staticmethod
     def print_end_logs():
+        """Print end time and total run duration."""
         now = datetime.now()
 
         print('end date/time every checkpoint:', now.strftime("%Y%m%d, %H:%M:%S"))
@@ -66,5 +86,4 @@ class system_logs(object):
         # mean_memory = np.mean(system_logs.__instance.memory_usage)
         # std_memory = np.std(system_logs.__instance.memory_usage)
         # print('mean mem : ', mean_memory, ', std mem : ', std_memory )
-
 

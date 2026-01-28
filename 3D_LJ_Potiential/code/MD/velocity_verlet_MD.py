@@ -1,3 +1,8 @@
+"""MD module: velocity-Verlet Langevin integrator and trajectory driver.
+
+Notes:
+- Part of 3D Lennard-Jones MD workflow.
+"""
 import sys
 sys.path.append( '../')
 
@@ -17,8 +22,14 @@ import time
 import torch
 
 class Langevin_MD:
+    """Langevin dynamics integrator using velocity-Verlet updates."""
 
     def __init__(self,lennard_jones2d):
+        """Initialize the integrator.
+
+        Args:
+            lennard_jones2d: Potential object providing derivative(q, l).
+        """
         self.lennard_jones2d = lennard_jones2d
         print(' velocity verlet MD')
         #self.f_stat = force()
@@ -28,6 +39,19 @@ class Langevin_MD:
 
 
     def one_step(self,q_list,p_list,l_list,tau, gamma, temp):
+        """Advance one Langevin step.
+
+        Args:
+            q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+            p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+            l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+            tau (float): Time step.
+            gamma (float): Friction coefficient.
+            temp (float): Temperature.
+
+        Returns:
+            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: Updated (q, p, l).
+        """
 
         p_plus = thermostat(p_list, gamma, temp, tau)
         p_list_2 = p_plus - 0.5*tau*self.lennard_jones2d.derivative(q_list,l_list)
@@ -45,6 +69,21 @@ class Langevin_MD:
 
 
     def nsteps(self,q_list,p_list,l_list,tau,nitr,append_strike, gamma, temp):
+        """Run multiple integration steps and collect trajectory snapshots.
+
+        Args:
+            q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+            p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+            l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+            tau (float): Time step.
+            nitr (int): Number of integration steps.
+            append_strike (int): Interval for saving snapshots.
+            gamma (float): Friction coefficient.
+            temp (float): Temperature.
+
+        Returns:
+            List[torch.Tensor]: List of stacked (q, p, l) snapshots.
+        """
 
         assert (nitr % append_strike == 0), 'incompatible strike and nitr'
 

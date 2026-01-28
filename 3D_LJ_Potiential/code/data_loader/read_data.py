@@ -7,6 +7,16 @@ from data_loader.data_io import data_io
 # ====================================================== 
 def read_data(filename,nchain):
 
+    """Read trajectory data and extract input/label pairs.
+
+    Args:
+        filename (str): Path to saved trajectory file.
+        nchain (int): Chain length for label selection (1, 4, 8, 16).
+
+    Returns:
+        Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+        (q_list, p_list, l_list, q_label, p_label).
+    """
     qpl_list,tau_long,tau_short = data_io.read_trajectory_qpl(filename)
 
     # shape of qp_list is [nsamples, (q, p,l), trajectory length, nparticle, DIM = 2 or 3]
@@ -41,6 +51,19 @@ def read_data(filename,nchain):
 # ====================================================== 
 def ran_shuffle(q_list,p_list,l_list,q_label,p_label):
 
+    """Randomly shuffle samples across all tensors.
+
+    Args:
+        q_list (torch.Tensor): Positions, shape [nsamples, nparticles, dim].
+        p_list (torch.Tensor): Momenta, shape [nsamples, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [nsamples, nparticles, dim].
+        q_label (torch.Tensor): Position labels, shape [nsamples, nparticles, dim].
+        p_label (torch.Tensor): Momentum labels, shape [nsamples, nparticles, dim].
+
+    Returns:
+        Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+        Shuffled (q_list, p_list, l_list, q_label, p_label).
+    """
     nsamples = q_list.shape[0]
     perm_indx = torch.randperm(nsamples)
 
@@ -77,6 +100,11 @@ def ran_shuffle(q_list,p_list,l_list,q_label,p_label):
 # 
 # ====================================================== 
 def make_tree(node):
+    """Render an autograd graph for debugging.
+
+    Args:
+        node: Autograd graph node.
+    """
     dot = make_dot(node)
     dot.render('qlist')
     
@@ -91,5 +119,4 @@ if __name__=='__main__':
     
     z = q_list*p_list*q_label*p_label
     make_tree(z)
-
 

@@ -63,6 +63,7 @@ def compare_checkpoints(ckpt_a: str, ckpt_b: str, rtol: float = 0.0, atol: float
 
 
 def main() -> None:
+    """Run CLI checkpoint comparison and print a summary."""
     parser = argparse.ArgumentParser(description="Compare baseline vs refactor checkpoints.")
     parser.add_argument("--ckpt-a", required=True, help="baseline checkpoint (.pth)")
     parser.add_argument("--ckpt-b", required=True, help="new checkpoint (.pth)")

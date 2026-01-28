@@ -2,6 +2,11 @@ import numpy as np
 
 def check_maindict(dict):
     # 20250809
+    """Validate main training dictionary constraints.
+
+    Args:
+        dict (dict): Training config dictionary.
+    """
     tau_long = dict['tau_long']
     tau_traj_len_max = 64*tau_long # 64 steps times tau_long
     tau_traj_len=dict['tau_traj_len']
@@ -22,12 +27,23 @@ def check_maindict(dict):
 
 def check_datadict(dict):
 
+    """Validate dataset dictionary constraints.
+
+    Args:
+        dict (dict): Data config dictionary with batch_size/train/val counts.
+    """
     batch_size=dict['batch_size']
     assert (dict['train_pts'] >= batch_size), 'ERROR: batch_size request more than data points'
     assert (dict['vald_pts'] >= batch_size), 'ERROR: batch_size request more than data points'
 
 def check_traindict(dict,tau_long):
 
+    """Validate training-loop dictionary constraints.
+
+    Args:
+        dict (dict): Training loop config dictionary.
+        tau_long (float): Long time step size.
+    """
     nitr=dict['nitr']
     tau_short=dict['tau_short']
     append_strike=dict['append_strike']
@@ -37,6 +53,11 @@ def check_traindict(dict,tau_long):
 
 def check_testdict(maindict):
 
+    """Validate evaluation dictionary constraints.
+
+    Args:
+        maindict (dict): Evaluation config dictionary.
+    """
     tau_traj_len = maindict["tau_traj_len"]
 
     # traj_len_list = maindict["traj_len"]

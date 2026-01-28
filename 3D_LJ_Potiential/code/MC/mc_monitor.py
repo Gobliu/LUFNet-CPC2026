@@ -6,6 +6,21 @@ import glob
 import matplotlib.ticker as ticker
 
 def split_mcsteps(u,npar,rho,temp, ylabel,start=0, mean=None, std=None):
+    """split_mcsteps function.
+
+Args:
+    u (Sequence[np.ndarray]): MC energy series list.
+    npar (int): Number of particles.
+    rho (str): Density label.
+    temp (str): Temperature label.
+    ylabel (str): Y-axis label.
+    start (int): Starting index for plotting.
+    mean: Optional mean values (unused).
+    std: Optional std values (unused).
+
+Returns:
+    None
+    """
     print(len(u))
 
     rows, cols = 5, 5 # 5, 5

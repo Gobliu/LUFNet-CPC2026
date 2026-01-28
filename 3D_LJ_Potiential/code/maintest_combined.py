@@ -16,6 +16,7 @@ import yaml
 def main():
     # python maintest_combined.py 256 >  log/n256rho0.85T0.9LUF065_tau0.05
 
+    """Run evaluation/inference using maintest_config.yaml."""
     force_cuda = args.get('force_cuda', True)
     _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)
@@ -205,4 +206,3 @@ if __name__=='__main__':
     with open(yaml_config_path, 'r') as f:
         args = yaml.load(f, Loader=yaml.Loader)
     main()
-

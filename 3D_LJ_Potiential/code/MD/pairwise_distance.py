@@ -10,14 +10,16 @@ import numpy as np
 from scipy.stats import gaussian_kde
 
 def pair_dq(q_list,l_list):
-    '''
-    # pair_dq(q_list):
+    """Compute pairwise distances between particles with PBC.
 
-        use to compute the pair distance between particles
+    Args:
+        q_list (torch.Tensor): Positions at a single time point,
+            shape [batch, nparticles, dim].
+        l_list (torch.Tensor): Box sizes, shape [batch, nparticles, dim].
 
-        :param q_list: with only time point , shape = [batch,nparticles,dim=2 or 3]
-        :return: square pair distance
-    '''
+    Returns:
+        torch.Tensor: Pairwise distances, shape [batch, nparticles, nparticles - 1].
+    """
 
     nsamples, nparticle, dim = q_list.shape
 
@@ -32,6 +34,14 @@ def pair_dq(q_list,l_list):
     return dd
 
 def plot_pairs(dd,npar,rho, boxsize):
+    """Plot pairwise distance distribution and KDE.
+
+    Args:
+        dd (torch.Tensor): Pairwise distances, shape [batch, nparticles, nparticles - 1].
+        npar (int): Number of particles.
+        rho (str): Density label used for title/legend.
+        boxsize (torch.Tensor): Box size scalar tensor.
+    """
 
     # plot compare square pair-wise distance
     temp_list = [0.9]
@@ -77,4 +87,3 @@ if __name__ == '__main__':
     dd_list = torch.stack(dd_list)
 
     plot_pairs(dd_list,npar,rho,torch.mean(boxsize))
-

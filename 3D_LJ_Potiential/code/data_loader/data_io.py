@@ -1,6 +1,7 @@
 import torch
 
 class data_io:
+    """I/O helpers for trajectory and metadata files."""
 
     # standardize shape of qpl_list is [nsamples, (q, p, boxsize), trajectory length, nparticle, DIM]
     # standardize shape of q_list  is [nsamples,         trajectory length, nparticle, DIM]
@@ -102,6 +103,16 @@ class data_io:
     @staticmethod
     def random_shuffle(qpl_list,tau_long,tau_short):
 
+        """Randomly shuffle trajectories along the sample axis.
+
+        Args:
+            qpl_list (torch.Tensor): Trajectory tensor [nsamples, 3, traj, nparticles, dim].
+            tau_long (float): Long timestep (unused; kept for API).
+            tau_short (float): Short timestep (unused; kept for API).
+
+        Returns:
+            torch.Tensor: Shuffled trajectory tensor.
+        """
         nsamples = qpl_list.shape[0]
         rand_idx = torch.randperm(nsamples)
         qpl_shuffle = qpl_list[rand_idx]
@@ -128,6 +139,5 @@ if __name__=='__main__':
     qpl_sh = data_io.random_shuffle(qpl_list,tau_long,tau_short)
 
     print('qpl_sh ',qpl_sh[:2])
-
 
 

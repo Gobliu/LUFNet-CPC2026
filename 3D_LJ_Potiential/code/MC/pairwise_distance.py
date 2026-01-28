@@ -34,6 +34,17 @@ def pair_dq(q_list,l_list):
 def plot_pairs(dd,npar,rho, boxsize):
 
     # plot compare square pair-wise distance
+    """plot_pairs function.
+
+Args:
+    dd (torch.Tensor): Pairwise distances, shape [ntemp, nsamples, nparticles, nparticles - 1].
+    npar (int): Number of particles.
+    rho (str): Density label.
+    boxsize (torch.Tensor): Box size scalar tensor.
+
+Returns:
+    None
+    """
     temp_list = [0.01, 0.1, 0.2, 0.4, 0.6]
     fig, axs = plt.subplots(1, dd.shape[0], figsize=(16, 4))
     print(boxsize.item())
@@ -79,4 +90,3 @@ if __name__ == '__main__':
     dd_list = torch.stack(dd_list)
 
     plot_pairs(dd_list,npar,rho,torch.mean(boxsize))
-

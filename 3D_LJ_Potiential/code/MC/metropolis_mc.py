@@ -22,6 +22,11 @@ class metropolis_mc:
 
     def __init__(self,system_logs):
 
+        """__init__ function.
+
+Args:
+    system_logs: Logger utility for timing/metadata.
+    """
         metropolis_mc._obj_count += 1
         assert (metropolis_mc._obj_count == 1), type(self).__name__ + " has more than one object"
 
@@ -31,6 +36,11 @@ class metropolis_mc:
         print('metropolis_mc initialized : boxsize ',self.boxsize, flush=True)
 
     def position_sampler(self):
+        """position_sampler function.
+
+Returns:
+    torch.Tensor: Positions, shape [1, nparticle, DIM].
+    """
         if MC_parameters.DIM==2:
             return self.position_sampler2d()
         elif MC_parameters.DIM==3:

@@ -13,6 +13,7 @@
 ## Build, Test, and Development Commands
 - `python train_main.py`: run training; uses parameters loaded from `main_config.yaml` (edit this for experiments).
 - `python maintest_combined.py`: run evaluation/inference using checkpoints referenced in `maintest_config.yaml`.
+- `python compare_with_baseline.py`: run one training pass and compare epoch-20 checkpoint vs baseline.
 - `bash run.sh`: batch post-processing of logs in `results/` and summary generation via `show_results.sh`.
 - `bash show_results.sh <logfile>`: summarize a single log file.
 - `python plot_output_pwnet.py` or `python plot_tau.py`: optional plotting utilities.

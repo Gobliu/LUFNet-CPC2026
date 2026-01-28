@@ -27,6 +27,17 @@ def mcsteps(u,start_step, npar,rho,temp, ylabel, mean=None, std=None):
 
 
 def dist(e, npar,rho, saved_dir):
+    """dist function.
+
+Args:
+    e (torch.Tensor): Energy samples, shape [ntemp, nsamples, nsteps].
+    npar (int): Number of particles.
+    rho (str): Density label.
+    saved_dir (str): Output prefix (unused; plots are shown).
+
+Returns:
+    None
+    """
     xmin=torch.min(e)
     xmax=torch.max(e)
 

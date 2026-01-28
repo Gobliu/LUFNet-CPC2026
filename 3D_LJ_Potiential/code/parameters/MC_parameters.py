@@ -3,6 +3,7 @@ import math
 
 class MC_parameters:
 
+    """MC_parameters class."""
     nparticle = None
     temperature = None
 
@@ -26,6 +27,14 @@ class MC_parameters:
 
     @staticmethod
     def load_dict(json_filename):
+        """load_dict function.
+
+Args:
+    json_filename (str): Path to MC config JSON.
+
+Returns:
+    None
+    """
         with open(json_filename) as f:
             data = json.load(f)
 

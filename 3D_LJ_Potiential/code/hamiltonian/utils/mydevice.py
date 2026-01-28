@@ -8,34 +8,52 @@ import torch
 
 class mydevice(object):
 
+    """mydevice class."""
     __instance = None
 
     def __new__(cls, *args, **kwargs):
+        """Create or return the singleton instance."""
         if not mydevice.__instance:
             mydevice.__instance = object.__new__(cls)
         return mydevice.__instance
 
     def __init__(self):
+        """Initialize device selection."""
         use_cuda = torch.cuda.is_available()
         mydevice.__instance.value = torch.device("cuda" if use_cuda else "cpu")
         print('device singleton constructed for ',mydevice.__instance.value)
         
     @staticmethod
     def load(x):
+        """Move tensor to the configured device.
+
+        Args:
+            x (torch.Tensor): Tensor to move.
+
+        Returns:
+            torch.Tensor: Tensor on the configured device.
+        """
         return x.to(mydevice.__instance.value)
 
     @staticmethod
     def get():
+        """Get the configured torch.device."""
         return mydevice.__instance.value
     
     @staticmethod
     def device_name():
+        """Print the configured device."""
         print('device singleton constructed for ',mydevice.__instance.value)
 # ================================================
 
 
 def verify_device(specified_device):
 
+    """Verify the active device matches a requested device string.
+
+    Args:
+        specified_device (str): Device string (e.g., "cpu", "cuda").
+    """
     target = torch.device(specified_device)
 
     if mydevice.get() != target: 
@@ -44,5 +62,4 @@ def verify_device(specified_device):
     # this is to test if loading to GPU will throw an error
     a = torch.tensor([1])
     mydevice.load(a)
-
 

@@ -2,7 +2,9 @@ import numpy as np
 
 class force_stat:
 
+    """force_stat class."""
     def __init__(self):
+        """__init__ function."""
         self.dim = 2
         self.clear()
 
@@ -24,6 +26,11 @@ class force_stat:
         self.cntr += 1
 
     def clear(self):
+        """clear function.
+
+        Returns:
+            None
+        """
         self.force_mean  = np.zeros(self.dim) # make zero
         self.force_stdd  = np.zeros(self.dim)
         self.force_min   =  1e10*np.ones(self.dim)
@@ -31,6 +38,12 @@ class force_stat:
         self.cntr = 0
 
     def print(self, e, label):
+        """print function.
+
+        Args:
+            e (int): Step/epoch index.
+            label (str): Label for the stats line.
+        """
         print(e, label, 'update function  cntr ' , self.cntr)
 
         if self.cntr > 0:
@@ -47,5 +60,4 @@ class force_stat:
                   .format(mean_y, stdd_y, self.force_min[1], self.force_max[1]))
         else:
             print(e,label,' force_stat.py, no stat to print')
-
 

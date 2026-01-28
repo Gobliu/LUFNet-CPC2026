@@ -19,6 +19,7 @@ def find_epoch_ckpts(root: Path, epoch: int, exclude: Path | None = None) -> set
 
 
 def main() -> int:
+    """Run training once and compare epoch-20 checkpoint against the baseline."""
     parser = argparse.ArgumentParser(
         description="Train once, then compare epoch checkpoint against baseline."
     )

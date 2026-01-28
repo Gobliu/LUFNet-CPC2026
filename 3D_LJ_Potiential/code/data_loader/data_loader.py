@@ -41,10 +41,25 @@ class torch_dataset(Dataset):
 
 # ===========================================================
 class my_data:
+    """my_data class."""
     def __init__(self,train_filename,val_filename,test_filename,tau_long, window_sliding, saved_pair_steps,
                       tau_traj_len,train_pts=0,val_pts=0,test_pts=0): # 20250809
 
         # 20250809 to adjust tau_long
+        """__init__ function.
+
+Args:
+    train_filename (str): Training dataset path.
+    val_filename (str): Validation dataset path.
+    test_filename (str): Test dataset path.
+    tau_long (float): Long time step size.
+    window_sliding (int): Window length for integration.
+    saved_pair_steps (int): Pairing stride in saved trajectory.
+    tau_traj_len (float): Trajectory length in time units.
+    train_pts (int): Optional subsample size for training.
+    val_pts (int): Optional subsample size for validation.
+    test_pts (int): Optional subsample size for testing.
+    """
         traj_len_index = round(tau_traj_len/tau_long) * saved_pair_steps
         label_index = int((traj_len_index - saved_pair_steps) + window_sliding * saved_pair_steps)
         print('tau_traj_len',tau_traj_len, 'tau_long', tau_long, 'saved_pair_steps', saved_pair_steps)
@@ -84,6 +99,22 @@ class my_data:
 
     # ===========================================================
     def check_md_trajectory(self,q_init,p_init,q_final,p_final,l_list,neval,tau,nitr,append_strike):
+        """check_md_trajectory function.
+
+Args:
+    q_init (torch.Tensor): Initial positions over trajectory.
+    p_init (torch.Tensor): Initial momenta over trajectory.
+    q_final (torch.Tensor): Final positions.
+    p_final (torch.Tensor): Final momenta.
+    l_list (torch.Tensor): Box sizes.
+    neval (int): Label index to compare.
+    tau (float): Time step.
+    nitr (int): Number of steps.
+    append_strike (int): Snapshot stride.
+
+Returns:
+    None
+    """
         assert(self.train_set.check_load.md_trajectory(q_init,p_init,q_final,p_final,
                             l_list,neval,tau,nitr,append_strike )),'data_loader.py:82 error'
     # ===========================================================
@@ -94,6 +125,15 @@ class my_data:
         # perform subsampling of data when specified
         # this is important when we need to perform quick debugging with
         # few data points
+        """sample function.
+
+Args:
+    data_set (torch_dataset): Dataset to subsample.
+    num_pts (int): Number of samples to keep.
+
+Returns:
+    torch_dataset: Subsampled dataset.
+    """
         if num_pts > 0:
             if num_pts > len(data_set):
                 print("error: request more than CIFAR10 set")
@@ -108,8 +148,16 @@ class my_data:
 # ===========================================================
 class data_loader:
     #  data loader upon this custom dataset
+    """data_loader class."""
     def __init__(self, data_set, batch_size, seed=None):
 
+        """__init__ function.
+
+Args:
+    data_set (my_data): Dataset wrapper with train/val/test splits.
+    batch_size (int): Batch size for loaders.
+    seed (int | None): Seed for deterministic shuffling.
+    """
         self.data_set = data_set
         self.batch_size = batch_size
         self.seed = seed
@@ -137,5 +185,3 @@ class data_loader:
         self.test_loader  = torch.utils.data.DataLoader(self.data_set.test_set,
                             batch_size=batch_size, shuffle=False,
                             generator=generator, worker_init_fn=worker_init_fn, **kwargs)
-
-
