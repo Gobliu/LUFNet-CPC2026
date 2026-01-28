@@ -26,54 +26,25 @@ If you enable deterministic algorithms in PyTorch and see a CuBLAS warning, set 
 CUBLAS_WORKSPACE_CONFIG=:4096:8 python train_main.py
 ```
 
-To save a baseline log (stdout) for later comparison:
-
-```bash
-CUBLAS_WORKSPACE_CONFIG=:4096:8 PYTHONUNBUFFERED=1 python -u train_main.py | tee results/baseline_run/baseline.log
-```
-
-To compare later, you can save a new log and run the comparer:
-
-```bash
-CUBLAS_WORKSPACE_CONFIG=:4096:8 PYTHONUNBUFFERED=1 python -u train_main.py | tee /tmp/new_run.log
-python compare_runs.py --log-a results/baseline_run/baseline.log --log-b /tmp/new_run.log
-```
-
 Checkpoint comparison (recommended if you might change stdout formatting later):
 
 ```bash
 python compare_runs.py --ckpt-a /path/to/baseline.pth --ckpt-b /path/to/new.pth
 ```
+`compare_runs.py` only supports checkpoint comparison via `--ckpt-a` and `--ckpt-b`.
 
 For convenience, `code/compare_with_baseline.py` will run training once, then compare the checkpoint
 at a fixed epoch (default 20) in `results/baseline_run/` with the new run's checkpoint under
-`results/` (excluding the baseline folder).
+`results/` (excluding the baseline folder) using `compare_runs.py`.
 From `3D_LJ_Potiential/code`:
 
 ```bash
 python compare_with_baseline.py
 ```
 
-Optional overrides:
-
-```bash
-python compare_with_baseline.py --epoch 20 --baseline-ckpt results/baseline_run/baseline000020.pth
-python compare_with_baseline.py --train-cmd "CUBLAS_WORKSPACE_CONFIG=:4096:8 PYTHONUNBUFFERED=1 python -u train_main.py"
-```
-
 ## Baseline + refactor comparison
-Use `code/run_compare_baseline.sh` to run two trainings and compare logs (and optionally checkpoints).
-
-One-liner from `3D_LJ_Potiential/code`:
-
-```bash
-CUBLAS_WORKSPACE_CONFIG=:4096:8 ENV_NAME=pytorch RUN_CMD="python train_main.py" OUTPUT_DIR=/tmp/lufnet_baseline bash run_compare_baseline.sh
-```
-
-After the run:
-- Baseline log: `/tmp/lufnet_baseline/run1.log`
-- Refactor log: `/tmp/lufnet_baseline/run2.log`
-- Compare helper: `code/compare_runs.py`
+Use `code/compare_with_baseline.py` to run training once and compare the baseline checkpoint
+against the new run's checkpoint with `compare_runs.py`.
 
 ## Outputs
 Training and evaluation logs and checkpoints are written under `code/results/` at runtime. Post-processing helpers live in:
