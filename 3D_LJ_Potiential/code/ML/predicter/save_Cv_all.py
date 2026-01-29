@@ -53,13 +53,13 @@ if __name__ == '__main__':
         temp_list = [0.44, 0.46, 0.48, 0.5]
         for temp in temp_list:
 
-            load_file0 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.1dpt100000_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb009_nsteps10000.pt'
+            load_file0 = f'../../../thumbnail_data/gen_by_ML/{dim}d/lt0.1dpt100000_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb009_nsteps10000.pt'
             print('data0 list', load_file0)
 
-            load_file1 = f'../../../data_sets/gen_by_MD/{dim}d/noML-metric-lt0.01every1t0.7t1000/n{npar}rho{rho}T{temp}/energy_gamma{gamma}_tmax1000.pt'
+            load_file1 = f'../../../thumbnail_data/gen_by_MD/{dim}d/noML-metric-lt0.01every1t0.7t1000/n{npar}rho{rho}T{temp}/energy_gamma{gamma}_tmax1000.pt'
             print('data1 list', load_file1)
 
-            load_file2 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.1dpt{dpt}_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb{saved_model}_nsteps10000.pt'
+            load_file2 = f'../../../thumbnail_data/gen_by_ML/{dim}d/lt0.1dpt{dpt}_{region}/n{npar}rho{rho}T{temp}/energy_gamma{gamma}mb{saved_model}_nsteps10000.pt'
             print('data2 list', load_file2)
 
             data1_list.append(load_file1)
@@ -74,10 +74,10 @@ if __name__ == '__main__':
 
         for i in temp_list:
 
-            load_file1 = f'../../../data_sets/gen_by_MD/{dim}d/noML-metric-lt0.001every0.1t0.35t100/n{npar}rho{rho}T{i}/energy_gamma{gamma}_tmax100.pt'
+            load_file1 = f'../../../thumbnail_data/gen_by_MD/{dim}d/noML-metric-lt0.001every0.1t0.35t100/n{npar}rho{rho}T{i}/energy_gamma{gamma}_tmax100.pt'
             print('data1 list', load_file1)
 
-            load_file2 = f'../../../data_sets/gen_by_ML/{dim}d/lt0.05dpt{dpt}_{region}/n{npar}rho{rho}T{i}/energy_gamma{gamma}LUF{saved_model}_tmax100.pt'
+            load_file2 = f'../../../thumbnail_data/gen_by_ML/{dim}d/lt0.05dpt{dpt}_{region}/n{npar}rho{rho}T{i}/energy_gamma{gamma}LUF{saved_model}_tmax100.pt'
             print('data2 list', load_file2)
 
             data1_list.append(load_file1)

@@ -42,11 +42,11 @@ if __name__ == '__main__':
         for temp in temp_list:
 
             data = {
-                    "filename0": '../../../data_sets/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(dim, region, npar, rho, temp)
+                    "filename0": '../../../thumbnail_data/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(dim, region, npar, rho, temp)
                              + f'rij_gr_gamma{gamma}mb009',
-                    "filename1" : '../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(dim, npar,rho,temp)
+                    "filename1" : '../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(dim, npar,rho,temp)
                      + f'rij_gr_gamma{gamma}',
-                    "filename2": '../../../data_sets/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/'.format(dim, dpt, region, npar, rho, temp)
+                    "filename2": '../../../thumbnail_data/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/'.format(dim, dpt, region, npar, rho, temp)
                     + f'rij_gr_gamma{gamma}mb{saved_model}'
                     }
 
@@ -62,9 +62,9 @@ if __name__ == '__main__':
 
         for i in temp_list:
             data = {
-                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/rij_gr_gamma{}".format(
+                "energy2": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/rij_gr_gamma{}".format(
                     dim, npar, rho, i, gamma),
-                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/rij_gr_gamma{}LUF{}".format(  dim, dpt, region, npar, rho, i, gamma,saved_model)}
+                "energy3": "../../../thumbnail_data/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/rij_gr_gamma{}LUF{}".format(  dim, dpt, region, npar, rho, i, gamma,saved_model)}
 
             data1_list.append(data['energy2'])
             data2_list.append(data['energy3'])

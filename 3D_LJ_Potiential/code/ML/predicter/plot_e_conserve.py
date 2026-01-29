@@ -74,9 +74,9 @@ if __name__ == '__main__':
                      }
 
         data = {
-            "saved_dir": "../../../data_sets/gen_by_ML/2d/lt0.1dpt{}_{}/".format(ml_dict["dpt"], region),
-             "energy1" : "../../../data_sets/gen_by_MD/2d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(npar,rho,T,gamma),
-            "energy2": "../../../data_sets/gen_by_ML/2d/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(ml_dict["dpt"],region,npar,rho,T,gamma,ml_dict["saved_model"])}
+            "saved_dir": "../../../thumbnail_data/gen_by_ML/2d/lt0.1dpt{}_{}/".format(ml_dict["dpt"], region),
+             "energy1" : "../../../thumbnail_data/gen_by_MD/2d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(npar,rho,T,gamma),
+            "energy2": "../../../thumbnail_data/gen_by_ML/2d/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(ml_dict["dpt"],region,npar,rho,T,gamma,ml_dict["saved_model"])}
 
     elif dim == 3:
         print('load md data on 3d .......')
@@ -87,10 +87,10 @@ if __name__ == '__main__':
                      }
 
         data = {
-            "saved_dir": "../../../data_sets/gen_by_ML/{}d/lt0.02dpt{}_{}/".format(dim,ml_dict["dpt"], region),
-            "energy1": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.14t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(
+            "saved_dir": "../../../thumbnail_data/gen_by_ML/{}d/lt0.02dpt{}_{}/".format(dim,ml_dict["dpt"], region),
+            "energy1": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.14t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(
                 dim, npar, rho, T, gamma),
-            "energy2": "../../../data_sets/gen_by_ML/{}d/lt0.02dpt{}_{}/n{}rho{}T{}/energy_gamma20LUF{}_tmax100.pt".format( dim, ml_dict["dpt"], region, npar, rho, T, ml_dict["saved_model"])}
+            "energy2": "../../../thumbnail_data/gen_by_ML/{}d/lt0.02dpt{}_{}/n{}rho{}T{}/energy_gamma20LUF{}_tmax100.pt".format( dim, ml_dict["dpt"], region, npar, rho, T, ml_dict["saved_model"])}
 
     else:
         assert False , 'invalid load data given .... '

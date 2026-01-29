@@ -62,7 +62,7 @@ def plot_pairs(dd,npar,rho, boxsize):
     plt.show()
 
 if __name__ == '__main__':
-    # python pairwise_distance.py ../../data_sets/gen_by_MC 2 0.03
+    # python pairwise_distance.py ../../thumbnail_data/gen_by_MC 2 0.03
 
     argv = sys.argv
     filename = argv[1]

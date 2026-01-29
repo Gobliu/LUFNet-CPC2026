@@ -61,13 +61,13 @@ if __name__ == '__main__':
         gamma = int(gamma)
 
     data = {
-	     # "energy1" : "../../../data_sets/gen_by_MD/3d/noML-metric-lt0.025every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(npar,rho,T, gamma),
-        "energy2": "../../data_sets/gen_by_MD/3d/noML-metric-lt0.02every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
+	     # "energy1" : "../../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.025every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(npar,rho,T, gamma),
+        "energy2": "../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.02every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
             npar, rho, T, gamma),
-        "energy3": "../../data_sets/gen_by_MD/3d/noML-metric-lt0.01every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(  npar, rho, T, gamma),
-        "energy4": "../../data_sets/gen_by_MD/3d/noML-metric-lt0.01every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
+        "energy3": "../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.01every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(  npar, rho, T, gamma),
+        "energy4": "../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.01every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
             npar, rho, T, gamma),
-        # "energy4": "../../../data_sets/gen_by_MD/3d/noML-metric-lt0.001every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
+        # "energy4": "../../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.001every1t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
         #     npar, rho, T, gamma),
     }
 

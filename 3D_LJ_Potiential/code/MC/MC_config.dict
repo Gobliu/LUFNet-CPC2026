@@ -1,7 +1,7 @@
 {
     "nparticle": 32,
     "temperature": 0.9,
-    "MC_output_filename": "../../data_sets/gen_by_MC/s1n32rho0.85T0.9.pt",
+    "MC_output_filename": "../../thumbnail_data/gen_by_MC/s1n32rho0.85T0.9.pt",
     "seed": 24146,
     "DIM": 3,
     "rho": 0.85,

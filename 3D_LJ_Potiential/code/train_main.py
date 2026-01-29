@@ -92,9 +92,9 @@ def main():
                  "e_weight"          : ew,
                  "reg_weight"        : repw}
 
-    data = {"train_file": '../data_sets/n64lt0.1stpstraj180_l_dpt100.pt', # 20250809
-            "valid_file": '../data_sets/n64lt0.1stpstraj180_l_dpt100.pt',
-            "test_file": '../data_sets/n64lt0.1stpstraj180_l_dpt100.pt',
+    data = {"train_file": '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt', # 20250809
+            "valid_file": '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt',
+            "test_file": '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt',
             "train_pts" : dpt_train,
             "vald_pts"  : dpt_valid,
             "test_pts"  : dpt_valid,

@@ -32,11 +32,11 @@ if __name__ == '__main__':
         print('load md data on 2d .......')
 
         data = {
-                "filename1" : '../../../data_sets/gen_by_MD/2d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(npar,rho,T)
+                "filename1" : '../../../thumbnail_data/gen_by_MD/2d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/'.format(npar,rho,T)
                  + 'rij_gr_gamma{}.pt'.format(gamma),
-            "filename2": '../../../data_sets/gen_by_ML/2d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt,region,npar,rho,T)
+            "filename2": '../../../thumbnail_data/gen_by_ML/2d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt,region,npar,rho,T)
                              + 'rij_gr_gamma{}mb{}.pt'.format(gamma, saved_model),
-                "filename3": '../../../data_sets/gen_by_ML/2d/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(region, npar, rho, T)
+                "filename3": '../../../thumbnail_data/gen_by_ML/2d/lt0.1dpt100000_{}/n{}rho{}T{}/'.format(region, npar, rho, T)
                          + 'rij_gr_gamma{}mb009.pt'.format(gamma),
                 "nofile": 2,
                 "linestyle" : ['dashed','dotted'],
@@ -46,9 +46,9 @@ if __name__ == '__main__':
         print('load md data on 3d .......')
 
         data = {
-            "filename1": '../../../data_sets/gen_by_MD/3d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/'.format(npar, rho, T)
+            "filename1": '../../../thumbnail_data/gen_by_MD/3d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/'.format(npar, rho, T)
                          + 'rij_gr_gamma{}.pt'.format(gamma),
-            "filename2": '../../../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format( tau_long,dpt,region,npar,rho,T)
+            "filename2": '../../../thumbnail_data/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format( tau_long,dpt,region,npar,rho,T)
                              + 'rij_gr_gamma{}LUF{}.pt'.format(gamma, saved_model),
                 "nofile": 2,
                 "linestyle" : ['dashed','dotted'],

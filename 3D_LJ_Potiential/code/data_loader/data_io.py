@@ -126,7 +126,7 @@ class data_io:
 
 if __name__=='__main__':
 
-    filename = '../../data_sets/n16anyrholt0.1stps_100pts.pt'
+    filename = '../../thumbnail_data/n16anyrholt0.1stps_100pts.pt'
     qpl_list,tau_long,tau_short = data_io.read_trajectory_qpl(filename)
 
     print('shape of qpl_list [nsamples, (q,p,l)-index, ', end='')

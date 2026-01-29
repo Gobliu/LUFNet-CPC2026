@@ -63,11 +63,11 @@ if __name__ == '__main__':
 
         for i in temp_list:
             data = {
-                "energy1": "../../../data_sets/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/energy_gamma{}mb009_nsteps10000.pt".format(
+                "energy1": "../../../thumbnail_data/gen_by_ML/{}d/lt0.1dpt100000_{}/n{}rho{}T{}/energy_gamma{}mb009_nsteps10000.pt".format(
                     dim, region, npar, rho, i, gamma),
-                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
+                "energy2": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt0.01every1t0.7t1000/n{}rho{}T{}/energy_gamma{}_tmax1000.pt".format(
                     dim, npar, rho, i, gamma),
-                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(
+                "energy3": "../../../thumbnail_data/gen_by_ML/{}d/lt0.1dpt{}_{}/n{}rho{}T{}/energy_gamma{}mb{}_nsteps10000.pt".format(
                     dim, dpt, region, npar, rho, i, gamma, saved_model)}
 
             data1_list.append(data['energy2'])
@@ -82,9 +82,9 @@ if __name__ == '__main__':
 
         for i in temp_list:
             data = {
-                "energy2": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(
+                "energy2": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt0.001every0.1t0.35t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format(
                     dim, npar, rho, i, gamma),
-                "energy3": "../../../data_sets/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/energy_gamma{}LUF{}_tmax100.pt".format(
+                "energy3": "../../../thumbnail_data/gen_by_ML/{}d/lt0.05dpt{}_{}/n{}rho{}T{}/energy_gamma{}LUF{}_tmax100.pt".format(
                     dim, dpt, region, npar, rho, i, gamma, saved_model)}
 
             data1_list.append(data['energy2'])

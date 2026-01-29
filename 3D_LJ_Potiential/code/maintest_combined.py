@@ -91,11 +91,11 @@ def main():
                  "e_weight"    : 1,
                  "reg_weight"    : 10}
 
-    data = { "train_file": '../data_sets/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
+    data = { "train_file": '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
              + '/n{}rho{}T{}.pt'.format(npar,rho,temp),
-             "valid_file": '../data_sets/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
+             "valid_file": '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
              + '/n{}rho{}T{}.pt'.format(npar,rho,temp),
-             "test_file" : '../data_sets/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
+             "test_file" : '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
              + '/n{}rho{}T{}.pt'.format(npar,rho,temp), 
              "train_pts" : 10,
              "vald_pts"  : 10,
@@ -103,7 +103,7 @@ def main():
              "batch_size": 20}
     
     maindict = {
-                 "save_dir"     : '../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region,npar,rho,temp)
+                 "save_dir"     : '../thumbnail_data/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region,npar,rho,temp)
                                   + "pred_n{}len08ws08gamma{}LUF{}_tau".format(npar,gamma,num_saved),
                  "nitr"         : nitr,  # for check md trajectories
                  "tau_short"    : 1e-4,

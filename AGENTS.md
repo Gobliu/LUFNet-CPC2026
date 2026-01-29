@@ -34,5 +34,5 @@
 - PRs should include: purpose, key config changes, data requirements, and any new result plots/log summaries.
 
 ## Configuration & Data Notes
-- Many paths point to external datasets (e.g., `../data_sets/...`). Verify local data availability.
+- Many paths point to external datasets (e.g., `../thumbnail_data/...`). Verify local data availability.
 - Checkpoint paths are embedded in scripts; update configs when moving or renaming runs.

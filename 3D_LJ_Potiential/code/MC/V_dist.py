@@ -62,7 +62,7 @@ def dist(e, npar,rho, saved_dir):
     # plt.close()
 
 if __name__ == '__main__':
-    #python V_dist.py ../../data_sets/gen_by_MC 2 0.03
+    #python V_dist.py ../../thumbnail_data/gen_by_MC 2 0.03
     #
     torch.manual_seed(9745452)
 

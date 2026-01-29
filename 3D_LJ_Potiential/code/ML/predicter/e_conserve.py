@@ -88,25 +88,25 @@ if __name__ == '__main__':
         if dim == 2:
             print('load md data on 2d .......')
             data = {
-                     "filename" : '../../../data_sets/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
+                     "filename" : '../../../thumbnail_data/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
                      'n{}rho{}T{}gamma{}.pt'.format(npar,rho,T,gamma),
-                     "save_dir": "../../../data_sets/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( tau_long,
+                     "save_dir": "../../../thumbnail_data/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( tau_long,
                       npar, rho, T, gamma)}
 
         elif dim ==3:
             print('load md data on 3d .......')
             data = {
-                     "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
+                     "filename": '../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
                             'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),  # 3d
-                      "save_dir": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( dim, tau_long,
+                      "save_dir": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/energy_gamma{}_tmax100.pt".format( dim, tau_long,
                     npar, rho, T, gamma) }
 
 
     else:
         print(f'load ml data on {dim}d .......')
         data = {
-                 "filename" : '../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt,region,npar,rho,T) + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format(npar,gamma,saved_model,tau_long) ,
-                 "save_dir": "../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/".format(tau_long,dpt, region, npar, rho, T) + 'energy_gamma{}LUF{}_tmax100.pt'.format(
+                 "filename" : '../../../thumbnail_data/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt,region,npar,rho,T) + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format(npar,gamma,saved_model,tau_long) ,
+                 "save_dir": "../../../thumbnail_data/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/".format(tau_long,dpt, region, npar, rho, T) + 'energy_gamma{}LUF{}_tmax100.pt'.format(
                  gamma, saved_model, saved_tp)}
 
     print(data)

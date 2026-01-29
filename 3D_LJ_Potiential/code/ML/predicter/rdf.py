@@ -143,16 +143,16 @@ if __name__ == '__main__':
         if dim == 2:
             print('load md data on 2d .......')
             data = {
-                     "filename" : '../../../data_sets/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
+                     "filename" : '../../../thumbnail_data/gen_by_MD/noML-metric-lt{}every1t0.7t100/n{}rho{}T{}/'.format(tau_long,npar,rho,T) +
                      'n{}rho{}T{}gamma{}.pt'.format(npar,rho,T,gamma),
-                     "saved_dir": "../../../data_sets/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/".format( tau_long,npar, rho, T)}
+                     "saved_dir": "../../../thumbnail_data/gen_by_MD/noML-metric-lt{}every0.1t0.7t100/n{}rho{}T{}/".format( tau_long,npar, rho, T)}
 
         elif dim == 3:
             print('load md data on 3d .......')
             data = {
-                     "filename": '../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
+                     "filename": '../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/'.format(dim, tau_long, npar, rho, T) +
                             'n{}rho{}T{}gamma{}.pt'.format(npar, rho, T, gamma),
-                      "saved_dir": "../../../data_sets/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/".format( dim, tau_long,npar, rho, T) }
+                      "saved_dir": "../../../thumbnail_data/gen_by_MD/{}d/noML-metric-lt{}every0.1t0.14t100/n{}rho{}T{}/".format( dim, tau_long,npar, rho, T) }
 
         else:
             assert False, 'invalid dim given .... '
@@ -161,16 +161,16 @@ if __name__ == '__main__':
         if dim == 2:
             print(f'load ml data on 2d .......')
             data = {
-                "filename": '../../../data_sets/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)
+                "filename": '../../../thumbnail_data/gen_by_ML/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)
                             + 'pred_n{}len08ws08gamma{}mb{}_tau{}.pt'.format(npar, gamma, saved_model,tau_long),
-                "saved_dir": '../../../data_sets/gen_by_ML/2d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)}
+                "saved_dir": '../../../thumbnail_data/gen_by_ML/2d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region, npar, rho, T)}
 
         elif dim == 3:
             print(f'load ml data on 3d .......')
             data = {
-                "filename": '../../../data_sets/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long, dpt, region, npar,  rho, T)
+                "filename": '../../../thumbnail_data/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long, dpt, region, npar,  rho, T)
                             + 'pred_n{}len08ws08gamma{}LUF{}_tau{}.pt'.format( npar, gamma, saved_model, tau_long),
-                "saved_dir": "../../../data_sets/gen_by_ML/{}d/lt{}dpt{}_{}/n{}rho{}T{}/".format(dim, tau_long, dpt, region, npar,  rho,  T)}
+                "saved_dir": "../../../thumbnail_data/gen_by_ML/{}d/lt{}dpt{}_{}/n{}rho{}T{}/".format(dim, tau_long, dpt, region, npar,  rho,  T)}
 
         else:
             assert False, 'invalid dim given .... '

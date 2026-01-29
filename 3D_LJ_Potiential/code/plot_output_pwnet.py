@@ -116,7 +116,7 @@ if __name__ == '__main__':
                  "e_weight"    : 1,
                  "reg_weight"    : 10}
 
-    data = { "test_file" : '../data_sets/gen_by_MD/3d/n32lt0.1stpstraj18_l_dpt45000.pt',
+    data = { "test_file" : '../thumbnail_data/gen_by_MD/3d/n32lt0.1stpstraj18_l_dpt45000.pt',
              "test_pts"  : 1000,
              "batch_size": 1000,
              "window_sliding"   : traindict["window_sliding"] }
