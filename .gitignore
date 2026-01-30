@@ -17,11 +17,13 @@ results/*/log_*
 # Ignore model checkpoints
 *.pth
 
-# Ignore pdf related files
-*/code/analysis/3d/*/*/*pdf
-*/code/analysis/3d/*/*txt
-analysis/3d/*/*/*pdf
-analysis/3d/*/*txt
+# Keep checkpoint for baseline run
+!3D_LJ_Potential/code/results/baseline_run/baseline000020.pth
+
+# Ignore resutls related files
+*.txt
+*.png
+*.pdf
 
 # Ignore NSCC related files
 out.txt
