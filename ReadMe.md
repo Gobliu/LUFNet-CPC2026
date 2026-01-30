@@ -65,7 +65,3 @@ Training and evaluation logs and checkpoints are written under `3D_LJ_Potiential
 
 ### Data notes
 Paths in configs may assume external datasets. If you relocate data, update the paths in the config files accordingly.
-
-### Tips
-- Start with smaller datasets (e.g., lower `dpt_train` / `dpt_valid`) when iterating.
-- Keep `ngrid: 12` for 3D as expected by the current implementation.
