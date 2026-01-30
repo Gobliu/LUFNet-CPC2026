@@ -96,7 +96,7 @@ All relative paths in YAML files are interpreted relative to
 - **`thumbnail_data/`**  
   Small example datasets sufficient for pipeline testing and debugging.
 
-- **Full dataset**  
+- **Full dataset of 3D Lennard–Jones**  
   The full dataset (MD/MC trajectories, energies, and forces) is deposited on Zenodo.  
   DOI: (to be added)
 
@@ -148,12 +148,6 @@ All outputs are written under:
 ```
 
 This includes logs, checkpoints, and evaluation summaries.
-
----
-
-## Dataset availability (2D LJ)
-
-The 2D Lennard–Jones workflow and datasets are not included in this release and will be added in a future update.
 
 ---
 
