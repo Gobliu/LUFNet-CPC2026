@@ -62,6 +62,3 @@ against the new run's checkpoint with `compare_ckpt.py`.
 Training and evaluation logs and checkpoints are written under `3D_LJ_Potiential/code/results/` at runtime. Post-processing helpers live in:
 - `3D_LJ_Potiential/code/run.sh`
 - `3D_LJ_Potiential/code/show_results.sh`
-
-### Data notes
-Paths in configs may assume external datasets. If you relocate data, update the paths in the config files accordingly.
