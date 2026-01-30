@@ -1,0 +1,8 @@
+# Minimal runtime dependencies
+numpy==1.26.3
+scipy==1.15.2
+torch==2.9.1
+matplotlib==3.9.1
+seaborn==0.13.2
+PyYAML==6.0.1
+torchviz
