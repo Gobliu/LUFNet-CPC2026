@@ -1,64 +1,175 @@
 # LUFNet-CPC2026
 
-This repository contains 2D and 3D Lennard-Jones (LJ) workflows and related assets.
-## Corresponding Paper
-Scalable Neural Network Driven Molecular Dynamics Simulation (https://doi.org/10.1016/j.cpc.2026.110036)
+This repository provides **reproducible workflows for training and evaluating neural-network-driven molecular dynamics models** on **2D and 3D Lennard–Jones (LJ) systems**, as described in the accompanying *Computer Physics Communications* paper:
 
-## Dataset
-The large dataset is deposited on Zenodo: (link)
+**Scalable Neural-Network–Driven Molecular Dynamics Simulation**  
+*Computer Physics Communications* (2026)  
+DOI: https://doi.org/10.1016/j.cpc.2026.110036
 
-## 2D Lennard-Jones Potential (LUFNet)
-The code and thumbnail data will be released in the next version (expected in March 2026).
+---
 
-## 3D Lennard-Jones Potential (LUFNet)
-This folder contains the 3D Lennard-Jones (LJ) workflow used in this project, including training/evaluation code and example datasets.
+## Repository overview
 
-### Structure
-- `3D_LJ_Potiential/code/`: training, evaluation, and analysis scripts.
-  - Entry points: `train_main.py` (training) and `maintest_combined.py` (evaluation).
-  - Configs: `main_config.yaml`, `maintest_config.yaml`.
-  - Utilities: `utils/`, `data_loader/`, `ML/`, `hamiltonian/`, `MD/`, `MC/`.
-- `3D_LJ_Potiential/thumbnail_data/`: sample datasets for MD/MC and training/validation.
+- **2D Lennard–Jones (LUFNet)**  
+  The 2D LJ workflow and associated thumbnail data are not included in this release and will be added in a future version (expected March 2026).
 
-### Quick start
-From `3D_LJ_Potiential/code`:
+- **3D Lennard–Jones (LUFNet)**  
+  This release contains the complete 3D LJ workflow, including:
+  - training and evaluation code
+  - example datasets
+  - reproducibility and checkpoint comparison utilities
+
+---
+
+## Requirements
+
+- Python ≥ 3.9  
+- PyTorch ≥ 2.0  
+- Linux (tested on Ubuntu)  
+- CUDA-enabled GPU (optional but recommended)
+
+---
+
+## Typical workflow
+
+1. Inspect or test the pipeline using example data (`thumbnail_data/`)
+2. Configure training parameters in `main_config.yaml`
+3. Train a model using `train_main.py`
+4. Evaluate the trained model using `maintest_combined.py`
+5. (Optional) Compare checkpoints against a baseline for reproducibility
+
+---
+
+## Directory structure (3D Lennard–Jones)
+
+> Note: the directory name `3D_LJ_Potential` is kept for backward compatibility.
+
+```
+3D_LJ_Potential/
+├── code/
+│   ├── train_main.py
+│   ├── maintest_combined.py
+│   ├── main_config.yaml
+│   ├── maintest_config.yaml
+│   ├── compare_ckpt.py
+│   ├── compare_with_baseline.py
+│   ├── utils/
+│   ├── data_loader/
+│   ├── ML/
+│   ├── hamiltonian/
+│   ├── MD/
+│   └── MC/
+├── thumbnail_data/
+```
+
+---
+
+## Quick start
 
 ```bash
+cd 3D_LJ_Potential/code
 python train_main.py
 python maintest_combined.py
 ```
 
-Training uses parameters in `main_config.yaml`. Evaluation uses `maintest_config.yaml`.
+- Training parameters are read from `main_config.yaml`
+- Evaluation parameters are read from `maintest_config.yaml`
+- Outputs are written to `results/`
 
-### Reproducibility / deterministic runs (CUDA)
-If you enable deterministic algorithms in PyTorch and see a CuBLAS warning, set the workspace config before running:
+---
+
+## Configuration files
+
+- **`main_config.yaml`**  
+  Training configuration: model architecture, optimizer, dataset paths, output directories.
+
+- **`maintest_config.yaml`**  
+  Evaluation and post-processing configuration.
+
+All relative paths in YAML files are interpreted relative to  
+`3D_LJ_Potiential/code`.
+
+---
+
+## Data
+
+- **`thumbnail_data/`**  
+  Small example datasets sufficient for pipeline testing and debugging.
+
+- **Full dataset**  
+  The full dataset (MD/MC trajectories, energies, and forces) is deposited on Zenodo.  
+  DOI: (to be added)
+
+Update dataset paths in `main_config.yaml` to use the full dataset.
+
+---
+
+## Reproducibility and deterministic execution (CUDA)
+
+When using deterministic algorithms in PyTorch, CuBLAS requires an explicit workspace configuration:
 
 ```bash
 CUBLAS_WORKSPACE_CONFIG=:4096:8 python train_main.py
 ```
 
-Checkpoint comparison (recommended if you might change stdout formatting later):
+This enables deterministic GEMM behavior on supported GPUs.
+
+---
+
+## Checkpoint comparison (optional)
+
+### Direct comparison
 
 ```bash
-python compare_ckpt.py --ckpt-a /path/to/baseline.pth --ckpt-b /path/to/new.pth
+python compare_ckpt.py \
+  --ckpt-a /path/to/baseline.pth \
+  --ckpt-b /path/to/new.pth
 ```
 
-`compare_ckpt.py` only supports checkpoint comparison via `--ckpt-a` and `--ckpt-b`.
-
-For convenience, `3D_LJ_Potiential/code/compare_with_baseline.py` will run training once, then compare the checkpoint
-at a fixed epoch (default 20) in `3D_LJ_Potiential/code/results/baseline_run/` with the new run's checkpoint under
-`3D_LJ_Potiential/code/results/` (excluding the baseline folder) using `compare_ckpt.py`.
-From `3D_LJ_Potiential/code`:
+### Baseline vs new run
 
 ```bash
 python compare_with_baseline.py
 ```
 
-### Baseline + refactor comparison
-Use `3D_LJ_Potiential/code/compare_with_baseline.py` to run training once and compare the baseline checkpoint
-against the new run's checkpoint with `compare_ckpt.py`.
+This script:
+- runs training once
+- compares the checkpoint at a fixed epoch (default: 20)
+- uses `results/baseline_run/` as the reference
 
-### Outputs
-Training and evaluation logs and checkpoints are written under `3D_LJ_Potiential/code/results/` at runtime. Post-processing helpers live in:
-- `3D_LJ_Potiential/code/run.sh`
-- `3D_LJ_Potiential/code/show_results.sh`
+---
+
+## Outputs
+
+All outputs are written under:
+
+```
+3D_LJ_Potiential/code/results/
+```
+
+This includes logs, checkpoints, and evaluation summaries.
+
+---
+
+## Dataset availability (2D LJ)
+
+The 2D Lennard–Jones workflow and datasets are not included in this release and will be added in a future update.
+
+---
+
+## Citation
+
+```bibtex
+@article{LUFNetCPC2026,
+  title   = {Scalable Neural-Network--Driven Molecular Dynamics Simulation},
+  journal = {Computer Physics Communications},
+  year    = {2026},
+  doi     = {10.1016/j.cpc.2026.110036}
+}
+```
+
+---
+
+## Contact
+
+For questions or issues related to this repository, please contact the authors listed in the corresponding paper.
