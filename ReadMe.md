@@ -2,7 +2,7 @@
 
 This repository contains 2D and 3D Lennard-Jones (LJ) workflows and related assets.
 ## Corresponding Paper
-https://doi.org/10.1016/j.cpc.2026.110036
+Scalable Neural Network Driven Molecular Dynamics Simulation (https://doi.org/10.1016/j.cpc.2026.110036)
 
 ## Dataset
 
