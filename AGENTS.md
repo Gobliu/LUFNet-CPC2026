@@ -5,17 +5,16 @@
 - `data_loader/`: dataset loading utilities and data wrappers.
 - `hamiltonian/`, `MD/`, `MC/`: physics/MD/MC-related modules.
 - `utils/`: shared helpers (logging, device setup, parameter checks).
-- Top-level entrypoints: `train_main.py` (training) and `maintest_combined.py` (evaluation).
-- Configuration files: `main_config.yaml`, `maintest_config.yaml`.
-- Scripts and analysis: `run.sh`, `show_results.sh`, `plot_output_pwnet.py`, `plot_tau.py`.
+- Top-level entrypoints: `train_main.py` (training) and `test_main.py` (evaluation).
+- Configuration files: `train_config.yaml`, `test_config.yaml`.
+- Scripts and analysis: `utils/show_results.sh`, `plot_output_pwnet.py`, `plot_tau.py`.
 - Outputs typically land under `results/` (created at runtime).
 
 ## Build, Test, and Development Commands
-- `python train_main.py`: run training; uses parameters loaded from `main_config.yaml` (edit this for experiments).
-- `python maintest_combined.py`: run evaluation/inference using checkpoints referenced in `maintest_config.yaml`.
+- `python train_main.py`: run training; uses parameters loaded from `train_config.yaml` (edit this for experiments).
+- `python test_main.py`: run evaluation/inference using checkpoints referenced in `test_config.yaml`.
 - `python compare_with_baseline.py`: run one training pass and compare epoch-20 checkpoint vs baseline.
-- `bash run.sh`: batch post-processing of logs in `results/` and summary generation via `show_results.sh`.
-- `bash show_results.sh <logfile>`: summarize a single log file.
+- `bash utils/show_results.sh <logfile>`: summarize a single log file.
 - `python plot_output_pwnet.py` or `python plot_tau.py`: optional plotting utilities.
 
 ## Coding Style & Naming Conventions
@@ -24,7 +23,7 @@
 - No formatter/linter is configured in-repo; avoid reformatting unrelated code.
 
 ## Testing Guidelines
-- There is no dedicated test framework; validation is performed via `maintest_combined.py`.
+- There is no dedicated test framework; validation is performed via `test_main.py`.
 - Use small data slices when iterating, then rerun full evaluation for reporting.
 - Check outputs under `results/` for metrics and logs.
 

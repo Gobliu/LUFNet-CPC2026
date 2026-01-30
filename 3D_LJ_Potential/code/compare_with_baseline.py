@@ -84,7 +84,7 @@ def main() -> int:
 
     compare_cmd = [
         "python",
-        "compare_ckpt.py",
+        "utils/compare_ckpt.py",
         "--ckpt-a",
         str(baseline_ckpt),
         "--ckpt-b",

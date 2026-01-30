@@ -14,9 +14,9 @@ import numpy  as np
 import yaml
 
 def main():
-    # python maintest_combined.py 256 >  log/n256rho0.85T0.9LUF065_tau0.05
+    # python test_main.py 256 >  log/n256rho0.85T0.9LUF065_tau0.05
 
-    """Run evaluation/inference using maintest_config.yaml."""
+    """Run evaluation/inference using test_config.yaml."""
     force_cuda = args.get('force_cuda', True)
     _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)
@@ -28,8 +28,10 @@ def main():
     set_global_seed(seed, deterministic)
 
     argv = sys.argv
-
-    npar = int(argv[1])
+    if len(argv) > 1:
+        npar = int(argv[1])
+    else:
+        npar = int(args.get('npar', 64))
 
     net_type = args['net_type']
     single_parnet_type = args['single_parnet_type']
@@ -53,9 +55,7 @@ def main():
     region = args['region']
     gamma = args['gamma']
 
-
-    traindict = {"loadfile": './results/traj_len08ws0{}tau{}ngrid{}{}_dpt{}/mbpw000{}.pth'.format(
-                                  window_sliding,tau_long,ngrid, net_type,dpt,num_saved),  # to load previously trained model
+    traindict = {"loadfile": args['ckpt_path'],  # to load previously trained model
                  "net_nnodes": 128,  # number of nodes in neural nets for force
                  "pw4mb_nnodes" : 128,
                  "pw_output_dim" : 3, # 20250812: change from 2D to 3D, psi
@@ -91,20 +91,15 @@ def main():
                  "e_weight"    : 1,
                  "reg_weight"    : 10}
 
-    data = { "train_file": '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
-             + '/n{}rho{}T{}.pt'.format(npar,rho,temp),
-             "valid_file": '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
-             + '/n{}rho{}T{}.pt'.format(npar,rho,temp),
-             "test_file" : '../thumbnail_data/gen_by_MD/3d/noML-metric-st1e-4every0.1t8/n{}rho{}T{}'.format(npar,rho,temp)
-             + '/n{}rho{}T{}.pt'.format(npar,rho,temp), 
+    data = { "train_file": '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt',
+             "valid_file": '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt',
+             "test_file" : '../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt',
              "train_pts" : 10,
              "vald_pts"  : 10,
-             "test_pts"  : 1000,
-             "batch_size": 20}
+             "test_pts"  : 10,
+             "batch_size": 2}
     
-    maindict = {
-                 "save_dir"     : '../thumbnail_data/gen_by_ML/3d/lt{}dpt{}_{}/n{}rho{}T{}/'.format(tau_long,dpt, region,npar,rho,temp)
-                                  + "pred_n{}len08ws08gamma{}LUF{}_tau".format(npar,gamma,num_saved),
+    maindict = {"save_dir"     : './results/test_folder/',
                  "nitr"         : nitr,  # for check md trajectories
                  "tau_short"    : 1e-4,
                  "append_strike": nitr, # for check md trajectories
@@ -202,7 +197,7 @@ def main():
     system_logs.print_end_logs()
 
 if __name__=='__main__':
-    yaml_config_path = 'maintest_config.yaml'
+    yaml_config_path = 'test_config.yaml'
     with open(yaml_config_path, 'r') as f:
         args = yaml.load(f, Loader=yaml.Loader)
     main()

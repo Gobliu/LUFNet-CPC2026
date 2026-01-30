@@ -26,7 +26,7 @@ class mydevice(object):
         use_cuda = torch.cuda.is_available()
         if force_cuda and not use_cuda:
             raise RuntimeError(
-                "CUDA is required but not available. Set force_cuda: false in main_config.yaml/maintest_config.yaml "
+                "CUDA is required but not available. Set force_cuda: false in train_config.yaml/test_config.yaml "
                 "to allow CPU fallback."
             )
         mydevice.__instance.value = torch.device("cuda" if use_cuda else "cpu")

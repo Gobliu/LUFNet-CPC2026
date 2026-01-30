@@ -33,9 +33,9 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 ## Typical workflow
 
 1. Inspect or test the pipeline using example data (`thumbnail_data/`)
-2. Configure training parameters in `main_config.yaml`
+2. Configure training parameters in `train_config.yaml`
 3. Train a model using `train_main.py`
-4. Evaluate the trained model using `maintest_combined.py`
+4. Evaluate the trained model using `test_main.py`
 5. (Optional) Compare checkpoints against a baseline for reproducibility
 
 ---
@@ -48,12 +48,12 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 3D_LJ_Potential/
 ├── code/
 │   ├── train_main.py
-│   ├── maintest_combined.py
-│   ├── main_config.yaml
-│   ├── maintest_config.yaml
-│   ├── compare_ckpt.py
+│   ├── test_main.py
+│   ├── train_config.yaml
+│   ├── test_config.yaml
 │   ├── compare_with_baseline.py
 │   ├── utils/
+│   │   └── compare_ckpt.py
 │   ├── data_loader/
 │   ├── ML/
 │   ├── hamiltonian/
@@ -69,21 +69,21 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 ```bash
 cd 3D_LJ_Potential/code
 python train_main.py
-python maintest_combined.py
+python test_main.py
 ```
 
-- Training parameters are read from `main_config.yaml`
-- Evaluation parameters are read from `maintest_config.yaml`
+- Training parameters are read from `train_config.yaml`
+- Evaluation parameters are read from `test_config.yaml`
 - Outputs are written to `results/`
 
 ---
 
 ## Configuration files
 
-- **`main_config.yaml`**  
+- **`train_config.yaml`**  
   Training configuration: model architecture, optimizer, dataset paths, output directories.
 
-- **`maintest_config.yaml`**  
+- **`test_config.yaml`**  
   Evaluation and post-processing configuration.
 
 All relative paths in YAML files are interpreted relative to  
@@ -100,7 +100,7 @@ All relative paths in YAML files are interpreted relative to
   The full dataset (MD/MC trajectories, energies, and forces) is deposited on Zenodo.  
   DOI: (to be added)
 
-Update dataset paths in `main_config.yaml` to use the full dataset.
+Update dataset paths in `train_config.yaml` to use the full dataset.
 
 ---
 
@@ -121,7 +121,7 @@ This enables deterministic GEMM behavior on supported GPUs.
 ### Direct comparison
 
 ```bash
-python compare_ckpt.py \
+python utils/compare_ckpt.py \
   --ckpt-a /path/to/baseline.pth \
   --ckpt-b /path/to/new.pth
 ```

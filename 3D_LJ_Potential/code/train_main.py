@@ -12,7 +12,7 @@ from data_loader.data_loader import my_data
 
 def main():
 
-    """Run training using parameters from main_config.yaml."""
+    """Run training using parameters from train_config.yaml."""
     force_cuda = args.get('force_cuda', True)
     _ = mydevice(force_cuda=force_cuda)
     _ = system_logs(mydevice)
@@ -176,7 +176,7 @@ def main():
     system_logs.print_end_logs()
 
 if __name__=='__main__':
-    yaml_config_path = 'main_config.yaml'
+    yaml_config_path = 'train_config.yaml'
     with open(yaml_config_path, 'r') as f:
         args = yaml.load(f, Loader=yaml.Loader)
     main()

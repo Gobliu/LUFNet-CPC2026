@@ -3,6 +3,7 @@ single_parnet_type: transformer_type # single particle neural network type
 multi_parnet_type: gnn_identity # multi particle neural network type
 readout_net_type: mlp_type # readout neural network type
 seed: 34952
+ckpt_path: ./results/baseline_run/baseline000020.pth
 deterministic: true
 force_cuda: true
 rho: 0.85

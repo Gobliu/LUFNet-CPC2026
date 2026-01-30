@@ -10,13 +10,13 @@ def run_baseline_results(log_dir: Union[str, Path]) -> None:
     Python equivalent of:
     log_dir='results/baseline_run'
     cat $log_dir/log* > $log_dir/log_combine
-    ./show_results.sh $log_dir/log_combine
+    ./utils/show_results.sh $log_dir/log_combine
     """
     # 1. Path Setup using pathlib
     script_dir = Path(__file__).resolve().parent
     base_path = Path(log_dir)
     log_combine_file = base_path / "log_combine"
-    script_path = script_dir / "show_results.sh"
+    script_path = script_dir / "utils" / "show_results.sh"
 
     # 2. Defensive Programming: Assertions and Explicit Errors
     assert base_path.exists(), f"Log directory not found: {base_path}"
