@@ -5,7 +5,7 @@ This repository contains 2D and 3D Lennard-Jones (LJ) workflows and related asse
 Scalable Neural Network Driven Molecular Dynamics Simulation (https://doi.org/10.1016/j.cpc.2026.110036)
 
 ## Dataset
-
+The large dataset is deposited on Zenodo: (link)
 
 ## 2D Lennard-Jones Potential (LUFNet)
 The code and thumbnail data will be released in the next version (expected in March 2026).
