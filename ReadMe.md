@@ -1,6 +1,11 @@
 # LUFNet-CPC2026
 
 This repository contains 2D and 3D Lennard-Jones (LJ) workflows and related assets.
+## Corresponding Paper
+
+
+## Dataset
+
 
 ## 2D Lennard-Jones Potential (LUFNet)
 The code and thumbnail data will be released in the next version (expected in March 2026).
