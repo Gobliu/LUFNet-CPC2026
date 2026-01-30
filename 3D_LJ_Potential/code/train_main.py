@@ -25,7 +25,6 @@ def main():
     deterministic = args.get('deterministic', True)
     set_global_seed(seed, deterministic)
 
-    net_type = args['net_type']
     single_parnet_type = args['single_parnet_type']
     multi_parnet_type = args['multi_parnet_type']
     readout_net_type = args['readout_net_type']

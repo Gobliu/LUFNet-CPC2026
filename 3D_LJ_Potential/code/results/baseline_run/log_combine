@@ -1,0 +1,1689 @@
+device singleton constructed for  cuda
+pid :  132795
+uname :  uname_result(system='Linux', node='bii-spd-0b4c993', release='6.14.0-37-generic', version='#37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2', machine='x86_64')
+code run start time  20260130, 14:29:44
+device singleton constructed for  cuda
+trainer dict ============== 
+loadfile : None
+net_nnodes : 128
+pw4mb_nnodes : 128
+pw_output_dim : 3
+init_weights : relu
+optimizer : Adam
+single_particle_net_type : transformer_type
+multi_particle_net_type : gnn_identity
+readout_step_net_type : mlp_type
+n_encoder_layers : 2
+n_gnn_layers : 2
+edge_attention : True
+d_model : 256
+nhead : 8
+net_dropout : 0.0
+grad_clip : 0.5
+tau_traj_len : 0.4
+tau_long : 0.05
+saved_pair_steps : 5
+loss_weights : [0, 0.125, 0, 0.25, 0, 0.5, 0, 1]
+window_sliding : 8
+ngrids : 12
+b_list : [0.2]
+a_list : [0]
+maxlr : 1e-05
+tau_init : 1
+loss dict ============== 
+polynomial_degree : 4
+rthrsh : 0.7
+e_weight : 1
+reg_weight : 10
+data dict ============== 
+train_file : ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+valid_file : ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+test_file : ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+train_pts : 10
+vald_pts : 10
+test_pts : 10
+batch_size : 2
+window_sliding : 8
+main dict ============== 
+start_epoch : 0
+end_epoch : 20
+save_dir : ./results/baseline_run
+tau_short : 0.0001
+nitr : 500
+append_strike : 500
+ckpt_interval : 1
+val_interval : 1
+verb : 1
+begin ------- check param dict -------- 
+end   ------- check param dict -------- 
+tau_traj_len 0.4 tau_long 0.05 saved_pair_steps 5
+load my data ... traj len index 40 window sliding 8 label index 75
+load train set .........
+load valid set .........
+load test set .........
+my_data initialized : train_filename  ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt  val_filename  ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt  test_filename  ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt  train_pts  10  val_pts  10  test_pts  10
+kwargs  {'num_workers': 8, 'pin_memory': True} batch_size  2
+single particle net type transformer ..........
+single particle transformer net : d_model 256 output_dim 256
+single-particle tranformernet : ngrid 12 input dim 576 traj len 8 prep output dim 6
+!!!!! single par transformer_net 576 256 6 8 12
+single particle transformer net : d_model 256 output_dim 256
+single-particle tranformernet : ngrid 12 input dim 576 traj len 8 prep output dim 6
+!!!!! single par transformer_net 576 256 6 8 12
+multi particle net type gnn identity..........
+!!!!! multi par graph net  256 256 0 attention False
+!!!!! multi par graph net  256 256 0 attention False
+readout step net type mlp ..........
+!!!!! update step mlp_net 256 3 128 0.0
+!!!!! update step mlp_net 256 3 128 0.0
+create isocahedron object ....
+ velocity verletx 
+optim given .... adam ....
+loss weight .... [0, 0.125, 0, 0.25, 0, 0.5, 0, 1]...
+loss initialized: rthrsh 0.7 pethrsh 288.990 e weight 1 reg weight 10 reg weight2 0.01 weight len 8
+checkpoint initialized : net  LLUF_Lengavin(
+  (prepare_data): PrepareData(
+    (net): PWNet(
+      (layers): ModuleList(
+        (0): Linear(in_features=1, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=3, bias=True)
+      )
+    )
+  )
+  (LLUF_update_p): HalfStepUpdate(
+    (prepare_data): PrepareData(
+      (net): PWNet(
+        (layers): ModuleList(
+          (0): Linear(in_features=1, out_features=128, bias=True)
+          (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+          (4): Linear(in_features=128, out_features=3, bias=True)
+        )
+      )
+    )
+    (single_par): SingleParticle(
+      (net): SingleParticleTransformerNet(
+        (feat_embedder): Linear(in_features=72, out_features=256, bias=True)
+        (transformer): Sequential(
+          (0): EncoderLayer(
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (attn): MultiheadAttention(
+              (qkv): Linear(in_features=256, out_features=768, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=256, out_features=256, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (0): Linear(in_features=256, out_features=1024, bias=True)
+              (1): GELU(approximate='none')
+              (2): Dropout(p=0.0, inplace=False)
+              (3): Linear(in_features=1024, out_features=256, bias=True)
+              (4): GELU(approximate='none')
+              (5): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): EncoderLayer(
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (attn): MultiheadAttention(
+              (qkv): Linear(in_features=256, out_features=768, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=256, out_features=256, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (0): Linear(in_features=256, out_features=1024, bias=True)
+              (1): GELU(approximate='none')
+              (2): Dropout(p=0.0, inplace=False)
+              (3): Linear(in_features=1024, out_features=256, bias=True)
+              (4): GELU(approximate='none')
+              (5): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+    )
+    (multi_par): MultiParticles(
+      (net): MultiParticlesGraphNet(
+        (gcl_0): Identity()
+      )
+    )
+    (update_step): ReadoutStep(
+      (net): ReadoutStepMLPNet(
+        (mlp): Sequential(
+          (0): Linear(in_features=256, out_features=128, bias=True)
+          (1): Dropout(p=0.0, inplace=False)
+          (2): Linear(in_features=128, out_features=128, bias=True)
+          (3): Dropout(p=0.0, inplace=False)
+          (4): Linear(in_features=128, out_features=3, bias=True)
+          (5): Tanh()
+        )
+      )
+    )
+  )
+  (LLUF_update_q): HalfStepUpdate(
+    (prepare_data): PrepareData(
+      (net): PWNet(
+        (layers): ModuleList(
+          (0): Linear(in_features=1, out_features=128, bias=True)
+          (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+          (4): Linear(in_features=128, out_features=3, bias=True)
+        )
+      )
+    )
+    (single_par): SingleParticle(
+      (net): SingleParticleTransformerNet(
+        (feat_embedder): Linear(in_features=72, out_features=256, bias=True)
+        (transformer): Sequential(
+          (0): EncoderLayer(
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (attn): MultiheadAttention(
+              (qkv): Linear(in_features=256, out_features=768, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=256, out_features=256, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (0): Linear(in_features=256, out_features=1024, bias=True)
+              (1): GELU(approximate='none')
+              (2): Dropout(p=0.0, inplace=False)
+              (3): Linear(in_features=1024, out_features=256, bias=True)
+              (4): GELU(approximate='none')
+              (5): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): EncoderLayer(
+            (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (attn): MultiheadAttention(
+              (qkv): Linear(in_features=256, out_features=768, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=256, out_features=256, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (0): Linear(in_features=256, out_features=1024, bias=True)
+              (1): GELU(approximate='none')
+              (2): Dropout(p=0.0, inplace=False)
+              (3): Linear(in_features=1024, out_features=256, bias=True)
+              (4): GELU(approximate='none')
+              (5): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+    )
+    (multi_par): MultiParticles(
+      (net): MultiParticlesGraphNet(
+        (gcl_0): Identity()
+      )
+    )
+    (update_step): ReadoutStep(
+      (net): ReadoutStepMLPNet(
+        (mlp): Sequential(
+          (0): Linear(in_features=256, out_features=128, bias=True)
+          (1): Dropout(p=0.0, inplace=False)
+          (2): Linear(in_features=128, out_features=128, bias=True)
+          (3): Dropout(p=0.0, inplace=False)
+          (4): Linear(in_features=128, out_features=3, bias=True)
+          (5): Tanh()
+        )
+      )
+    )
+  )
+) opt  Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    decoupled_weight_decay: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0
+)
+begin ------- initial learning configurations -------- 
+0 init_config tau 0 : 1.451889e-01 tau 1 : 9.497871e-01 tau 2 : 9.719501e-01
+tau grad is None before gradient
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *emrse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 init_config p update function  cntr  0
+0 init_config p  force_stat.py, no stat to print
+0 init_config q update function  cntr  0
+0 init_config q  force_stat.py, no stat to print
+end  ------- initial learning configurations -------- 
+5 batches 
+
+1 train tau 0 : 1.451389e-01 tau 1 : 9.497688e-01 tau 2 : 9.719684e-01
+1 train tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 1 lr 1.00e-05 total 5665.143355701644 27325.948129606368 40682.50376832682 43754.292416332115 40848.28220671405 41219.99916023361 40475.1184489081 39767.37706434303
+ train 1 lr 1.00e-05 *qrmse 1.3541027176554723 1.948811133213899 2.027532225042168 2.0339555675307346 2.0063162133048635 2.0084752012356075 2.004446229913401 2.0046270184456256 -qmse 2.150042084181224 4.136846419335416 4.467311737711869 4.468529287107136 4.347371583713558 4.372533134484861 4.380270504965067 4.377890028502668 -qmae 2.0316216452640967 3.0088419962091755 3.161849624047425 3.1512706495353093 3.1111044593382253 3.1238886938586967 3.121534423402852 3.108640649172827
+ train 1 lr 1.00e-05 *prmse 1.1491564536116505 1.815545974001963 2.142363206580856 2.2065533417449914 2.165537704363112 2.174432450449692 2.157212930868568 2.1446393922786924 -pmse 1.8139305724989359 4.182040953438105 5.561921887056073 5.817962687007997 5.581513029706505 5.530221727725408 5.467884338210828 5.417692077521548 -pmae 1.73115727868296 2.7300833039391224 3.194773184746747 3.306096535172357 3.2465355244219993 3.269544146352092 3.248995986128505 3.242927520828116
+ train 1 lr 1.00e-05 *krmse 0.004325256446878934 0.008563687332283099 0.012729196152151689 0.016799831944821108 0.021079851143420193 0.027127036620474443 0.03485962953751296 0.04358781372843161 -kmae 0.004325256446878934 0.008563687332283099 0.012729196152151689 0.016799831944821108 0.021079851143420193 0.027127036620474443 0.03485962953751296 0.04358781372843161
+ train 1 lr 1.00e-05 *urmse 153708166.21761435 535207749.05662185 143182871.76329765 13986530.607826108 163569805.752371 133000797.49109718 307245212.29005605 271931846.4979929 -umae 153708166.21761435 535207749.05662185 143182871.76329765 13986530.607826108 163569805.752371 133000797.49109718 307245212.29005605 271931846.4979929
+ train 1 lr 1.00e-05 *ermse 153708166.21897438 535207749.0604801 143182871.77079067 13986530.620077515 163569805.77051157 133000797.51625204 307245212.3234061 271931846.54078364 -emae 153708166.21897438 535207749.0604801 143182871.77079067 13986530.620077515 163569805.77051157 133000797.51625204 307245212.3234061 271931846.54078364 *relurep 18235102518.62431 67190069625.57239 17100837805.456573 1292397558.6666315 19969650165.79065 10841479120.468092 38509983563.55155 31186389630.076527
+ train 1 lr 1.00e-05 qshape 3681.4167146829873 15481.7756972538 18053.26207950503 18280.10067132602 17248.142524842864 17351.344301943114 17210.877805126886 17232.668163267608 pshape 1972.7266410186573 11833.172432352572 22618.24168882178 25463.1917450061 23589.139681871187 23857.65485829049 23253.24064378121 22523.70890107543 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+1 train p update function  cntr  40
+For x axis: mean -0.0058 std 0.1371 min -0.1964 max 0.2470
+For y axis: mean -0.0060 std 0.1371 min -0.1996 max 0.2464
+1 train q update function  cntr  40
+For x axis: mean -0.0135 std 0.0450 min -0.0950 max 0.0712
+For y axis: mean -0.0136 std 0.0451 min -0.0929 max 0.0706
+ at t= 1
+time use for  1 epoches is: time usage : 0:00:08.092121 ( 0:00:08.092121 ) at t= 1
+saving file to  ././results/baseline_run/mbpw000001.pth
+checkpint to file  ././results/baseline_run/mbpw000001.pth
+0 checkpoint values tau 0 : 1.451389e-01 tau 1 : 9.497688e-01 tau 2 : 9.719684e-01
+0 checkpoint values tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+1 eval tau 0 : 1.451389e-01 tau 1 : 9.497688e-01 tau 2 : 9.719684e-01
+1 eval tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 1 lr 1.00e-05 total 5705.78374836256 27359.72772403654 40764.24272485105 43223.21646304533 40404.909072664974 40547.30855741704 40200.20213163502 38800.81000454502
+ eval 1 lr 1.00e-05 *qrmse 1.3578862366430227 1.9506799496083904 2.032037967236371 2.0216638765799404 1.997358866082072 1.9961934137028987 2.005954658420004 1.9868744617440832 -qmse 2.1622768471720564 4.149498428744832 4.479433679605066 4.431181472158306 4.320359098776631 4.313540036262389 4.365912145722994 4.276435692230109 -qmae 2.037700277697871 3.0125653456763986 3.1677777228017545 3.1377192878192814 3.102293621943197 3.1092260335786728 3.125850637139763 3.0893113047776986
+ eval 1 lr 1.00e-05 *prmse 1.148701992928902 1.8144692512291232 2.140636578560026 2.2041393058300045 2.1619418867893097 2.168342344114732 2.1492511613768825 2.136009758242845 -pmse 1.81309428310631 4.1786972069263255 5.55447991776388 5.804859612185067 5.561190463978283 5.501131024694732 5.428550895626422 5.366531993593097 -pmae 1.7303457251075223 2.7291041549914734 3.1951399448188886 3.3047318170146007 3.243302325658155 3.2632318188115796 3.2383498348750366 3.2311104701933657
+ eval 1 lr 1.00e-05 *krmse 0.0028794535181941193 0.005840108219072304 0.008895511010721257 0.012022495236830012 0.015247677966739204 0.018561619427648446 0.02195769524267168 0.025478391386419184 -kmae 0.0028794535181941193 0.005840108219072304 0.008895511010721257 0.012022495236830012 0.015247677966739204 0.018561619427648446 0.02195769524267168 0.025478391386419184
+ eval 1 lr 1.00e-05 *urmse 154179610.23632234 536163998.951583 141654093.46917668 14386427.249138275 174502693.97838742 129973641.9742178 312385898.9852448 271823329.163458 -umae 154179610.23632234 536163998.951583 141654093.46917668 14386427.249138275 174502693.97838742 129973641.9742178 312385898.9852448 271823329.163458
+ eval 1 lr 1.00e-05 *ermse 154179610.23752832 536163998.9543312 141654093.4738055 14386427.25597693 174502693.9877732 129973641.9864887 312385899.0008109 271823329.18281233 -emae 154179610.23752832 536163998.9543312 141654093.4738055 14386427.25597693 174502693.9877732 129973641.9864887 312385899.0008109 271823329.18281233 *relurep 18689252418.56303 59880610157.45333 16241280696.24678 1263938796.7016397 21294614073.93268 15610360584.705078 39019316396.38246 31613402705.141155
+ eval 1 lr 1.00e-05 qshape 3724.9485472967535 15545.298961895362 18209.175813898946 17859.430958057674 16957.171867678477 16939.35844565774 17273.416197048307 16616.404194292525 pshape 1969.835201065806 11803.428762141186 22544.066910952104 25352.785504987667 23436.737204986497 23596.9501117593 22915.78593458672 22173.405810252494 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+1 eval p update function  cntr  40
+For x axis: mean -0.0074 std 0.0856 min -0.1137 max 0.1274
+For y axis: mean -0.0076 std 0.0856 min -0.1160 max 0.1304
+1 eval q update function  cntr  40
+For x axis: mean -0.0094 std 0.0641 min -0.1043 max 0.0828
+For y axis: mean -0.0095 std 0.0643 min -0.1100 max 0.0827
+5 batches 
+
+2 train tau 0 : 1.450980e-01 tau 1 : 9.497791e-01 tau 2 : 9.719489e-01
+2 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 2 lr 1.00e-05 total 5734.397228116277 27408.587759198133 40833.54271125355 43056.76749620687 40356.8798244286 40531.86281731069 40069.17579987935 39193.40610802175
+ train 2 lr 1.00e-05 *qrmse 1.360599546493774 1.9526593556283216 2.034464599065709 2.017619755261383 1.9961829483301023 1.9980386812128272 2.005469167688079 2.001607563381053 -qmse 2.1689340144349245 4.157970653090841 4.491527482948954 4.419601961929784 4.3161541720612595 4.334515606232076 4.361349100180999 4.3381009391329055 -qmae 2.041615108991251 3.0157425262678865 3.172653480940699 3.132279377831276 3.0983114029131387 3.113996338368286 3.124538215650724 3.1088475750491966
+ train 2 lr 1.00e-05 *prmse 1.1485408047486172 1.8141627493995056 2.140271385034821 2.203387718052773 2.1610280281816 2.166494619920518 2.146550090832112 2.1329390550765197 -pmse 1.8128139205738745 4.1775895029925065 5.552044091097249 5.800593515350726 5.554610376472188 5.4917559985775055 5.415950078543737 5.350162585817905 -pmae 1.730126002160582 2.728856728850727 3.1962685057195044 3.3045312221600183 3.2420389607803983 3.260867710682426 3.234962700402998 3.2255018454372277
+ train 2 lr 1.00e-05 *krmse 0.0019980387318031534 0.004025079230319006 0.0060925442431688515 0.00817759636241564 0.010306022983758 0.012467845480842722 0.014659196681376363 0.016923653682893967 -kmae 0.0019980387318031534 0.004025079230319006 0.0060925442431688515 0.00817759636241564 0.010306022983758 0.012467845480842722 0.014659196681376363 0.016923653682893967
+ train 2 lr 1.00e-05 *urmse 154427001.62557265 536009245.09448755 140344141.16175532 14329055.98050202 176146010.5187522 129452495.68050566 317247694.37221324 273352412.48233736 -umae 154427001.62557265 536009245.09448755 140344141.16175532 14329055.98050202 176146010.5187522 129452495.68050566 317247694.37221324 273352412.48233736
+ train 2 lr 1.00e-05 *ermse 154427001.62647313 536009245.0963764 140344141.16472045 14329055.984622186 176146010.52411112 129452495.68718883 317247694.3803843 273352412.49225205 -emae 154427001.62647313 536009245.0963764 140344141.16472045 14329055.984622186 176146010.52411112 129452495.68718883 317247694.3803843 273352412.49225205 *relurep 17655602465.86969 60684898466.49846 16335894216.123636 1350453996.7371666 21141680218.952877 15542623614.57396 31909248868.95536 27159213421.59256
+ train 2 lr 1.00e-05 qshape 3754.517273752059 15600.210041535998 18290.583641092413 17724.906194470117 16947.447318506423 17002.013030324288 17251.565375154205 17125.3785351786 pshape 1968.8799543642176 11797.377717662135 22531.959070161138 25320.86130173676 23398.432505922177 23518.849786986404 22806.610424725153 22057.027572843144 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+2 train p update function  cntr  40
+For x axis: mean -0.0118 std 0.0571 min -0.1130 max 0.1274
+For y axis: mean -0.0119 std 0.0570 min -0.1126 max 0.1304
+2 train q update function  cntr  40
+For x axis: mean -0.0127 std 0.0801 min -0.1544 max 0.0982
+For y axis: mean -0.0128 std 0.0803 min -0.1584 max 0.0938
+ at t= 2
+time use for  1 epoches is: time usage : 0:00:17.042055 ( 0:00:08.949934 ) at t= 2
+saving file to  ././results/baseline_run/mbpw000002.pth
+checkpint to file  ././results/baseline_run/mbpw000002.pth
+0 checkpoint values tau 0 : 1.450980e-01 tau 1 : 9.497791e-01 tau 2 : 9.719489e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+2 eval tau 0 : 1.450980e-01 tau 1 : 9.497791e-01 tau 2 : 9.719489e-01
+2 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 2 lr 1.00e-05 total 5755.551789567046 27457.97982783014 40901.43322916559 42721.80675471465 40500.843480415424 40514.46012999754 40105.32058011162 39298.79373093432
+ eval 2 lr 1.00e-05 *qrmse 1.3625655525139693 1.954473338746031 2.0371704186079733 2.0087646779420654 2.0007021384983643 1.9995909984784412 2.0090684606008664 2.0072845806313033 -qmse 2.1746777362041287 4.167094155333686 4.499909966013381 4.385938833257832 4.3254983442716535 4.3445945667103985 4.379618336667326 4.364366159840847 -qmae 2.045627272196406 3.020656361685206 3.1783176020839474 3.122985843570593 3.0979616476164793 3.120587919324152 3.133264194667599 3.122004692868088
+ eval 2 lr 1.00e-05 *prmse 1.1483149261699293 1.8136641261589639 2.1396296759646165 2.2028699468141157 2.160086022821448 2.1648019253768482 2.144085762341112 2.1310095439990024 -pmse 1.8125481715220257 4.1765346113055815 5.549727907097553 5.796597421557139 5.548518340018337 5.483075060772745 5.404234902583513 5.33503014400735 -pmae 1.729769894245814 2.7283721073232714 3.1969016718453416 3.3044235772582 3.241370444122591 3.2597552458026646 3.232230314892662 3.224207886090042
+ eval 2 lr 1.00e-05 *krmse 0.0008133696238170618 0.0016204910872527733 0.002433839996980969 0.0032308743513663972 0.004074941849481761 0.004952015088680461 0.005843388138894378 0.0067587492413879735 -kmae 0.0008133696238170618 0.0016204910872527733 0.002433839996980969 0.0032308743513663972 0.004074941849481761 0.004952015088680461 0.005843388138894378 0.0067587492413879735
+ eval 2 lr 1.00e-05 *urmse 154593375.57888976 536316154.736488 141162809.59428877 14610640.643713754 181152136.34666914 127515859.97452435 318717601.8693495 281157116.75708437 -umae 154593375.57888976 536316154.736488 141162809.59428877 14610640.643713754 181152136.34666914 127515859.97452435 318717601.8693495 281157116.75708437
+ eval 2 lr 1.00e-05 *ermse 154593375.57929477 536316154.73716223 141162809.5950932 14610640.644498985 181152136.34728697 127515859.97482857 318717601.86928356 281157116.75670165 -emae 154593375.57929477 536316154.73716223 141162809.5950932 14610640.644498985 181152136.34728697 127515859.97482857 318717601.86928356 281157116.75670165 *relurep 18262145833.73823 61976508304.50425 16721131733.947292 1342141640.877277 22276402589.935116 10069561701.605518 32586543904.47828 34258764413.50119
+ eval 2 lr 1.00e-05 qshape 3777.166866810649 15663.695535493936 18386.252709743687 17413.29569634387 17131.071254418894 17054.90642900136 17400.500322222855 17310.558238479698 pshape 1967.3849227563965 11783.284292336204 22504.180519421905 25297.51105837078 23358.77222599653 23448.55370099618 22693.820257888758 21977.235492454623 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+2 eval p update function  cntr  40
+For x axis: mean -0.0103 std 0.0248 min -0.0539 max 0.0425
+For y axis: mean -0.0104 std 0.0248 min -0.0566 max 0.0459
+2 eval q update function  cntr  40
+For x axis: mean -0.0107 std 0.0989 min -0.1591 max 0.1064
+For y axis: mean -0.0108 std 0.0991 min -0.1650 max 0.1061
+5 batches 
+
+3 train tau 0 : 1.451017e-01 tau 1 : 9.497690e-01 tau 2 : 9.719284e-01
+3 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 3 lr 1.00e-05 total 5755.674209830626 27464.864512227738 40867.99880037752 42579.86122237012 40594.47089541506 40478.93736978709 40155.525894812126 39330.008292594124
+ train 3 lr 1.00e-05 *qrmse 1.3626210205598408 1.9545764901871414 2.036274018842973 2.0049631712386846 2.003543501199708 1.9993664391174506 2.0111751878086634 2.008803912930867 -qmse 2.1751518451854954 4.168074404631733 4.494815576466172 4.370891925059074 4.336493228721878 4.342296840909585 4.391994052650631 4.369084829411566 -qmae 2.0459892677280394 3.021301684944511 3.1767184615118484 3.1201479345192453 3.1025818217014427 3.121685347210385 3.1381463427572074 3.1326252513832915
+ train 3 lr 1.00e-05 *prmse 1.1482687635968394 1.8136459698984448 2.1395806795382977 2.202686773941271 2.1598117583555325 2.164189277428007 2.1434438019432784 2.130588829002117 -pmse 1.8124688534455484 4.176228707930865 5.549093119053568 5.795538732482285 5.546957450568856 5.480954365786223 5.401513825598902 5.3316240400280765 -pmae 1.729726600733803 2.7284760819314378 3.1972326345394313 3.304232532011933 3.24120722536014 3.258807102914524 3.2317159499937604 3.224084055406211
+ train 3 lr 1.00e-05 *krmse 0.0005660627941241003 0.0011292206168990182 0.0017022636056812646 0.0022709564584140196 0.0029353443202523753 0.003763866311035291 0.004621883831305462 0.005483622812747923 -kmae 0.0005660627941241003 0.0011292206168990182 0.0017022636056812646 0.0022709564584140196 0.0029353443202523753 0.003763866311035291 0.004621883831305462 0.005483622812747923
+ train 3 lr 1.00e-05 *urmse 154712511.0855631 536565788.69491434 142242426.46019727 14659773.770531237 181128076.53841186 127218660.71696071 319250693.2080308 287739258.5166178 -umae 154712511.0855631 536565788.69491434 142242426.46019727 14659773.770531237 181128076.53841186 127218660.71696071 319250693.2080308 287739258.5166178
+ train 3 lr 1.00e-05 *ermse 154712511.08565232 536565788.69490737 142242426.4599058 14659773.769758817 181128076.53696233 127218660.71464252 319250693.2047511 287739258.5124075 -emae 154712511.08565232 536565788.69490737 142242426.4599058 14659773.769758817 181128076.53696233 127218660.71464252 319250693.2047511 287739258.5124075 *relurep 18167773593.64353 60553061524.16785 16513647718.375656 1053774497.3687346 22070527088.778408 15404737762.449265 40366721003.07348 35135064645.6195
+ train 3 lr 1.00e-05 qshape 3777.548738684623 15671.407181314124 18355.003557300723 17278.81754347153 17235.471333205438 17044.016521144404 17479.222987046356 17358.68013325388 pshape 1967.1254711460017 11782.457330913614 22501.995243076795 25290.04367889859 23347.999562209625 23423.920848642687 22665.302907765774 21960.32815934024 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+3 train p update function  cntr  40
+For x axis: mean -0.0046 std 0.0179 min -0.0539 max 0.0416
+For y axis: mean -0.0047 std 0.0179 min -0.0566 max 0.0459
+3 train q update function  cntr  40
+For x axis: mean -0.0070 std 0.1051 min -0.1639 max 0.1342
+For y axis: mean -0.0071 std 0.1053 min -0.1698 max 0.1322
+ at t= 3
+time use for  1 epoches is: time usage : 0:00:25.978261 ( 0:00:08.936206 ) at t= 3
+saving file to  ././results/baseline_run/mbpw000003.pth
+checkpint to file  ././results/baseline_run/mbpw000003.pth
+0 checkpoint values tau 0 : 1.451017e-01 tau 1 : 9.497690e-01 tau 2 : 9.719284e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+3 eval tau 0 : 1.451017e-01 tau 1 : 9.497690e-01 tau 2 : 9.719284e-01
+3 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 3 lr 1.00e-05 total 5756.564306950177 27479.62212160934 40907.95685139467 42710.40611625237 40749.12816792836 40513.25818144946 39988.069812446316 39072.54151548915
+ eval 3 lr 1.00e-05 *qrmse 1.3626884850916299 1.95501987579236 2.0374062001956283 2.0086493433674413 2.007958618698391 2.00123780874385 2.007538023114742 2.0017131798014236 -qmse 2.1749276749518507 4.170288458537 4.4968934840851835 4.387106978532123 4.361762864668028 4.346296556544741 4.37275339473773 4.336252730972193 -qmae 2.0466342174839753 3.023535269465376 3.180867395214121 3.1270727444066013 3.1136632507647026 3.1294986638712503 3.1325605089022184 3.119067575791921
+ eval 3 lr 1.00e-05 *prmse 1.1482227235456361 1.8136097845658266 2.139537803575124 2.2026225936571886 2.159614269480896 2.1635098064324794 2.142711239480619 2.1300450457134206 -pmse 1.812370544551655 4.175867819320955 5.54836221799142 5.794386038114316 5.545346659562279 5.478759759616418 5.398727970341337 5.328300864636855 -pmae 1.729520027726173 2.7284493059578296 3.1970196753917692 3.304283249276041 3.241186452049918 3.257487211126256 3.2301475216894944 3.2232097355768246
+ eval 3 lr 1.00e-05 *krmse 0.00041277339290992645 0.0010194079037231906 0.0018498297224850857 0.0029342303006063553 0.004256626417471754 0.0058066769662630914 0.007470181095339035 0.009101146466276511 -kmae 0.00041277339290992645 0.0010194079037231906 0.0018498297224850857 0.0029342303006063553 0.004256626417471754 0.0058066769662630914 0.007470181095339035 0.009101146466276511
+ eval 3 lr 1.00e-05 *urmse 154598961.48371923 536530581.1421444 142819458.15081233 14766876.994086515 182445818.43829888 124964208.9983603 321926315.6995201 288761055.0083285 -umae 154598961.48371923 536530581.1421444 142819458.15081233 14766876.994086515 182445818.43829888 124964208.9983603 321926315.6995201 288761055.0083285
+ eval 3 lr 1.00e-05 *ermse 154598961.48333153 536530581.1411413 142819458.14896247 14766876.991152287 182445818.43404227 124964208.99255364 321926315.69204986 288761054.99922734 -emae 154598961.48333153 536530581.1411413 142819458.14896247 14766876.991152287 182445818.43404227 124964208.99255364 321926315.69204986 288761054.99922734 *relurep 16651663050.399158 59143792526.05818 12607146673.9127 1055264479.1221492 22466928632.588493 15126330825.778477 32215749293.244984 34864977875.27409
+ eval 3 lr 1.00e-05 qshape 3778.747336838129 15687.536447507639 18397.205911349327 17412.64194434585 17397.74555264879 17107.567885791483 17343.627064944776 17124.066275069104 pshape 1966.8169701120485 11781.085674101701 22499.75094004535 25286.764171906525 23340.382615279574 23394.69029565798 22633.442747501533 21937.475240420048 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+3 eval p update function  cntr  40
+For x axis: mean 0.0077 std 0.0165 min -0.0359 max 0.0421
+For y axis: mean 0.0077 std 0.0164 min -0.0390 max 0.0452
+3 eval q update function  cntr  40
+For x axis: mean 0.0020 std 0.1099 min -0.1550 max 0.1408
+For y axis: mean 0.0019 std 0.1101 min -0.1610 max 0.1398
+5 batches 
+
+4 train tau 0 : 1.451279e-01 tau 1 : 9.497497e-01 tau 2 : 9.719149e-01
+4 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 4 lr 1.00e-05 total 5749.2027884616855 27443.4444427862 40890.81988523468 42846.81804411412 40806.851938194166 40393.59953644046 39961.803914692675 38863.54911239094
+ train 4 lr 1.00e-05 *qrmse 1.3619682844899526 1.9537491337993829 2.0369210750758153 2.012613547622625 2.0098282381377834 1.998032442131396 2.0070766153367074 1.9954532304262738 -qmse 2.173216704308071 4.164050060029252 4.493684162858175 4.400757966212949 4.373167886132339 4.328129566221845 4.371459767020377 4.308697671540418 -qmae 2.0454685322350934 3.021655652263386 3.180073474892642 3.1327055802174577 3.1189613457108125 3.1254940520893966 3.126816667231206 3.1073722037031652
+ train 4 lr 1.00e-05 *prmse 1.1482211059810115 1.8136525513613968 2.139474127682027 2.2025218340231154 2.159539220460352 2.1632869939714836 2.142581301444385 2.129881847820608 -pmse 1.8123316671129692 4.175736759258383 5.548140087037114 5.794094927389336 5.545008047361686 5.478386491656211 5.39838775612029 5.32804297031832 -pmae 1.7295001213998749 2.728464592766777 3.1965154377218696 3.304114148085252 3.2410383142969947 3.2572210663851267 3.2292573618015035 3.22317337791
+ train 4 lr 1.00e-05 *krmse 0.0005861899855792663 0.001337661346536545 0.0022890117595186334 0.0034974888617912425 0.00495589538787411 0.0066360653961178295 0.008414145012176633 0.010129220899870473 -kmae 0.0005861899855792663 0.001337661346536545 0.0022890117595186334 0.0034974888617912425 0.00495589538787411 0.0066360653961178295 0.008414145012176633 0.010129220899870473
+ train 4 lr 1.00e-05 *urmse 154494628.94808894 536823069.5020107 142168980.87053302 14824806.150949895 182169073.64786524 123897798.59887584 323140592.03333664 291201381.14437425 -umae 154494628.94808894 536823069.5020107 142168980.87053302 14824806.150949895 182169073.64786524 123897798.59887584 323140592.03333664 291201381.14437425
+ train 4 lr 1.00e-05 *ermse 154494628.94756025 536823069.5007248 142168980.86825854 14824806.147452408 182169073.64290935 123897798.59223978 323140592.0249225 291201381.13424504 -emae 154494628.94756025 536823069.5007248 142168980.86825854 14824806.147452408 182169073.64290935 123897798.59223978 323140592.0249225 291201381.13424504 *relurep 18912722968.038612 58575168786.07682 16192074039.670849 1390752261.8592503 22038146833.587997 15247207564.900244 33138006844.323322 35379828306.51466
+ train 4 lr 1.00e-05 qshape 3771.411210824282 15650.866855995304 18383.59264917263 17553.9519844639 17457.881301979873 16997.31117559924 17323.018415611405 16923.29308821353 pshape 1966.7915776374036 11781.577586790896 22496.227236062055 25281.866059650223 23337.970636214293 23385.288360841216 22627.785499081267 21929.256024177408 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+4 train p update function  cntr  40
+For x axis: mean 0.0151 std 0.0222 min -0.0364 max 0.0732
+For y axis: mean 0.0151 std 0.0221 min -0.0408 max 0.0786
+4 train q update function  cntr  40
+For x axis: mean 0.0061 std 0.1067 min -0.1550 max 0.1491
+For y axis: mean 0.0060 std 0.1069 min -0.1558 max 0.1483
+ at t= 4
+time use for  1 epoches is: time usage : 0:00:34.833667 ( 0:00:08.855406 ) at t= 4
+saving file to  ././results/baseline_run/mbpw000004.pth
+checkpint to file  ././results/baseline_run/mbpw000004.pth
+0 checkpoint values tau 0 : 1.451279e-01 tau 1 : 9.497497e-01 tau 2 : 9.719149e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+4 eval tau 0 : 1.451279e-01 tau 1 : 9.497497e-01 tau 2 : 9.719149e-01
+4 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 4 lr 1.00e-05 total 5727.607206529343 27439.195152982742 40880.53263178134 42937.89739470425 40864.59362193056 40503.039761275446 39974.870091516015 38497.976505934974
+ eval 4 lr 1.00e-05 *qrmse 1.360048044184297 1.9534789194797355 2.036321211530477 2.015482864102346 2.011742887332909 2.0017136923395933 2.0078547706784926 1.9841304703972285 -qmse 2.1677723397543396 4.163434503285783 4.488604004462184 4.414982960497347 4.387744699386443 4.336544941101752 4.369480688538909 4.252746889555267 -qmae 2.042812588246112 3.0214420198654763 3.179390971412085 3.1370507999766124 3.1278314938234937 3.1309945112417243 3.124451498000325 3.091480235350379
+ eval 4 lr 1.00e-05 *prmse 1.148246702655173 1.813726280886104 2.1396498265013153 2.2023414038444487 2.1594024346276735 2.162785407356129 2.1425901745437934 2.1298635530821493 -pmse 1.8122992034933005 4.175639502552142 5.547992414481067 5.793943073835112 5.5449193477225975 5.478383870780012 5.398612587674937 5.328684038766321 -pmae 1.7295304278612111 2.728661795567548 3.195806110342734 3.3036503148210046 3.24090086550886 3.255824688904042 3.2285507720575737 3.2226679408183214
+ eval 4 lr 1.00e-05 *krmse 0.0010689342657230316 0.0022913205037759397 0.003698441701174593 0.005260516978519236 0.006983739565288883 0.00884682073263734 0.010761721224764287 0.012633191318611714 -kmae 0.0010689342657230316 0.0022913205037759397 0.003698441701174593 0.005260516978519236 0.006983739565288883 0.00884682073263734 0.010761721224764287 0.012633191318611714
+ eval 4 lr 1.00e-05 *urmse 154368362.844827 536760220.8793166 145832857.07703996 15107249.017073538 180640907.8462251 123474933.66727416 324052690.29514724 294424437.95948744 -umae 154368362.844827 536760220.8793166 145832857.07703996 15107249.017073538 180640907.8462251 123474933.66727416 324052690.29514724 294424437.95948744
+ eval 4 lr 1.00e-05 *ermse 154368362.84390405 536760220.8772615 145832857.0736398 15107249.01211391 180640907.83949083 123474933.65856954 324052690.28441477 294424437.94685423 -emae 154368362.84390405 536760220.8772615 145832857.0736398 15107249.01211391 180640907.83949083 123474933.65856954 324052690.28441477 294424437.94685423 *relurep 17760593209.817764 59165914811.91502 15695753666.197796 1173696647.3740146 22103241872.11976 15127310035.555676 40259804654.618835 36315625796.52431
+ eval 4 lr 1.00e-05 qshape 3749.6246435923485 15645.188019420832 18366.428498853453 17653.948319319286 17521.368702688687 17128.161876454044 17336.605622949508 16561.48384055275 pshape 1966.9825629369946 11783.007133561909 22503.104132927885 25272.949075384964 23332.224919241864 23363.87788482141 22627.264468566507 21925.49266538221 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+4 eval p update function  cntr  40
+For x axis: mean 0.0280 std 0.0307 min -0.0354 max 0.0832
+For y axis: mean 0.0280 std 0.0305 min -0.0373 max 0.0873
+4 eval q update function  cntr  40
+For x axis: mean 0.0147 std 0.1021 min -0.1221 max 0.1559
+For y axis: mean 0.0146 std 0.1023 min -0.1281 max 0.1541
+5 batches 
+
+5 train tau 0 : 1.451549e-01 tau 1 : 9.497266e-01 tau 2 : 9.719013e-01
+5 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 5 lr 1.00e-05 total 5710.130507346815 27436.336013565793 40850.98358352606 43030.93173601471 40765.41952815409 40654.25266788092 40048.416115460124 38389.05880181393
+ train 5 lr 1.00e-05 *qrmse 1.3585019336451496 1.9532431411351119 2.0353892105875255 2.018353531023952 2.0093367341739503 2.0064689492716163 2.0098605519463035 1.980053213535149 -qmse 2.1635040715752494 4.162589302208014 4.481955167296053 4.428427766404123 4.380486411128194 4.351682628494354 4.381796807995132 4.235515456317597 -qmae 2.0406402793435197 3.020578758144668 3.177970118619946 3.1405029164084843 3.1270102318481596 3.1361131140183645 3.128523574265474 3.0833571705310936
+ train 5 lr 1.00e-05 *prmse 1.1482561641692963 1.8137849054829709 2.1397366109881504 2.2022804501681916 2.1594305086270915 2.1626954278401116 2.1429948195008106 2.130337956078387 -pmse 1.8123133921670866 4.175713578206603 5.54819149098891 5.7943797269234505 5.545716238019067 5.479637258126486 5.400492291576375 5.331379221539311 -pmae 1.729530112393196 2.7287839399287845 3.195251540652561 3.303221488667841 3.240736729428723 3.255784238849768 3.2287013202763917 3.223596961565677
+ train 5 lr 1.00e-05 *krmse 0.0014054047639155075 0.002909533903831929 0.004506196870583445 0.006185100099158047 0.007959423942357801 0.009806935026991193 0.011650535049243672 0.013372280922978774 -kmae 0.0014054047639155075 0.002909533903831929 0.004506196870583445 0.006185100099158047 0.007959423942357801 0.009806935026991193 0.011650535049243672 0.013372280922978774
+ train 5 lr 1.00e-05 *urmse 154390752.51633143 536985880.3473612 148039147.22501236 14991736.227011537 179772661.88629848 123116184.96709207 324502254.33737 298128205.5664705 -umae 154390752.51633143 536985880.3473612 148039147.22501236 14991736.227011537 179772661.88629848 123116184.96709207 324502254.33737 298128205.5664705
+ train 5 lr 1.00e-05 *ermse 154390752.5152062 536985880.3449495 148039147.22114766 14991736.221527562 179772661.87902755 123116184.95789135 324502254.32624346 298128205.553624 -emae 154390752.5152062 536985880.3449495 148039147.22114766 14991736.221527562 179772661.87902755 123116184.95789135 324502254.32624346 298128205.553624 *relurep 18171293282.24862 62001282622.33507 17936917305.395 1423434847.9065762 22128830873.91465 14898674463.590353 33382042683.794453 29500865909.602467
+ train 5 lr 1.00e-05 qshape 3732.0568118373967 15640.941155925586 18333.82026742194 17750.522398809193 17421.00940941397 17283.004175897448 17393.20498269058 16435.377903060806 pshape 1967.073695509418 11784.394857640213 22506.163316104125 25269.40933720552 23333.410118740117 23360.24849198347 22644.211132769542 21942.68089875312 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+5 train p update function  cntr  40
+For x axis: mean 0.0355 std 0.0399 min -0.0413 max 0.1232
+For y axis: mean 0.0356 std 0.0397 min -0.0412 max 0.1238
+5 train q update function  cntr  40
+For x axis: mean 0.0192 std 0.0974 min -0.1217 max 0.1615
+For y axis: mean 0.0191 std 0.0977 min -0.1233 max 0.1591
+ at t= 5
+time use for  1 epoches is: time usage : 0:00:43.735010 ( 0:00:08.901343 ) at t= 5
+saving file to  ././results/baseline_run/mbpw000005.pth
+checkpint to file  ././results/baseline_run/mbpw000005.pth
+0 checkpoint values tau 0 : 1.451549e-01 tau 1 : 9.497266e-01 tau 2 : 9.719013e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+5 eval tau 0 : 1.451549e-01 tau 1 : 9.497266e-01 tau 2 : 9.719013e-01
+5 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 5 lr 1.00e-05 total 5697.230743814952 27393.389436458947 40795.97765993049 43220.39538256588 40829.56115066536 40775.784066374574 39873.87760450077 38243.97254523983
+ eval 5 lr 1.00e-05 *qrmse 1.3572657861001727 1.951810386167907 2.0335992640441654 2.0237279253322216 2.011208814164966 2.0100568487273893 2.0045114398415462 1.975460260879385 -qmse 2.160126709648318 4.155331691653404 4.474384345553066 4.447817961553075 4.391918715800413 4.356352752356117 4.352730491821735 4.215922409288174 -qmae 2.0386619491518605 3.0183462027260544 3.1753452428637496 3.147610334232371 3.1320021717665876 3.139823652900118 3.1175231136968553 3.0757046083155117
+ eval 5 lr 1.00e-05 *prmse 1.1483280065358414 1.8139186576418616 2.139867467856083 2.2022489159080223 2.159556070741833 2.1628631517573966 2.1434542118380553 2.1306113549961614 -pmse 1.8123178184187831 4.175773551302434 5.5484360246586935 5.794931952039866 5.546708746844384 5.481184215504991 5.4028035768085285 5.334672813996886 -pmae 1.7297012627779467 2.7288641316393383 3.1945218600835537 3.3030090308841102 3.241073388597948 3.255486891073717 3.228670411677128 3.223215556754333
+ eval 5 lr 1.00e-05 *krmse 0.0016762917596283345 0.003410705999595187 0.0051962390639206605 0.007021976387039652 0.008900751827404485 0.010809539031706738 0.012660550068013343 0.014323681162990032 -kmae 0.0016762917596283345 0.003410705999595187 0.0051962390639206605 0.007021976387039652 0.008900751827404485 0.010809539031706738 0.012660550068013343 0.014323681162990032
+ eval 5 lr 1.00e-05 *urmse 154084039.66626334 536758286.6999323 149743956.75995478 15623506.444629842 176788205.64959028 122734268.06555283 324832002.2882422 294587519.2022095 -umae 154084039.66626334 536758286.6999323 149743956.75995478 15623506.444629842 176788205.64959028 122734268.06555283 324832002.2882422 294587519.2022095
+ eval 5 lr 1.00e-05 *ermse 154084039.66510543 536758286.6975166 149743956.75617522 15623506.439382274 176788205.64276782 122734268.05707566 324832002.2781908 294587519.19088763 -emae 154084039.66510543 536758286.6975166 149743956.75617522 15623506.439382274 176788205.64276782 122734268.05707566 324832002.2781908 294587519.19088763 *relurep 11662764517.047298 60696762414.980896 16739772128.242146 1368989762.3731637 21647883743.223778 10003565887.278204 39872830150.207016 28960105119.920937
+ eval 5 lr 1.00e-05 qshape 3718.720153617378 15595.28152454141 18274.024870634854 17942.0719896099 17479.68632888816 17398.12534984992 17199.54937950489 16281.901878226601 pshape 1967.5105901975744 11787.107911917534 22510.95278929564 25267.323392955983 23338.8748217772 23366.65871652465 22663.32822499588 21951.07066701323 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+5 eval p update function  cntr  40
+For x axis: mean 0.0424 std 0.0522 min -0.0444 max 0.1323
+For y axis: mean 0.0425 std 0.0520 min -0.0445 max 0.1353
+5 eval q update function  cntr  40
+For x axis: mean 0.0224 std 0.0892 min -0.0820 max 0.1574
+For y axis: mean 0.0223 std 0.0894 min -0.0877 max 0.1550
+5 batches 
+
+6 train tau 0 : 1.451565e-01 tau 1 : 9.497065e-01 tau 2 : 9.718906e-01
+6 train tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 6 lr 1.00e-05 total 5687.316596188963 27392.38480865115 40762.522060753334 43265.77982391163 40795.846122367424 40881.96160839617 39852.71205761321 38247.62292016497
+ train 6 lr 1.00e-05 *qrmse 1.3563832560771794 1.9517526722205134 2.0328453114748406 2.0254606964188993 2.01084672864319 2.013522977324273 2.0043077234100024 1.9762356998593837 -qmse 2.1577544022345627 4.1548509047072395 4.471627711719267 4.454335587071028 4.387210640211114 4.370745662302003 4.352059776385802 4.222377321722559 -qmae 2.0373334965955983 3.0178234464312346 3.174590472428371 3.148322106357656 3.1311519027738215 3.1441853897449703 3.1190465912173275 3.073386491917194
+ train 6 lr 1.00e-05 *prmse 1.1483259074465728 1.813862566274518 2.139770924817283 2.2019751666877756 2.159392011045623 2.162694029823075 2.143358496571516 2.130366543708538 -pmse 1.8122739876185587 4.17560558108554 5.548106331001597 5.7944393972735355 5.5460593124653474 5.4803275009334635 5.401743098006221 5.33348546198399 -pmae 1.729766362114838 2.728844370826038 3.194262173695914 3.3025862421135783 3.2407494133148944 3.2554135355615075 3.2288883246518614 3.2228128091453834
+ train 6 lr 1.00e-05 *krmse 0.0017181447675721495 0.0034944504908538177 0.005323475332969796 0.007194329012786804 0.009121607410138321 0.011082453185417096 0.012983982097594016 0.01468644101904495 -kmae 0.0017181447675721495 0.0034944504908538177 0.005323475332969796 0.007194329012786804 0.009121607410138321 0.011082453185417096 0.012983982097594016 0.01468644101904495
+ train 6 lr 1.00e-05 *urmse 153992825.89527413 536894182.2254477 151238235.29458463 15686408.721218964 176642833.59345445 122549637.68611701 327018892.58624256 298282110.1516468 -umae 153992825.89527413 536894182.2254477 151238235.29458463 15686408.721218964 176642833.59345445 122549637.68611701 327018892.58624256 298282110.1516468
+ train 6 lr 1.00e-05 *ermse 153992825.8940696 536894182.2229283 151238235.29062992 15686408.715711972 176642833.58627287 122549637.67716908 327018892.575604 298282110.1396338 -emae 153992825.8940696 536894182.2229283 151238235.29062992 15686408.715711972 176642833.58627287 122549637.67716908 327018892.575604 298282110.1396338 *relurep 17640628953.625294 53945701925.61929 16167897375.525324 1526031797.9067976 21804248489.53015 15240662831.662659 33717558030.332195 37044061036.65242
+ train 6 lr 1.00e-05 qshape 3708.817801055412 15595.691870690842 18244.396309508582 18000.777890662117 17453.33073291081 17511.531010057202 17182.687428720026 16295.930202452098 pshape 1967.4987951335509 11785.692937960308 22507.125751244752 25254.001933249518 23331.51538945661 23359.430598338968 22659.024628893185 21940.692717712875 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+6 train p update function  cntr  40
+For x axis: mean 0.0422 std 0.0547 min -0.0421 max 0.1414
+For y axis: mean 0.0423 std 0.0545 min -0.0439 max 0.1450
+6 train q update function  cntr  40
+For x axis: mean 0.0214 std 0.0853 min -0.0819 max 0.1543
+For y axis: mean 0.0213 std 0.0856 min -0.0877 max 0.1549
+ at t= 6
+time use for  1 epoches is: time usage : 0:00:52.748511 ( 0:00:09.013501 ) at t= 6
+saving file to  ././results/baseline_run/mbpw000006.pth
+checkpint to file  ././results/baseline_run/mbpw000006.pth
+0 checkpoint values tau 0 : 1.451565e-01 tau 1 : 9.497065e-01 tau 2 : 9.718906e-01
+0 checkpoint values tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+6 eval tau 0 : 1.451565e-01 tau 1 : 9.497065e-01 tau 2 : 9.718906e-01
+6 eval tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 6 lr 1.00e-05 total 5687.751090425119 27352.358238447487 40717.48246325667 43275.681942536685 40587.45882013921 40760.895090460814 39703.7114761174 38224.55000777597
+ eval 6 lr 1.00e-05 *qrmse 1.3564788013825768 1.9507411431449662 2.031804367123624 2.026242553343274 2.0055764297763905 2.010574071107725 2.000654549125075 1.9771985896849302 -qmse 2.157971828546919 4.150188878358788 4.469121223211909 4.456151222287245 4.364889612582426 4.356318694243425 4.3368770609637695 4.229436523907003 -qmae 2.0368158722570775 3.015549811172336 3.1722700651695224 3.147874888623186 3.122351237277342 3.136767269850538 3.1129873812897637 3.0731959206212003
+ eval 6 lr 1.00e-05 *prmse 1.148273127794025 1.8136949327469956 2.1395697051946954 2.2016110741099117 2.158953667672905 2.162082213207565 2.142592377895786 2.129287032087239 -pmse 1.8121564624398672 4.175181189348398 5.547249975458181 5.7930227405152275 5.5439590097093925 5.477428421946003 5.398004760619058 5.328846342385496 -pmae 1.7297669221093712 2.7285874370187373 3.194019388941404 3.3022158198984757 3.2400654210756814 3.2547789176503317 3.2273873896351937 3.2207530361450205
+ eval 6 lr 1.00e-05 *krmse 0.001685835702471028 0.003466264527779761 0.005340570869091232 0.007297831659650966 0.009353397290264742 0.011516265812119064 0.01373183550422199 0.01572941381756283 -kmae 0.001685835702471028 0.003466264527779761 0.005340570869091232 0.007297831659650966 0.009353397290264742 0.011516265812119064 0.01373183550422199 0.01572941381756283
+ eval 6 lr 1.00e-05 *urmse 154028432.11721748 536889671.3473061 153658518.51429653 16589239.19331571 174307845.7849672 123065316.72745308 328518789.91467667 295002134.14434457 -umae 154028432.11721748 536889671.3473061 153658518.51429653 16589239.19331571 174307845.7849672 123065316.72745308 328518789.91467667 295002134.14434457
+ eval 6 lr 1.00e-05 *ermse 154028432.11615196 536889671.3450036 153658518.51057377 16589239.187991017 174307845.77785084 123065316.71838605 328518789.9036783 295002134.1316959 -emae 154028432.11615196 536889671.3450036 153658518.51057377 16589239.187991017 174307845.77785084 123065316.71838605 328518789.9036783 295002134.1316959 *relurep 18151127630.373737 67201273031.07285 15085838934.619732 1670638186.0720696 21116772073.25995 14953363011.73583 25443989495.102516 36402379052.91319
+ eval 6 lr 1.00e-05 qshape 3709.5990385994933 15559.766308200622 18207.543876596355 18026.822783343898 17264.23249232268 17416.721061726053 17064.868544001707 16316.232566416427 pshape 1967.1520518256264 11781.591930246865 22498.93858666031 25237.85915919278 23312.226327816526 23333.174028734753 22627.842932115695 21897.317441359548 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+6 eval p update function  cntr  40
+For x axis: mean 0.0373 std 0.0549 min -0.0422 max 0.1388
+For y axis: mean 0.0374 std 0.0547 min -0.0427 max 0.1410
+6 eval q update function  cntr  40
+For x axis: mean 0.0162 std 0.0807 min -0.0709 max 0.1421
+For y axis: mean 0.0161 std 0.0810 min -0.0766 max 0.1401
+5 batches 
+
+7 train tau 0 : 1.451458e-01 tau 1 : 9.497098e-01 tau 2 : 9.718773e-01
+7 train tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 7 lr 1.00e-05 total 5695.420621442756 27348.410648875368 40725.37306266873 43219.04623139709 40523.57712856821 40558.125136297684 39825.350208669355 38212.49236142456
+ train 7 lr 1.00e-05 *qrmse 1.3571755894817725 1.9506892251632935 2.0322490148586754 2.0249418939197783 2.0042276198576854 2.0053519828134916 2.005398398367794 1.9784422307672362 -qmse 2.1600258525027476 4.1500089003378005 4.4730827587353374 4.4514597540579555 4.360620851003243 4.3347885719438795 4.357143630873351 4.2333740466148 -qmae 2.0377460895455974 3.0153853490765794 3.172215392182686 3.1462135377676943 3.1185725058772222 3.1277739864580107 3.121266103907782 3.0751833221930744
+ train 7 lr 1.00e-05 *prmse 1.1482408461168099 1.8136071080588407 2.1393889339823415 2.201327248047413 2.158457992391886 2.161466498214938 2.141583623534197 2.1282514647652766 -pmse 1.8120401087730484 4.174730803923962 5.546279766121124 5.791355938478827 5.541443489108796 5.473874356098145 5.393290316503515 5.322903783907355 -pmae 1.7297530437756403 2.728445403189345 3.194209605942983 3.301884284036457 3.2393760507979423 3.25408045498338 3.2261007957647627 3.2192786807006493
+ train 7 lr 1.00e-05 *krmse 0.0015268377663520516 0.0032416319767788913 0.005203571487680336 0.007372606614055676 0.009760081506621842 0.012329153109786061 0.01495265288332146 0.017417994139949156 -kmae 0.0015268377663520516 0.0032416319767788913 0.005203571487680336 0.007372606614055676 0.009760081506621842 0.012329153109786061 0.01495265288332146 0.017417994139949156
+ train 7 lr 1.00e-05 *urmse 154154079.8039087 537022788.303126 153739174.27870914 17027029.157772798 174253024.73111337 124055337.59371173 332051542.9756632 296500745.13911015 -umae 154154079.8039087 537022788.303126 153739174.27870914 17027029.157772798 174253024.73111337 124055337.59371173 332051542.9756632 296500745.13911015
+ train 7 lr 1.00e-05 *ermse 154154079.8028844 537022788.3008201 153739174.27484927 17027029.152088273 174253024.72332376 124055337.58357076 332051542.9631082 296500745.1243552 -emae 154154079.8028844 537022788.3008201 153739174.27484927 17027029.152088273 174253024.72332376 124055337.58357076 332051542.9631082 296500745.1243552 *relurep 18117185280.615902 62005506448.75897 18831686681.088676 1711932694.907021 14141453249.571629 15092056443.458761 33574990314.145226 29205261728.453552
+ train 7 lr 1.00e-05 qshape 3717.4671475959854 15557.589796324773 18222.52536193717 17983.370099216983 17221.626031769167 17240.574840487836 17230.25470935105 16344.142810469759 pshape 1966.9534738467696 11779.820852550594 22491.847700731563 25224.6761321801 23290.951096799043 23306.550295809848 22584.095499318308 21857.349550954797 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+7 train p update function  cntr  40
+For x axis: mean 0.0329 std 0.0482 min -0.0357 max 0.1375
+For y axis: mean 0.0330 std 0.0481 min -0.0356 max 0.1406
+7 train q update function  cntr  40
+For x axis: mean 0.0128 std 0.0836 min -0.0830 max 0.1430
+For y axis: mean 0.0127 std 0.0839 min -0.0858 max 0.1441
+ at t= 7
+time use for  1 epoches is: time usage : 0:01:01.661815 ( 0:00:08.913304 ) at t= 7
+saving file to  ././results/baseline_run/mbpw000007.pth
+checkpint to file  ././results/baseline_run/mbpw000007.pth
+0 checkpoint values tau 0 : 1.451458e-01 tau 1 : 9.497098e-01 tau 2 : 9.718773e-01
+0 checkpoint values tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+7 eval tau 0 : 1.451458e-01 tau 1 : 9.497098e-01 tau 2 : 9.718773e-01
+7 eval tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 7 lr 1.00e-05 total 5705.198984866439 27364.894710878143 40702.928933946314 43095.07044342723 40569.02079315811 40429.18816849252 39744.76685768647 37998.5411893888
+ eval 7 lr 1.00e-05 *qrmse 1.3581932007745903 1.9513957009708514 2.032102467181916 2.0219232597933683 2.0061944785748698 2.0023231889189477 2.004250546158407 1.9737243189477607 -qmse 2.162887700955643 4.153804792762615 4.473182779449602 4.439135535318009 4.366786021479055 4.325779681308034 4.351425515563606 4.206871757611171 -qmae 2.039282759995608 3.016420197367419 3.171092677455559 3.1417840341189196 3.12059007949462 3.124997263464837 3.120200941547779 3.070032825699239
+ eval 7 lr 1.00e-05 *prmse 1.14810800555111 1.8132884808732048 2.1390116053242467 2.200937825307341 2.1579463928846545 2.1606767410048215 2.140362162596797 2.126796543191478 -pmse 1.811874231364392 4.174088112570443 5.544923314551098 5.7890793397714155 5.538035022326637 5.469109958079138 5.386968535661201 5.31480244549149 -pmae 1.7295438810037056 2.728124724646294 3.194363196223121 3.3017023232739175 3.2386427571130127 3.2531352767983024 3.224725992134722 3.2172652440121565
+ eval 7 lr 1.00e-05 *krmse 0.0013875460947466501 0.0030845206021735683 0.00509621540238725 0.007400426730545795 0.01001061352917736 0.012889274556963714 0.015899304756235445 0.018815231736093053 -kmae 0.0013875460947466501 0.0030845206021735683 0.00509621540238725 0.007400426730545795 0.01001061352917736 0.012889274556963714 0.015899304756235445 0.018815231736093053
+ eval 7 lr 1.00e-05 *urmse 154185414.83684522 537145608.1438913 156132290.3470274 17622887.074656285 174205911.19462836 123731386.89645469 333504552.5138041 294402083.2568456 -umae 154185414.83684522 537145608.1438913 156132290.3470274 17622887.074656285 174205911.19462836 123731386.89645469 333504552.5138041 294402083.2568456
+ eval 7 lr 1.00e-05 *ermse 154185414.8357647 537145608.141357 156132290.34264928 17622887.068045646 174205911.18538344 123731386.8842076 333504552.498383 294402083.23837477 -emae 154185414.8357647 537145608.141357 156132290.34264928 17622887.068045646 174205911.18538344 123731386.8842076 333504552.498383 294402083.23837477 *relurep 19167275631.174824 56779913245.309006 19524392813.8319 1747831757.6385999 21091214504.20351 9844196634.194817 41411810643.3528 28037330694.298546
+ eval 7 lr 1.00e-05 qshape 3728.110955757489 15582.092446391329 18215.217338765848 17875.875722822995 17289.086696681134 17144.274045319475 17199.252577088744 16187.705348873502 pshape 1966.0880291089493 11771.802264486816 22476.711595180463 25208.194720604224 23268.934096476973 23273.91412317305 22534.514280597727 21799.83584051531 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+7 eval p update function  cntr  40
+For x axis: mean 0.0272 std 0.0378 min -0.0378 max 0.1082
+For y axis: mean 0.0274 std 0.0376 min -0.0350 max 0.1098
+7 eval q update function  cntr  40
+For x axis: mean 0.0096 std 0.0896 min -0.0903 max 0.1465
+For y axis: mean 0.0095 std 0.0899 min -0.0962 max 0.1448
+5 batches 
+
+8 train tau 0 : 1.451457e-01 tau 1 : 9.497204e-01 tau 2 : 9.718669e-01
+8 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 8 lr 1.00e-05 total 5713.175536390316 27363.102882848703 40702.606600186686 43054.649279665624 40580.044371162876 40408.90179041585 39693.07453383484 38073.92805627586
+ train 8 lr 1.00e-05 *qrmse 1.3589267818241535 1.9513891810626696 2.0322977278557537 2.0210955968433737 2.0067579551854626 2.0022122394006896 2.0034173128346837 1.9768537560293757 -qmse 2.165213552340774 4.1545313371618535 4.474938918197127 4.436907742798141 4.369968182187022 4.328014498186946 4.348661827620769 4.224689303695833 -qmae 2.0406020652143133 3.017022617722387 3.171873260830828 3.141988539241133 3.1232690888543377 3.12544110062248 3.1184981006682 3.076464076640234
+ train 8 lr 1.00e-05 *prmse 1.1480651764431933 1.8132075121512714 2.138880905297708 2.2007123605566705 2.1576321577543647 2.160194963889176 2.1397481730356605 2.126245650673253 -pmse 1.8117863945372483 4.173748891885637 5.54421871389467 5.787900322810297 5.536287676336452 5.466679579488735 5.383809394910939 5.310830573466167 -pmae 1.7294377535954877 2.7281077246684053 3.1946879286757968 3.3016453228673073 3.2383722580411343 3.2526691673815966 3.224321690936518 3.216608125628503
+ train 8 lr 1.00e-05 *krmse 0.0013291828050895128 0.003017487602487612 0.005071734330519084 0.007469239168829867 0.010225747336715618 0.013301681717008873 0.016551736587058684 0.019754908864128916 -kmae 0.0013291828050895128 0.003017487602487612 0.005071734330519084 0.007469239168829867 0.010225747336715618 0.013301681717008873 0.016551736587058684 0.019754908864128916
+ train 8 lr 1.00e-05 *urmse 154243768.10778323 537742589.6005894 157081813.81688568 18593097.91160561 174577693.50888315 123500625.89204423 334126704.61415684 287904916.7225989 -umae 154243768.10778323 537742589.6005894 157081813.81688568 18593097.91160561 174577693.50888315 123500625.89204423 334126704.61415684 287904916.7225989
+ train 8 lr 1.00e-05 *ermse 154243768.10673365 537742589.5980623 157081813.8124349 18593097.904786564 174577693.49923557 123500625.87914376 334126704.5977838 287904916.702844 -emae 154243768.10673365 537742589.5980623 157081813.8124349 18593097.904786564 174577693.49923557 123500625.87914376 334126704.5977838 287904916.702844 *relurep 18876844539.408897 60759341242.41426 15174761872.162811 1846663311.0280585 21497720299.680935 15023008391.964214 31942602601.56888 35611610802.35838
+ train 8 lr 1.00e-05 qshape 3736.353005799513 15582.429041847932 18220.715010152642 17845.52111386111 17313.591198704282 17144.38598429558 17172.97477430605 16284.865589177143 pshape 1965.8225305908022 11769.673841000777 22470.891590034036 25198.12816580452 23255.4531724586 23253.51580612028 22509.0997595288 21778.062467098724 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+8 train p update function  cntr  40
+For x axis: mean 0.0259 std 0.0319 min -0.0382 max 0.1072
+For y axis: mean 0.0261 std 0.0317 min -0.0318 max 0.1069
+8 train q update function  cntr  40
+For x axis: mean 0.0102 std 0.0942 min -0.0980 max 0.1593
+For y axis: mean 0.0101 std 0.0945 min -0.0997 max 0.1601
+ at t= 8
+time use for  1 epoches is: time usage : 0:01:10.462692 ( 0:00:08.800877 ) at t= 8
+saving file to  ././results/baseline_run/mbpw000008.pth
+checkpint to file  ././results/baseline_run/mbpw000008.pth
+0 checkpoint values tau 0 : 1.451457e-01 tau 1 : 9.497204e-01 tau 2 : 9.718669e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+8 eval tau 0 : 1.451457e-01 tau 1 : 9.497204e-01 tau 2 : 9.718669e-01
+8 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 8 lr 1.00e-05 total 5717.19594790106 27390.83008854884 40740.89329705077 42964.951757025556 40697.28979418987 40344.69606680343 39745.80031998149 38061.69861364983
+ eval 8 lr 1.00e-05 *qrmse 1.3593402921691775 1.9523413994401035 2.033539312211408 2.018693839636615 2.010190797282631 2.0011007351020704 2.006029537559649 1.9770211381668825 -qmse 2.16599808857478 4.158620430388015 4.478820635317827 4.426534896099643 4.386003420094075 4.324407539780733 4.358224935237061 4.2203351837014695 -qmae 2.0415729268183958 3.0191566765104536 3.1738917558279227 3.140402230304808 3.1281501147772235 3.12553157330471 3.1209991155140338 3.0796177788839274
+ eval 8 lr 1.00e-05 *prmse 1.147982988144227 1.8130280373274228 2.1386669790862904 2.200505266934022 2.157296342652008 2.159569150498752 2.1387745135636034 2.125266893981745 -pmse 1.8116606085743907 4.173272660798491 5.543229945397932 5.786272281038318 5.5339127236313495 5.46342329573189 5.379551072204579 5.305517767676029 -pmae 1.7293404878441578 2.727894896428514 3.1947962924380366 3.30146822307402 3.2378065710878787 3.251749619254832 3.2229156048587733 3.2152661575885455
+ eval 8 lr 1.00e-05 *krmse 0.0014038812497965125 0.0032188021060020723 0.005489087079068899 0.008351535444280356 0.011750501284340941 0.015646850658097056 0.0198249159783922 0.023951812928373874 -kmae 0.0014038812497965125 0.0032188021060020723 0.005489087079068899 0.008351535444280356 0.011750501284340941 0.015646850658097056 0.0198249159783922 0.023951812928373874
+ eval 8 lr 1.00e-05 *urmse 154348259.2696479 537232826.2301756 158773740.55389017 19246846.355972655 174969687.67830238 123821264.24016368 337316301.60805494 290110882.55785835 -umae 154348259.2696479 537232826.2301756 158773740.55389017 19246846.355972655 174969687.67830238 123821264.24016368 337316301.60805494 290110882.55785835
+ eval 8 lr 1.00e-05 *ermse 154348259.26832503 537232826.2270302 158773740.5484011 19246846.347621117 174969687.6665519 123821264.22451684 337316301.58823 290110882.5339066 -emae 154348259.26832503 537232826.2270302 158773740.5484011 19246846.347621117 174969687.6665519 123821264.22451684 337316301.58823 290110882.5339066 *relurep 18171446791.749886 67143762596.34251 15718251550.338964 1997175151.4481874 21609113470.621418 15055020759.137768 25940442891.36203 35780772214.77052
+ eval 8 lr 1.00e-05 qshape 3740.901026221778 15614.53009926785 18267.020803964442 17764.692735992063 17444.815595020737 17105.98586514209 17267.507662422773 16310.37412967254 pshape 1965.2949216792817 11765.29998928099 22462.872493086317 25189.259021033493 23241.474199169133 23227.710201661343 22467.29265755871 21740.324483977285 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+8 eval p update function  cntr  40
+For x axis: mean 0.0259 std 0.0228 min -0.0361 max 0.0876
+For y axis: mean 0.0261 std 0.0227 min -0.0283 max 0.0884
+8 eval q update function  cntr  40
+For x axis: mean 0.0134 std 0.1002 min -0.1010 max 0.1635
+For y axis: mean 0.0133 std 0.1005 min -0.1069 max 0.1619
+5 batches 
+
+9 train tau 0 : 1.451650e-01 tau 1 : 9.497121e-01 tau 2 : 9.718587e-01
+9 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ train 9 lr 1.00e-05 total 5713.980215382578 27390.719153820944 40743.45566109483 42969.631279550435 40684.43494447571 40361.348433639316 39767.651480204404 38110.1776146869
+ train 9 lr 1.00e-05 *qrmse 1.3590266899293368 1.9523950822325253 2.0337126947265167 2.019018324815863 2.009944757930121 2.001999730795233 2.0071087045627993 1.9790676948867365 -qmse 2.165065978302193 4.158785727138053 4.479036919459796 4.427914341427791 4.385376084454842 4.329145978021817 4.362104048152761 4.227234677444835 -qmae 2.041220188255985 3.019385869440344 3.1743477174282413 3.14064522394782 3.1277740978318187 3.1269935453315285 3.1229705363536375 3.081425843543302
+ train 9 lr 1.00e-05 *prmse 1.1479467626930675 1.812957772723222 2.1385721082583915 2.2003376122282305 2.157125037371107 2.15922413223306 2.1384478396641673 2.1248672166735405 -pmse 1.8116025359214611 4.17306147829182 5.542842377606588 5.78568004963028 5.533073334822579 5.462263756088185 5.378033461608885 5.3036730284246705 -pmae 1.7293199191843502 2.7278485317013095 3.1946683161024736 3.3012982971470315 3.2375571621037635 3.2512777922078078 3.2223894225116174 3.214515447704565
+ train 9 lr 1.00e-05 *krmse 0.001470222504590213 0.0033396278111791577 0.005662405851166308 0.00862631877295723 0.012150929554196655 0.016197115296321174 0.0205412976227203 0.02483580913099139 -kmae 0.001470222504590213 0.0033396278111791577 0.005662405851166308 0.00862631877295723 0.012150929554196655 0.016197115296321174 0.0205412976227203 0.02483580913099139
+ train 9 lr 1.00e-05 *urmse 154378972.83813775 537247506.5981882 159313454.24840164 20242267.017641634 174189163.78074178 123123783.99847038 337158202.1877304 286649646.5266015 -umae 154378972.83813775 537247506.5981882 159313454.24840164 20242267.017641634 174189163.78074178 123123783.99847038 337158202.1877304 286649646.5266015
+ train 9 lr 1.00e-05 *ermse 154378972.8367788 537247506.594949 159313454.24273923 20242267.009015314 174189163.76859084 123123783.98227327 337158202.167189 286649646.5017656 -emae 154378972.8367788 537247506.594949 159313454.24273923 20242267.009015314 174189163.76859084 123123783.98227327 337158202.167189 286649646.5017656 *relurep 16507475313.62439 53356847736.771 17363310270.839165 1882970316.4353435 14078718789.686375 14856110458.521866 41181358524.793884 35202643547.41121
+ train 9 lr 1.00e-05 qshape 3737.9142846688455 15616.017999310028 18273.231436443675 17776.352403340257 17438.856569991818 17136.796268187383 17303.358804806172 16375.196368583787 pshape 1965.065930713732 11763.701154510913 22459.224224651152 25182.278876210177 23234.57837448388 23213.552165451933 22453.292675398232 21723.981246103114 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+9 train p update function  cntr  40
+For x axis: mean 0.0266 std 0.0234 min -0.0361 max 0.0881
+For y axis: mean 0.0269 std 0.0233 min -0.0398 max 0.0912
+9 train q update function  cntr  40
+For x axis: mean 0.0157 std 0.0991 min -0.1010 max 0.1641
+For y axis: mean 0.0156 std 0.0994 min -0.1037 max 0.1643
+ at t= 9
+time use for  1 epoches is: time usage : 0:01:19.314776 ( 0:00:08.852084 ) at t= 9
+saving file to  ././results/baseline_run/mbpw000009.pth
+checkpint to file  ././results/baseline_run/mbpw000009.pth
+0 checkpoint values tau 0 : 1.451650e-01 tau 1 : 9.497121e-01 tau 2 : 9.718587e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+9 eval tau 0 : 1.451650e-01 tau 1 : 9.497121e-01 tau 2 : 9.718587e-01
+9 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ eval 9 lr 1.00e-05 total 5706.8922534050835 27381.896778045262 40740.2227339098 43011.37162263018 40652.63608551336 40338.07223143523 39691.62949013327 37914.83956659913
+ eval 9 lr 1.00e-05 *qrmse 1.3584130361878917 1.9522181214256302 2.0337082462541147 2.020630483047518 2.0094320952527256 2.001909753687555 2.0054650685167372 1.9738980057840692 -qmse 2.163370543468032 4.157770930088934 4.477627757741216 4.435670542753995 4.380979339808389 4.32818982697029 4.3575105688061395 4.206557513856782 -qmae 2.0402786427800463 3.0187498698556126 3.17426569625272 3.1423302448404375 3.1265001434018886 3.1277857271935092 3.1191621301289585 3.0733074388581696
+ eval 9 lr 1.00e-05 *prmse 1.1479292180361522 1.812866240830124 2.138452754604829 2.200025936986002 2.1568325420882006 2.1588276737599648 2.137998319912531 2.124294486176516 -pmse 1.811517029659419 4.172746562058306 5.542193667081129 5.784628821889646 5.531593001096771 5.460323643782877 5.375662411057317 5.30086348517789 -pmae 1.7293345178896922 2.7277321416108853 3.19446028496692 3.300889967214458 3.237063302915959 3.250871414767186 3.2215847078660445 3.2134651929291755
+ eval 9 lr 1.00e-05 *krmse 0.0015370084984535736 0.0034948092484677895 0.005944328798057663 0.009074118025066902 0.012802998998106618 0.01708691682657095 0.021691677385160736 0.026246450024732536 -kmae 0.0015370084984535736 0.0034948092484677895 0.005944328798057663 0.009074118025066902 0.012802998998106618 0.01708691682657095 0.021691677385160736 0.026246450024732536
+ eval 9 lr 1.00e-05 *urmse 154502044.36530098 537220551.6595067 162470479.74793378 21654091.516363848 173467571.57450625 124235029.18805459 341192388.2435695 287294392.2820629 -umae 154502044.36530098 537220551.6595067 162470479.74793378 21654091.516363848 173467571.57450625 124235029.18805459 341192388.2435695 287294392.2820629
+ eval 9 lr 1.00e-05 *ermse 154502044.36388224 537220551.6561153 162470479.74198943 21654091.50728973 173467571.56170326 124235029.17096767 341192388.2218779 287294392.2558164 -emae 154502044.36388224 537220551.6561153 162470479.74198943 21654091.50728973 173467571.56170326 124235029.17096767 341192388.2218779 287294392.2558164 *relurep 17944000492.69018 59864709568.0999 18340629260.930912 2324810680.8627872 20098948486.16961 15598876193.46539 34560357108.15881 36483976870.54843
+ eval 9 lr 1.00e-05 qshape 3730.939124002079 15609.748480696057 18275.106159907806 17833.112159770906 17420.226422457148 17130.632950834763 17245.895328955296 16202.785360731166 pshape 1964.9531294030044 11761.148297349204 22454.116574001997 25167.259462859267 23221.409663056216 23196.439280600476 22434.734161177967 21701.054205867957 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+9 eval p update function  cntr  40
+For x axis: mean 0.0260 std 0.0262 min -0.0502 max 0.0926
+For y axis: mean 0.0263 std 0.0261 min -0.0418 max 0.0931
+9 eval q update function  cntr  40
+For x axis: mean 0.0168 std 0.0958 min -0.0932 max 0.1607
+For y axis: mean 0.0168 std 0.0961 min -0.0991 max 0.1603
+5 batches 
+
+10 train tau 0 : 1.451970e-01 tau 1 : 9.497030e-01 tau 2 : 9.718589e-01
+10 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 10 lr 1.00e-05 total 5705.524112353894 27375.14374652012 40728.35038657116 43013.86775846874 40646.16748853627 40337.11445497582 39648.63554031166 37958.00874010894
+ train 10 lr 1.00e-05 *qrmse 1.358303509579963 1.9520372770718795 2.033479881772463 2.020941349421587 2.0095481887245454 2.0022375789213243 2.0045664165564223 1.9758713686889575 -qmse 2.1631019022188096 4.157034116738366 4.4767234317604006 4.437093570723558 4.381579567616864 4.328813389128622 4.3538560557594845 4.215489138225935 -qmae 2.0401532166283567 3.0185634557255967 3.174081295967386 3.142774877910351 3.1268937066769213 3.128023170959337 3.117225505256323 3.0752453749735555
+ train 10 lr 1.00e-05 *prmse 1.1479066033798713 1.812806792790908 2.138359687371295 2.199856159557911 2.1565930354320515 2.1585518369051884 2.137640961250752 2.123885550026781 -pmse 1.8114568392036254 4.172516611586742 5.54172113008285 5.783865505653606 5.53050080541853 5.458893664156071 5.3738971622571965 5.298699634198485 -pmae 1.729320206921382 2.727647562525641 3.194327083197684 3.3006049422060726 3.23671081686157 3.2504670883772904 3.2211015980390947 3.2126878629655073
+ train 10 lr 1.00e-05 *krmse 0.0015133330332907312 0.0034917865042958683 0.005984820405826108 0.009188045410748979 0.013020621510309716 0.01743538419426125 0.02219124187523336 0.026902968666898185 -kmae 0.0015133330332907312 0.0034917865042958683 0.005984820405826108 0.009188045410748979 0.013020621510309716 0.01743538419426125 0.02219124187523336 0.026902968666898185
+ train 10 lr 1.00e-05 *urmse 154549140.35786107 537137917.3869786 164140478.7119655 23095236.761664324 173136674.58506483 124068883.08576863 346281506.68147695 290870709.8655262 -umae 154549140.35786107 537137917.3869786 164140478.7119655 23095236.761664324 173136674.58506483 124068883.08576863 346281506.68147695 290870709.8655262
+ train 10 lr 1.00e-05 *ermse 154549140.3564581 537137917.38359 164140478.70598063 23095236.752476282 173136674.5720442 124068883.06833322 346281506.6592857 290870709.8386232 -emae 154549140.3564581 537137917.38359 164140478.70598063 23095236.752476282 173136674.5720442 124068883.06833322 346281506.6592857 290870709.8386232 *relurep 17360503922.515766 59078887971.50053 13998491185.348873 2474068642.076009 21150404308.462635 14578900067.056122 33034248302.84115 30228998387.486298
+ train 10 lr 1.00e-05 qshape 3729.713339333112 15604.478826999188 18267.134357483716 17843.79036245455 17424.46442094967 17141.514776870106 17217.097646888527 16262.302428379804 pshape 1964.8107730207835 11759.664919520934 22450.216029087445 25159.07739601419 23210.703067586604 23184.599678105715 22420.537893423138 21684.706311729133 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+10 train p update function  cntr  40
+For x axis: mean 0.0249 std 0.0266 min -0.0552 max 0.0945
+For y axis: mean 0.0252 std 0.0266 min -0.0418 max 0.0938
+10 train q update function  cntr  40
+For x axis: mean 0.0169 std 0.0954 min -0.0928 max 0.1607
+For y axis: mean 0.0168 std 0.0957 min -0.0991 max 0.1617
+ at t= 10
+time use for  1 epoches is: time usage : 0:01:28.234823 ( 0:00:08.920047 ) at t= 10
+saving file to  ././results/baseline_run/mbpw000010.pth
+checkpint to file  ././results/baseline_run/mbpw000010.pth
+0 checkpoint values tau 0 : 1.451970e-01 tau 1 : 9.497030e-01 tau 2 : 9.718589e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+10 eval tau 0 : 1.451970e-01 tau 1 : 9.497030e-01 tau 2 : 9.718589e-01
+10 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 10 lr 1.00e-05 total 5700.891342863321 27361.437893437036 40701.64998204118 43032.50885327409 40549.590094801366 40306.764864053264 39622.63347203462 37858.467327857375
+ eval 10 lr 1.00e-05 *qrmse 1.3579079950842523 1.9517142885987613 2.032933321074478 2.0217748548738257 2.0073327829707877 2.001685785054834 2.0043699274657008 1.9738158604617084 -qmse 2.161997309562627 4.155346824075075 4.4749497633242346 4.4397627422309425 4.3712351230790985 4.325753968205416 4.352764116385997 4.208189532888459 -qmae 2.03922337641202 3.017383636305797 3.172816473364246 3.142306080143316 3.122231709455696 3.1258551497821925 3.118010644582513 3.0700521673853913
+ eval 10 lr 1.00e-05 *prmse 1.1478808407125514 1.8127168920137016 2.1382041547225312 2.1996305282689668 2.1563341697159286 2.1582936984146324 2.1372665499219914 2.1232307728530935 -pmse 1.8113735716994384 4.172221724934508 5.541150440998001 5.782969794622192 5.5292329511964144 5.45713094107783 5.371627296147774 5.296010900861969 -pmae 1.729305672857178 2.727465346790823 3.1940330706821585 3.300253566853761 3.2361362899617894 3.2501797173999436 3.2203748164841586 3.2116906457518
+ eval 10 lr 1.00e-05 *krmse 0.001505320559333012 0.0035122411207408446 0.006039711406660331 0.009119848578454071 0.013019507105650984 0.017535583872232287 0.022416387309902207 0.02725487916196827 -kmae 0.001505320559333012 0.0035122411207408446 0.006039711406660331 0.009119848578454071 0.013019507105650984 0.017535583872232287 0.022416387309902207 0.02725487916196827
+ eval 10 lr 1.00e-05 *urmse 154582127.0563644 537130707.5750704 165930120.01106304 23411259.402539723 170506342.7468826 125694028.28807144 348367837.9998416 291993511.90581596 -umae 154582127.0563644 537130707.5750704 165930120.01106304 23411259.402539723 170506342.7468826 125694028.28807144 348367837.9998416 291993511.90581596
+ eval 10 lr 1.00e-05 *ermse 154582127.0550261 537130707.5717804 165930120.00517765 23411259.393419873 170506342.73386303 125694028.27053586 348367837.9774253 291993511.87856114 -emae 154582127.0550261 537130707.5717804 165930120.00517765 23411259.393419873 170506342.73386303 125694028.27053586 348367837.9774253 291993511.87856114 *relurep 19194333851.842476 60621505692.19456 20719924962.72096 2562089096.544558 20840236373.779366 10480198457.016836 40623820829.917404 37053951298.668106
+ eval 10 lr 1.00e-05 qshape 3725.2578896752902 15592.888203379243 18246.715753611606 17872.295936790673 17338.933657877635 17122.340926512563 17206.63994295162 16189.283700551834 pshape 1964.6334531880311 11757.54969005779 22443.934228429574 25149.21291648341 23199.656436923728 23173.423937540694 22404.993529083 21658.18362730554 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+10 eval p update function  cntr  40
+For x axis: mean 0.0216 std 0.0307 min -0.0643 max 0.0965
+For y axis: mean 0.0219 std 0.0307 min -0.0553 max 0.0967
+10 eval q update function  cntr  40
+For x axis: mean 0.0149 std 0.0915 min -0.0877 max 0.1543
+For y axis: mean 0.0148 std 0.0918 min -0.0935 max 0.1547
+5 batches 
+
+11 train tau 0 : 1.452364e-01 tau 1 : 9.496995e-01 tau 2 : 9.718482e-01
+11 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 11 lr 1.00e-05 total 5699.524381151607 27349.697157619346 40656.31706456988 43018.059009803386 40513.41615864354 40320.0107727368 39555.94444229307 37916.69511120884
+ train 11 lr 1.00e-05 *qrmse 1.3578279088123035 1.9513773680421405 2.0318150151407646 2.0216127962802113 2.0068349126760205 2.0021559952467287 2.0026418612829624 1.9763943926697423 -qmse 2.1618906593716063 4.153766763040695 4.471263966448432 4.4378482539246145 4.367742123519392 4.32906571562776 4.346146836480256 4.219041945031689 -qmae 2.0388145656225847 3.0163989605343717 3.1706326005276892 3.1411745013572956 3.121844054668029 3.1255710161156074 3.1166030726096317 3.073293961722161
+ train 11 lr 1.00e-05 *prmse 1.1478690481238236 1.8126455062653346 2.138094624322516 2.1994352717799153 2.1561279724897333 2.1581221691979833 2.137019398923544 2.1228160370304887 -pmse 1.811320043409718 4.172025645132542 5.540752948558686 5.782344977796713 5.52836905757866 5.455991036992653 5.370181359444763 5.294299953935261 -pmae 1.7293211236676083 2.7273239779686755 3.1937279474537736 3.299836426745359 3.2357408277330975 3.249996989377783 3.220019874302401 3.210926847384319
+ train 11 lr 1.00e-05 *krmse 0.0014500033033197246 0.0034211058434984176 0.005933671122438833 0.008958862896180707 0.012737385829106839 0.017260506401272035 0.02216163439880601 0.027019268931446905 -kmae 0.0014500033033197246 0.0034211058434984176 0.005933671122438833 0.008958862896180707 0.012737385829106839 0.017260506401272035 0.02216163439880601 0.027019268931446905
+ train 11 lr 1.00e-05 *urmse 154527796.5280388 537125172.7707701 166411021.95716816 24881272.256695468 169421425.73828563 126561866.79687977 357006137.7906891 297774932.935781 -umae 154527796.5280388 537125172.7707701 166411021.95716816 24881272.256695468 169421425.73828563 126561866.79687977 357006137.7906891 297774932.935781
+ train 11 lr 1.00e-05 *ermse 154527796.52679944 537125172.7676574 166411021.95151678 24881272.24784486 169421425.7255482 126561866.77961929 357006137.7685275 297774932.90876174 -emae 154527796.52679944 537125172.7676574 166411021.95151678 24881272.24784486 169421425.7255482 126561866.77961929 357006137.7685275 297774932.90876174 *relurep 17668673477.66082 54141377592.85963 16751932412.696844 2518818623.3697267 19716705554.5875 15987875881.486141 35750229794.91059 37024370453.45048
+ train 11 lr 1.00e-05 qshape 3723.9623019311052 15582.798638497212 18205.901103783 17866.847668729544 17311.96633803228 17143.255427490225 17149.71176430645 16263.966843413427 pshape 1964.5620792205013 11755.898519122133 22439.415960786882 25140.211341073842 23190.449820611255 23165.755345246576 22395.232677986623 21641.728267795417 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+11 train p update function  cntr  40
+For x axis: mean 0.0192 std 0.0337 min -0.0643 max 0.0989
+For y axis: mean 0.0195 std 0.0336 min -0.0628 max 0.0999
+11 train q update function  cntr  40
+For x axis: mean 0.0124 std 0.0892 min -0.0876 max 0.1540
+For y axis: mean 0.0123 std 0.0895 min -0.0901 max 0.1547
+ at t= 11
+time use for  1 epoches is: time usage : 0:01:37.391116 ( 0:00:09.156293 ) at t= 11
+saving file to  ././results/baseline_run/mbpw000011.pth
+checkpint to file  ././results/baseline_run/mbpw000011.pth
+0 checkpoint values tau 0 : 1.452364e-01 tau 1 : 9.496995e-01 tau 2 : 9.718482e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+11 eval tau 0 : 1.452364e-01 tau 1 : 9.496995e-01 tau 2 : 9.718482e-01
+11 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 11 lr 1.00e-05 total 5699.272112560128 27336.066935529852 40646.0536974203 43038.1010728815 40399.14599512242 40274.08224610165 39583.96899031901 37837.87616446389
+ eval 11 lr 1.00e-05 *qrmse 1.3578246375094998 1.951040733879728 2.031751286276677 2.022467208072242 2.004093583075747 2.0012852135345227 2.004137058119032 1.9748060982277675 -qmse 2.161884585919805 4.152100150488816 4.472344715456587 4.441181274840876 4.356433836761079 4.323324042319646 4.3518102870307604 4.213323729728544 -qmae 2.03859022418682 3.0155824361021093 3.170155515321955 3.1411447939355104 3.1161816652987313 3.1216209924022094 3.120279189911132 3.0683280536946014
+ eval 11 lr 1.00e-05 *prmse 1.1478331465523843 1.812570930801408 2.1379361294478336 2.1992583099377048 2.1558009028907885 2.157811181394422 2.136523924557375 2.1221015848914817 -pmse 1.8112241553540147 4.171672874482644 5.540055572216952 5.7812253669885605 5.526753060092815 5.453776706525235 5.367395151559601 5.290935686935044 -pmae 1.7292610689386172 2.727145725825266 3.1935480685457716 3.29955555953759 3.235127739689905 3.2494580794256924 3.21917131468557 3.209864194775791
+ eval 11 lr 1.00e-05 *krmse 0.0014517437903204921 0.003454614103550102 0.00603172537790222 0.00915200100733693 0.01298126330337337 0.017685377392895905 0.02279838783711694 0.027874530881036662 -kmae 0.0014517437903204921 0.003454614103550102 0.00603172537790222 0.00915200100733693 0.01298126330337337 0.017685377392895905 0.02279838783711694 0.027874530881036662
+ eval 11 lr 1.00e-05 *urmse 154515844.37814212 537224283.4344258 169409222.2533124 25265679.45235035 168246177.59310693 128238290.54661152 357789704.12242323 303920956.79884386 -umae 154515844.37814212 537224283.4344258 169409222.2533124 25265679.45235035 168246177.59310693 128238290.54661152 357789704.12242323 303920956.79884386
+ eval 11 lr 1.00e-05 *ermse 154515844.37694064 537224283.4313471 169409222.24764654 25265679.443393685 168246177.58012563 128238290.52892613 357789704.0996248 303920956.7709693 -emae 154515844.37694064 537224283.4313471 169409222.24764654 25265679.443393685 168246177.58012563 128238290.52892613 357789704.0996248 303920956.7709693 *relurep 17708992753.74596 59057545096.69761 14380739444.668985 2581539465.5792246 20813934219.650642 15676126452.784008 32495044548.578796 29867190556.95044
+ eval 11 lr 1.00e-05 qshape 3723.957571644742 15570.949436782534 18202.134108743234 17894.82913564482 17211.79285008631 17110.709879099715 17197.756483751942 16214.177976584126 pshape 1964.3145409153863 11754.117498747315 22432.91958867707 25132.27193723668 23176.353145036108 23152.372367001946 22375.212506567063 21612.69818787976 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+11 eval p update function  cntr  40
+For x axis: mean 0.0158 std 0.0354 min -0.0783 max 0.1004
+For y axis: mean 0.0162 std 0.0352 min -0.0686 max 0.1003
+11 eval q update function  cntr  40
+For x axis: mean 0.0094 std 0.0881 min -0.0846 max 0.1464
+For y axis: mean 0.0093 std 0.0884 min -0.0903 max 0.1472
+5 batches 
+
+12 train tau 0 : 1.452781e-01 tau 1 : 9.497049e-01 tau 2 : 9.718377e-01
+12 train tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 12 lr 1.00e-05 total 5695.640207504469 27327.27892934882 40646.68404811287 43044.62808106128 40404.75160783144 40285.800127682494 39606.86792842173 37849.237316077284
+ train 12 lr 1.00e-05 *qrmse 1.3575065438144778 1.950818610660935 2.0318107354560735 2.022794778026146 2.0043603660577416 2.002056554726344 2.0053558572926398 1.9756490388170547 -qmse 2.1610646163049583 4.150959740054577 4.471968492666117 4.441645442592417 4.3601250452802605 4.326893492689088 4.359450796823517 4.217967690809994 -qmae 2.038213404109377 3.015412097304756 3.170474772540598 3.1421822517263944 3.1177195444609853 3.123207713660782 3.1239351638048642 3.0703634963624316
+ train 12 lr 1.00e-05 *prmse 1.1478098653440925 1.8125443334053528 2.1378683139584416 2.199119189926931 2.1555873870196742 2.157456070150464 2.1361394124673696 2.1216335922433616 -pmse 1.8111608993915298 4.171428071319243 5.539578132782481 5.780503396289387 5.525764966109145 5.452444921068556 5.3657221702869276 5.288954522115509 -pmae 1.729216834395407 2.7270904781549765 3.193342628240072 3.299322403018408 3.234806478593741 3.2488409705990238 3.218407922468766 3.208990844657085
+ train 12 lr 1.00e-05 *krmse 0.0015744283498437595 0.0037234014934325764 0.006472453928683053 0.00978722066958504 0.013836183726718732 0.01878162340209406 0.024146650922022506 0.029465865091363265 -kmae 0.0015744283498437595 0.0037234014934325764 0.006472453928683053 0.00978722066958504 0.013836183726718732 0.01878162340209406 0.024146650922022506 0.029465865091363265
+ train 12 lr 1.00e-05 *urmse 154391867.7329191 537295527.8534021 171887961.1579975 25713172.160375994 168422537.84089997 127901516.99443734 364229957.87241405 310628346.85895264 -umae 154391867.7329191 537295527.8534021 171887961.1579975 25713172.160375994 168422537.84089997 127901516.99443734 364229957.87241405 310628346.85895264
+ train 12 lr 1.00e-05 *ermse 154391867.73159498 537295527.8500546 171887961.1518908 25713172.1507841 168422537.82706377 127901516.9756557 364229957.8482674 310628346.8294867 -emae 154391867.73159498 537295527.8500546 171887961.1518908 25713172.1507841 168422537.82706377 127901516.9756557 364229957.8482674 310628346.8294867 *relurep 17968562358.162846 60640538412.07703 17353410682.44148 2814323344.199202 20819109859.165203 16161355426.849716 33971068724.454662 38797618991.45656
+ train 12 lr 1.00e-05 qshape 3720.4792428735927 15562.881137056665 18205.673354714567 17907.6511459134 17225.736822144878 17136.601651802328 17236.402789455944 16244.732817464599 pshape 1964.1609646308775 11753.397792292153 22430.010693398297 25125.976935147883 23168.01478568656 23138.198475880177 22359.465138965792 21593.50449861269 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+12 train p update function  cntr  40
+For x axis: mean 0.0182 std 0.0362 min -0.0767 max 0.1079
+For y axis: mean 0.0186 std 0.0360 min -0.0660 max 0.1137
+12 train q update function  cntr  40
+For x axis: mean 0.0119 std 0.0881 min -0.0838 max 0.1508
+For y axis: mean 0.0118 std 0.0884 min -0.0903 max 0.1518
+ at t= 12
+time use for  1 epoches is: time usage : 0:01:46.333151 ( 0:00:08.942035 ) at t= 12
+saving file to  ././results/baseline_run/mbpw000012.pth
+checkpint to file  ././results/baseline_run/mbpw000012.pth
+0 checkpoint values tau 0 : 1.452781e-01 tau 1 : 9.497049e-01 tau 2 : 9.718377e-01
+0 checkpoint values tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+12 eval tau 0 : 1.452781e-01 tau 1 : 9.497049e-01 tau 2 : 9.718377e-01
+12 eval tau grad 0 : tensor([0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 12 lr 1.00e-05 total 5694.130542468769 27330.028324498744 40633.55145026308 43068.7701218167 40424.6189234097 40357.80259491295 39519.13897369164 37729.468143265265
+ eval 12 lr 1.00e-05 *qrmse 1.3573804528986986 1.9508806651660442 2.0315828554118083 2.0238549790507383 2.0055400617359482 2.0049737861457215 2.0034875208343297 1.972672973803014 -qmse 2.160560215262554 4.15128834925695 4.470456703445425 4.446191292360764 4.365350068591956 4.335329461136648 4.349549688561884 4.205026855763052 -qmae 2.038128002743251 3.015748935604684 3.1707853191793594 3.144259558806756 3.1210423314227524 3.1268630201611862 3.1190049864669525 3.0659984232959223
+ eval 12 lr 1.00e-05 *prmse 1.1477812868934274 1.8124884438754783 2.137738901608679 2.198873314251792 2.1552173329553854 2.1569828254278383 2.1356144406563584 2.120967248892307 -pmse 1.811044976643629 4.171022141326039 5.538777008239581 5.779224006450497 5.523971360122269 5.450090255637951 5.362850892294139 5.285618014688557 -pmae 1.7291622217994447 2.7269824766552575 3.192807811569665 3.298794112357838 3.2342849222427774 3.2478732707923057 3.2174586982316518 3.208038213553597
+ eval 12 lr 1.00e-05 *krmse 0.0016952607614510785 0.003992198462012176 0.006917551153451518 0.010435316901239267 0.014714745259072704 0.0199493363049138 0.025619668693107278 0.031228648953977943 -kmae 0.0016952607614510785 0.003992198462012176 0.006917551153451518 0.010435316901239267 0.014714745259072704 0.0199493363049138 0.025619668693107278 0.031228648953977943
+ eval 12 lr 1.00e-05 *urmse 154451250.81225365 537181484.6573318 174240761.5475543 28994833.228453238 167237111.24514556 129369294.61819604 372698231.82507455 309622342.60489327 -umae 154451250.81225365 537181484.6573318 174240761.5475543 28994833.228453238 167237111.24514556 129369294.61819604 372698231.82507455 309622342.60489327
+ eval 12 lr 1.00e-05 *ermse 154451250.81083304 537181484.6537521 174240761.54103965 28994833.218238316 167237111.2304308 129369294.5982467 372698231.79945487 309622342.5736646 -emae 154451250.81083304 537181484.6537521 174240761.54103965 28994833.218238316 167237111.2304308 129369294.5982467 372698231.79945487 309622342.5736646 *relurep 17940233447.54802 60624960905.41537 19575240839.91619 3081202467.9621043 19475912138.716846 11167285615.537165 32617806290.08396 38915760845.00338
+ eval 12 lr 1.00e-05 qshape 3719.1516359054813 15567.250532708305 18198.295769556367 17943.138058830507 17261.892438261355 17229.74398643559 17170.61457765801 16152.866786912218 pshape 1963.9789065632874 11751.777791790437 22424.255680706723 25114.63206298619 23151.72648514834 23117.05860847736 22337.524396033634 21565.60135635305 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+12 eval p update function  cntr  40
+For x axis: mean 0.0211 std 0.0386 min -0.0759 max 0.1164
+For y axis: mean 0.0215 std 0.0384 min -0.0652 max 0.1156
+12 eval q update function  cntr  40
+For x axis: mean 0.0144 std 0.0890 min -0.0749 max 0.1546
+For y axis: mean 0.0143 std 0.0894 min -0.0804 max 0.1555
+5 batches 
+
+13 train tau 0 : 1.453171e-01 tau 1 : 9.497170e-01 tau 2 : 9.718231e-01
+13 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 13 lr 1.00e-05 total 5697.926399484515 27314.506697095534 40638.55572109015 43045.178260680565 40385.36904695273 40203.56379110977 39526.307609543364 37797.87122155833
+ train 13 lr 1.00e-05 *qrmse 1.3577573346047795 1.9504526259915032 2.0319773093568587 2.0235458671083855 2.004862551744571 2.0009099655315494 2.0042943819641086 1.9760550372739556 -qmse 2.161707446110043 4.149548065089574 4.474646566917417 4.442731620410617 4.363722891207997 4.318347834669891 4.352552870229414 4.218911235046586 -qmae 2.0385019059287135 3.0149659327755125 3.1701014367186287 3.143058891681772 3.1189852432668497 3.117525149598008 3.1228574085968708 3.0717183977004425
+ train 13 lr 1.00e-05 *prmse 1.1477346936369293 1.8123924449334385 2.1375674686249453 2.198670014022524 2.1548485748670845 2.156590527362088 2.1349957894191194 2.1201424657342978 -pmse 1.8109452373071324 4.170644194930065 5.537995905646402 5.777966143983565 5.5221653815522656 5.447622321651389 5.359657723099589 5.281680426482467 -pmae 1.7290806737353115 2.726798553560816 3.192776342704788 3.2985717317881664 3.2338461738796886 3.2473589763943815 3.2166449312066887 3.2066761980452214
+ train 13 lr 1.00e-05 *krmse 0.0016612924731622901 0.0039591706193746745 0.006923881035557855 0.010519683043838301 0.015161537793065283 0.020650866690161074 0.02661746304090664 0.032541049941405054 -kmae 0.0016612924731622901 0.0039591706193746745 0.006923881035557855 0.010519683043838301 0.015161537793065283 0.020650866690161074 0.02661746304090664 0.032541049941405054
+ train 13 lr 1.00e-05 *urmse 154462974.4391032 537205091.7736368 175581983.1330918 32484467.47793745 165285240.5421893 130773463.78567357 382413351.5100496 307031694.54787457 -umae 154462974.4391032 537205091.7736368 175581983.1330918 32484467.47793745 165285240.5421893 130773463.78567357 382413351.5100496 307031694.54787457
+ train 13 lr 1.00e-05 *ermse 154462974.43769994 537205091.7700412 175581983.12647384 32484467.46747669 165285240.52702776 130773463.76502268 382413351.4834322 307031694.51533353 -emae 154462974.43769994 537205091.7700412 175581983.12647384 32484467.46747669 165285240.52702776 130773463.76502268 382413351.4834322 307031694.51533353 *relurep 18734632819.207397 51833094534.220345 19264535701.6007 3676852897.210776 20653991025.80243 15743659400.29827 31923614294.847218 30436580460.14674
+ train 13 lr 1.00e-05 qshape 3723.2430396217337 15553.9752635987 18210.614295640265 17929.319900185583 17238.980863294804 17092.705039439625 17203.488612911584 16254.144746887836 pshape 1963.6833598627811 11749.531433496833 22416.941425449888 25104.858360494985 23135.388183657917 23099.85875167015 22311.818996631788 21532.726474670497 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+13 train p update function  cntr  40
+For x axis: mean 0.0181 std 0.0375 min -0.0776 max 0.1104
+For y axis: mean 0.0186 std 0.0372 min -0.0689 max 0.1160
+13 train q update function  cntr  40
+For x axis: mean 0.0106 std 0.0905 min -0.0859 max 0.1534
+For y axis: mean 0.0105 std 0.0909 min -0.0875 max 0.1549
+ at t= 13
+time use for  1 epoches is: time usage : 0:01:55.272057 ( 0:00:08.938906 ) at t= 13
+saving file to  ././results/baseline_run/mbpw000013.pth
+checkpint to file  ././results/baseline_run/mbpw000013.pth
+0 checkpoint values tau 0 : 1.453171e-01 tau 1 : 9.497170e-01 tau 2 : 9.718231e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+13 eval tau 0 : 1.453171e-01 tau 1 : 9.497170e-01 tau 2 : 9.718231e-01
+13 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 13 lr 1.00e-05 total 5707.181297515284 27329.87900225918 40602.8429040381 42972.44120090235 40314.51747397439 40120.63656977386 39494.528034832234 37712.838230453104
+ eval 13 lr 1.00e-05 *qrmse 1.3586779139267748 1.951034290533972 2.031333982551716 2.021785983434794 2.003591683443222 1.998994388066788 2.004477772585508 1.9747601407135893 -qmse 2.164290439523859 4.152484364574112 4.47340157960757 4.43801062525437 4.356933872030162 4.311038461118266 4.350351543977061 4.215682528825368 -qmae 2.0397640097874397 3.015471106394259 3.1685531968081904 3.140085086279844 3.116823981475414 3.114476665464597 3.121139169345004 3.0696672250360737
+ eval 13 lr 1.00e-05 *prmse 1.1476639240438782 1.8122242048430237 2.137292039669265 2.198369140434117 2.154346734471532 2.1559768615685804 2.133983219536483 2.1190207934640117 -pmse 1.810785106978832 4.17004464545563 5.536777534556227 5.77596016138817 5.519246902141878 5.443633865015954 5.354522381524444 5.275344906409054 -pmae 1.7289578424848782 2.726552157307826 3.192631298871786 3.298062695387034 3.2328622702945147 3.2463632216683918 3.2153154740091283 3.2053173988571366
+ eval 13 lr 1.00e-05 *krmse 0.0016183983812093849 0.0039480989988216475 0.007021387447391825 0.011024682302796452 0.01608135644315343 0.022008607020516234 0.02847923730220312 0.034939812271471006 -kmae 0.0016183983812093849 0.0039480989988216475 0.007021387447391825 0.011024682302796452 0.01608135644315343 0.022008607020516234 0.02847923730220312 0.034939812271471006
+ eval 13 lr 1.00e-05 *urmse 154560847.84458545 537247447.2062967 179294473.771015 33288838.75733913 165444326.61218232 133023548.62759575 377166466.7231335 324402378.47824156 -umae 154560847.84458545 537247447.2062967 179294473.771015 33288838.75733913 165444326.61218232 133023548.62759575 377166466.7231335 324402378.47824156
+ eval 13 lr 1.00e-05 *ermse 154560847.84317058 537247447.202592 179294473.7641025 33288838.746314447 165444326.596101 133023548.60558712 377166466.6946543 324402378.44330174 -emae 154560847.84317058 537247447.202592 179294473.7641025 33288838.746314447 165444326.596101 133023548.60558712 377166466.6946543 324402378.44330174 *relurep 17785100730.259182 60606364171.7556 17612082815.643272 3907159510.4489403 19889283132.649323 16807443641.804007 37963626211.20348 28889490471.945778
+ eval 13 lr 1.00e-05 qshape 3732.9656627783056 15573.434908944173 18185.809662646683 17869.109110736426 17189.078413579235 17035.338689905308 17212.905701240514 16212.92911456986 pshape 1963.2156347369787 11745.444093315005 22406.033241391408 25092.33209016593 23114.439060395154 23074.297879868558 22270.622333591728 21488.90911588324 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+13 eval p update function  cntr  40
+For x axis: mean 0.0145 std 0.0334 min -0.0822 max 0.1062
+For y axis: mean 0.0150 std 0.0331 min -0.0702 max 0.1048
+13 eval q update function  cntr  40
+For x axis: mean 0.0061 std 0.0939 min -0.0875 max 0.1543
+For y axis: mean 0.0060 std 0.0943 min -0.0929 max 0.1560
+5 batches 
+
+14 train tau 0 : 1.453605e-01 tau 1 : 9.497196e-01 tau 2 : 9.718085e-01
+14 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ train 14 lr 1.00e-05 total 5707.382360191258 27326.41531026091 40589.51783520404 42973.36423672257 40296.28773591107 40089.88686303164 39471.242145319564 37713.86573864349
+ train 14 lr 1.00e-05 *qrmse 1.358715180069085 1.950977632700966 2.0310778967569094 2.022048538283807 2.0034548372755987 1.998592550149544 2.0043700751587026 1.9755205265270839 -qmse 2.1644169058729226 4.152136041263263 4.472951958264232 4.438898729174041 4.356491722733719 4.309192669293557 4.350712859824322 4.219793985465899 -qmae 2.039775091851447 3.0154088101311673 3.1681702957266475 3.1403935723005234 3.1166931435089067 3.1137940610731714 3.1213890100958364 3.070808389561461
+ train 14 lr 1.00e-05 *prmse 1.1476287345842713 1.8121539311320922 2.1371853200092064 2.198181715255892 2.154052664460731 2.1555632159881695 2.13349173953585 2.118457415172684 -pmse 1.8106974979013788 4.169724813267974 5.53616121729118 5.775012760354683 5.517920174552771 5.441791074318138 5.352116921308102 5.272500825198024 -pmae 1.7289010149735233 2.726454679183954 3.1923828675399237 3.2977002088154785 3.2324050232678183 3.245634219152373 3.2145526173429912 3.204367774121393
+ train 14 lr 1.00e-05 *krmse 0.0016640509157338722 0.004059747864492124 0.0072211936159578775 0.011436357548577681 0.016688956856405014 0.02284651854455324 0.02957024046145775 0.03628213934555733 -kmae 0.0016640509157338722 0.004059747864492124 0.0072211936159578775 0.011436357548577681 0.016688956856405014 0.02284651854455324 0.02957024046145775 0.03628213934555733
+ train 14 lr 1.00e-05 *urmse 154605406.87484452 537177597.9711864 180442159.66467932 34395599.06260682 163055569.9525731 133772574.60715723 373733652.5048864 320343299.57186246 -umae 154605406.87484452 537177597.9711864 180442159.66467932 34395599.06260682 163055569.9525731 133772574.60715723 373733652.5048864 320343299.57186246
+ train 14 lr 1.00e-05 *ermse 154605406.87337962 537177597.9673474 180442159.6575122 34395599.05117045 163055569.93588412 133772574.58431073 373733652.47531617 320343299.53558034 -emae 154605406.87337962 537177597.9673474 180442159.6575122 34395599.05117045 163055569.93588412 133772574.58431073 373733652.47531617 320343299.53558034 *relurep 18752184164.08502 54381230313.1058 17439358998.22497 3988871722.526633 20249470503.56347 16887848047.000666 35784165169.28249 39913563641.77946
+ train 14 lr 1.00e-05 qshape 3733.3996259172804 15571.763504938037 18176.994662404148 17878.31529838296 17182.86304316724 17021.95594375114 17210.737762992165 16236.532966439356 pshape 1962.9827342739777 11743.651805322872 22401.523172799898 25084.04893833961 23102.42469274383 23056.930919280498 22249.504382327403 21466.332772204136 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+14 train p update function  cntr  40
+For x axis: mean 0.0153 std 0.0342 min -0.0822 max 0.1079
+For y axis: mean 0.0158 std 0.0339 min -0.0705 max 0.1125
+14 train q update function  cntr  40
+For x axis: mean 0.0053 std 0.0939 min -0.0877 max 0.1538
+For y axis: mean 0.0052 std 0.0943 min -0.0894 max 0.1560
+ at t= 14
+time use for  1 epoches is: time usage : 0:02:04.289573 ( 0:00:09.017516 ) at t= 14
+saving file to  ././results/baseline_run/mbpw000014.pth
+checkpint to file  ././results/baseline_run/mbpw000014.pth
+0 checkpoint values tau 0 : 1.453605e-01 tau 1 : 9.497196e-01 tau 2 : 9.718085e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+14 eval tau 0 : 1.453605e-01 tau 1 : 9.497196e-01 tau 2 : 9.718085e-01
+14 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ eval 14 lr 1.00e-05 total 5707.92755885111 27317.806625229063 40570.582819532414 42974.56668993739 40244.40502802733 40054.35922147929 39450.51363727286 37605.2814486065
+ eval 14 lr 1.00e-05 *qrmse 1.3588110112744602 1.9507587451626982 2.0307899691129023 2.0224981501629293 2.002568459456372 1.998311367362573 2.0046808289374334 1.9733415165567774 -qmse 2.1646755923804006 4.151213232468703 4.472462559985428 4.440846332659474 4.3529989517341825 4.3062862444804555 4.351330217196525 4.211317165320425 -qmae 2.0397654239140826 3.014845823789263 3.1673603652169406 3.1405456442041704 3.1154004909083333 3.111227796111729 3.1216592334856257 3.066419700879025
+ eval 14 lr 1.00e-05 *prmse 1.147581902126738 1.812061489222564 2.1369913645203367 2.1978833551159362 2.1536190327297406 2.154969239846877 2.1327227721845454 2.117514613903738 -pmse 1.8105610893571775 4.169216736833749 5.535125773548278 5.773329121639963 5.51553272414599 5.4386595365899755 5.348244354039641 5.2677938110720675 -pmae 1.7288175816684874 2.726298638464769 3.1920795783298708 3.2972562687983946 3.23180132436796 3.244650510687761 3.213257306497634 3.2030201610090154
+ eval 14 lr 1.00e-05 *krmse 0.0017916802014718903 0.004370503846665019 0.007780352044121597 0.012374431966532585 0.018013492907304807 0.02461261617801356 0.031813895955745 0.039004632638513705 -kmae 0.0017916802014718903 0.004370503846665019 0.007780352044121597 0.012374431966532585 0.018013492907304807 0.02461261617801356 0.031813895955745 0.039004632638513705
+ eval 14 lr 1.00e-05 *urmse 154606215.3375661 536932363.9346697 184751027.5196523 38831680.35094078 163652996.40622646 134062385.75385873 371988369.0213825 326669279.9859893 -umae 154606215.3375661 536932363.9346697 184751027.5196523 38831680.35094078 163652996.40622646 134062385.75385873 371988369.0213825 326669279.9859893
+ eval 14 lr 1.00e-05 *ermse 154606215.33595777 536932363.9304838 184751027.51187196 38831680.338566355 163652996.38821292 134062385.72924614 371988368.98956865 326669279.94698465 -emae 154606215.33595777 536932363.9304838 184751027.51187196 38831680.338566355 163652996.38821292 134062385.72924614 371988368.98956865 326669279.94698465 *relurep 11696053525.534063 60721494797.96202 20526170975.679848 4506178688.052164 19443048412.962288 16893323200.106915 37981880992.67112 36127743956.63592
+ eval 14 lr 1.00e-05 qshape 3734.2421229469232 15565.583282014097 18166.225000273545 17893.191705531928 17149.777616215324 17011.714840510656 17220.931662508057 16166.142692372465 pshape 1962.685435904187 11741.223343214962 22393.357819258865 25070.37498440546 23083.627411812005 23031.644380968628 22218.581974764802 21428.13875623403 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+14 eval p update function  cntr  40
+For x axis: mean 0.0167 std 0.0342 min -0.0836 max 0.1138
+For y axis: mean 0.0173 std 0.0338 min -0.0702 max 0.1118
+14 eval q update function  cntr  40
+For x axis: mean 0.0038 std 0.0945 min -0.0855 max 0.1545
+For y axis: mean 0.0037 std 0.0949 min -0.0903 max 0.1568
+5 batches 
+
+15 train tau 0 : 1.454067e-01 tau 1 : 9.497247e-01 tau 2 : 9.717972e-01
+15 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ train 15 lr 1.00e-05 total 5711.4039627102575 27308.0553068088 40584.06180547977 42940.055798218105 40268.70243594302 40111.35299219991 39531.17262272936 37642.84566544053
+ train 15 lr 1.00e-05 *qrmse 1.359201968660475 1.9505487840547526 2.031373377302835 2.021865176549642 2.0036312012030484 2.0004721599100215 2.0078294114973496 1.9753962937141183 -qmse 2.1658419070245953 4.150548161702391 4.475270343489489 4.438342483688729 4.358905360105637 4.315601067566132 4.362801303069233 4.218653543621298 -qmae 2.040522534158446 3.0150947518562177 3.1686174757011143 3.1413054179695874 3.118854033946565 3.1133232412533878 3.1277747946206422 3.0710582697440576
+ train 15 lr 1.00e-05 *prmse 1.1475368080903687 1.8119723742785099 2.136841339819921 2.197674497040868 2.1532608963046007 2.1544775272684316 2.1320942271299947 2.116834620125672 -pmse 1.810465532128021 4.168844153081996 5.534358722193884 5.772090928627941 5.513749350012666 5.436250350186425 5.34521182334218 5.264085880074822 -pmae 1.728715206322955 2.7262599928197964 3.191999077709556 3.2968959301096943 3.2313565579480974 3.2436815906979364 3.212613574183662 3.2021381687586796
+ train 15 lr 1.00e-05 *krmse 0.0019070696807072852 0.004649649305821413 0.008272882710088659 0.013131101601131224 0.019084735658545293 0.026045596056372643 0.03364129147191104 0.04123833409554387 -kmae 0.0019070696807072852 0.004649649305821413 0.008272882710088659 0.013131101601131224 0.019084735658545293 0.026045596056372643 0.03364129147191104 0.04123833409554387
+ train 15 lr 1.00e-05 *urmse 154609509.50585002 537119752.7430788 187968172.63564664 41807744.33317901 164106375.45981216 135251934.2769175 378884354.5446523 322593428.5540453 -umae 154609509.50585002 537119752.7430788 187968172.63564664 41807744.33317901 164106375.45981216 135251934.2769175 378884354.5446523 322593428.5540453
+ train 15 lr 1.00e-05 *ermse 154609509.50412625 537119752.7386138 187968172.62737375 41807744.32004791 164106375.44072744 135251934.25087187 378884354.51101094 322593428.51280695 -emae 154609509.50412625 537119752.7386138 187968172.62737375 41807744.32004791 164106375.44072744 135251934.25087187 378884354.51101094 322593428.51280695 *relurep 17747057151.269768 60606878973.834595 18657354781.676136 5021881171.340465 18382435496.13557 16925334471.31538 39910838250.39966 28294674994.860756
+ train 15 lr 1.00e-05 qshape 3737.9972927848694 15558.129590520513 18186.092750136504 17868.37046642889 17188.60086954042 17088.57735973562 17326.648092298212 16230.261675572145 pshape 1962.4066699253885 11738.92571628829 22386.969055343263 25060.68533178921 23069.101566402605 23011.775632464283 22193.524530431147 21401.583989868384 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+15 train p update function  cntr  40
+For x axis: mean 0.0180 std 0.0312 min -0.0714 max 0.1099
+For y axis: mean 0.0185 std 0.0307 min -0.0650 max 0.1072
+15 train q update function  cntr  40
+For x axis: mean 0.0044 std 0.0988 min -0.0885 max 0.1683
+For y axis: mean 0.0043 std 0.0991 min -0.0903 max 0.1713
+ at t= 15
+time use for  1 epoches is: time usage : 0:02:13.387371 ( 0:00:09.097798 ) at t= 15
+saving file to  ././results/baseline_run/mbpw000015.pth
+checkpint to file  ././results/baseline_run/mbpw000015.pth
+0 checkpoint values tau 0 : 1.454067e-01 tau 1 : 9.497247e-01 tau 2 : 9.717972e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+15 eval tau 0 : 1.454067e-01 tau 1 : 9.497247e-01 tau 2 : 9.717972e-01
+15 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ eval 15 lr 1.00e-05 total 5712.8150215770265 27327.725335891846 40572.756634973644 42927.84169449738 40324.52157479576 40045.93119553026 39428.152360646855 37526.95327360471
+ eval 15 lr 1.00e-05 *qrmse 1.3593133435777585 1.9510996256106694 2.031170325206081 2.021692856675447 2.0055800585807 1.9994585808716985 2.0059701631660305 1.9724488345454632 -qmse 2.1660130853727706 4.152963569802353 4.473650609861826 4.437561488907277 4.3696010834144055 4.309276416889179 4.355392384204509 4.205984424661859 -qmae 2.04090722195426 3.016318845954956 3.168240130964454 3.1418599439052266 3.1226830142994286 3.1126169348351334 3.1242867477255993 3.068943639607903
+ eval 15 lr 1.00e-05 *prmse 1.1474765665865916 1.8119015515857693 2.1366884413449347 2.197487464985229 2.152878278418436 2.1538314593045884 2.1312128997715463 2.115965015982879 -pmse 1.8103186298219414 4.168309945149645 5.533292868793701 5.770386544867703 5.5113565235254365 5.433041475958856 5.341120662296403 5.259148742627649 -pmae 1.7285767057460018 2.726075087022109 3.1918376026002617 3.2966619718649484 3.230838926323808 3.2425808872612985 3.2110317652109996 3.20105882434187
+ eval 15 lr 1.00e-05 *krmse 0.001995984426282993 0.005000241189182453 0.009173296288118226 0.01445717586636377 0.020902005209682016 0.028411216007667807 0.03659516861219554 0.04478112982979117 -kmae 0.001995984426282993 0.005000241189182453 0.009173296288118226 0.01445717586636377 0.020902005209682016 0.028411216007667807 0.03659516861219554 0.04478112982979117
+ eval 15 lr 1.00e-05 *urmse 154711553.88952968 536678319.6261614 188918229.8601035 43585602.58430098 163040889.5524568 134710118.5699898 367805207.38834643 302087421.6455451 -umae 154711553.88952968 536678319.6261614 188918229.8601035 43585602.58430098 163040889.5524568 134710118.5699898 367805207.38834643 302087421.6455451
+ eval 15 lr 1.00e-05 *ermse 154711553.88757005 536678319.62116116 188918229.85093015 43585602.56984381 163040889.53155476 134710118.54157862 367805207.35175127 302087421.60076404 -emae 154711553.88757005 536678319.62116116 188918229.85093015 43585602.56984381 163040889.53155476 134710118.54157862 367805207.35175127 302087421.60076404 *relurep 17848266848.626747 60561696629.62999 17899165917.907936 5238731501.761575 20292029712.665863 16805120747.73504 38227793743.3235 37395681927.68005
+ eval 15 lr 1.00e-05 qshape 3739.804186400985 15579.739425333677 18181.225891415816 17863.956284724653 17260.722748577802 17050.99839375994 17261.4487347227 16149.603401427885 pshape 1962.0108351760414 11736.98591055817 22380.53074355782 25052.885409772727 23052.798826217964 22983.93280177033 22155.703625924158 21366.349872176826 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+15 eval p update function  cntr  40
+For x axis: mean 0.0217 std 0.0294 min -0.0715 max 0.1134
+For y axis: mean 0.0223 std 0.0288 min -0.0695 max 0.1103
+15 eval q update function  cntr  40
+For x axis: mean 0.0077 std 0.1015 min -0.0859 max 0.1690
+For y axis: mean 0.0076 std 0.1019 min -0.0901 max 0.1719
+5 batches 
+
+16 train tau 0 : 1.454544e-01 tau 1 : 9.497205e-01 tau 2 : 9.717843e-01
+16 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 16 lr 1.00e-05 total 5711.100791486223 27323.824906113958 40557.45641606619 42914.922156886074 40284.042539447706 40034.387890773316 39432.017246314215 37510.78153664293
+ train 16 lr 1.00e-05 *qrmse 1.359190223405997 1.951017932224125 2.0309103056069557 2.02159097445917 2.004912606245972 1.9996444071418789 2.006598165887767 1.9727217683602263 -qmse 2.165806729194045 4.152542164143083 4.4730223134863625 4.436243833341246 4.365676125975793 4.308766276902356 4.35784825136167 4.206341474118197 -qmae 2.040637056950541 3.0158524844647507 3.1674698016953675 3.1408825937473095 3.1209644386469737 3.1112117541751276 3.125467639607726 3.068101795771083
+ train 16 lr 1.00e-05 *prmse 1.1474426681112213 1.8118182994116132 2.136534702592352 2.1972902820594755 2.1525423165055115 2.153456982097374 2.130718086149577 2.11530530492949 -pmse 1.810225729809267 4.167962995338388 5.532612206556161 5.769319059357191 5.509858728147222 5.431031187921247 5.338643520022382 5.256179982697114 -pmae 1.7285329842816755 2.725931438065607 3.191585337375854 3.296270250526905 3.230298686260329 3.2419295633695766 3.210244119770283 3.2000499147059123
+ train 16 lr 1.00e-05 *krmse 0.002002566704087405 0.005050559944974742 0.009307203757509309 0.014712587607114514 0.021320110829912763 0.02902764998559959 0.037432792104572045 0.045838062938939036 -kmae 0.002002566704087405 0.005050559944974742 0.009307203757509309 0.014712587607114514 0.021320110829912763 0.02902764998559959 0.037432792104572045 0.045838062938939036
+ train 16 lr 1.00e-05 *urmse 154704993.1441721 536535182.5782176 189437868.85403204 45276610.65572815 161031030.6533616 134859499.36684752 369835231.29949796 285579667.975932 -umae 154704993.1441721 536535182.5782176 189437868.85403204 45276610.65572815 161031030.6533616 134859499.36684752 369835231.29949796 285579667.975932
+ train 16 lr 1.00e-05 *ermse 154704993.1422059 536535182.573167 189437868.8447248 45276610.641015545 161031030.63204145 134859499.33781987 369835231.2620652 285579667.93009394 -emae 154704993.1422059 536535182.573167 189437868.8447248 45276610.641015545 161031030.63204145 134859499.33781987 369835231.2620652 285579667.93009394 *relurep 18922778900.980927 55179573353.098434 23357926682.82402 5366435279.674886 19480428891.00605 17079738068.134594 32808783747.05058 35904281620.0399
+ train 16 lr 1.00e-05 qshape 3738.327220960301 15577.990641726337 18172.445292584056 17860.271504351665 17234.430680316724 17055.5086318405 17285.10534170029 16159.388417544536 pshape 1961.773570525922 11734.834264387628 22374.01112348213 25043.650652534405 23038.611859130982 22967.879258932815 22135.911904613924 21340.393119098397 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+16 train p update function  cntr  40
+For x axis: mean 0.0206 std 0.0314 min -0.0733 max 0.1185
+For y axis: mean 0.0213 std 0.0308 min -0.0768 max 0.1135
+16 train q update function  cntr  40
+For x axis: mean 0.0067 std 0.1012 min -0.0873 max 0.1688
+For y axis: mean 0.0066 std 0.1016 min -0.0901 max 0.1719
+ at t= 16
+time use for  1 epoches is: time usage : 0:02:22.279449 ( 0:00:08.892078 ) at t= 16
+saving file to  ././results/baseline_run/mbpw000016.pth
+checkpint to file  ././results/baseline_run/mbpw000016.pth
+0 checkpoint values tau 0 : 1.454544e-01 tau 1 : 9.497205e-01 tau 2 : 9.717843e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+16 eval tau 0 : 1.454544e-01 tau 1 : 9.497205e-01 tau 2 : 9.717843e-01
+16 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 16 lr 1.00e-05 total 5711.656830779475 27309.91417275954 40527.1687675928 42943.95428665177 40169.14294719208 39970.876586784725 39409.668875141404 37367.76482415694
+ eval 16 lr 1.00e-05 *qrmse 1.3592762292067946 1.950701048555829 2.030336793541925 2.0228653603775433 2.002325872505952 1.9983409611339478 2.0068100713061563 1.9698979786900288 -qmse 2.16595963582147 4.151109012348081 4.471956208968251 4.442336868916518 4.353679250412539 4.303787645914093 4.360674778334717 4.197445544860889 -qmae 2.0404329726341737 3.0148328982923225 3.166178392473318 3.141373702172904 3.115842621356726 3.1085741742924617 3.1249754323960355 3.0623691918388376
+ eval 16 lr 1.00e-05 *prmse 1.1473991923249771 1.811704782268065 2.1363189981160033 2.1969402900056183 2.152077840510405 2.15295428673297 2.1299969076569014 2.114293966177033 -pmse 1.8100864679248718 4.16745291463459 5.53158407761699 5.767670553134013 5.507520767860731 5.4278941883606935 5.334630168063378 5.251334085642012 -pmae 1.7284749502330226 2.7257065385818344 3.1911169155081103 3.295662446050799 3.229480451268387 3.24117259522426 3.2090669723880323 3.1983331410886224
+ eval 16 lr 1.00e-05 *krmse 0.0020356329856496603 0.00503855172882024 0.009383343549874667 0.01493855160097477 0.02176007585080759 0.029741833971021103 0.038464163769733606 0.04719035407743375 -kmae 0.0020356329856496603 0.00503855172882024 0.009383343549874667 0.01493855160097477 0.02176007585080759 0.029741833971021103 0.038464163769733606 0.04719035407743375
+ eval 16 lr 1.00e-05 *urmse 154811544.3172664 536588216.42311347 193355995.4682483 48281613.88189804 161973360.45687214 138986552.417079 369687020.98408794 270369363.9305425 -umae 154811544.3172664 536588216.42311347 193355995.4682483 48281613.88189804 161973360.45687214 138986552.417079 369687020.98408794 270369363.9305425
+ eval 16 lr 1.00e-05 *ermse 154811544.31533676 536588216.4180748 193355995.458865 48281613.866959475 161973360.43511203 138986552.38733715 369687020.94562376 270369363.88335216 -emae 154811544.31533676 536588216.4180748 193355995.458865 48281613.866959475 161973360.43511203 138986552.38733715 369687020.94562376 270369363.88335216 *relurep 19168121528.73526 66811293292.927734 23991588686.877155 5590816198.182882 18577247458.690117 16441848672.4276 35142696969.24975 26475800896.798565
+ eval 16 lr 1.00e-05 qshape 3739.157494786733 15566.739504776016 18150.976804347338 17904.8675646208 17139.725524612564 17013.459572211857 17292.039731500452 16057.344628613257 pshape 1961.4993359927423 11732.174667983525 22365.191963245466 25028.086722030966 23018.417422579507 22946.417014572864 22106.629143640952 21299.420195543684 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+16 eval p update function  cntr  40
+For x axis: mean 0.0180 std 0.0344 min -0.0841 max 0.1215
+For y axis: mean 0.0187 std 0.0338 min -0.0832 max 0.1178
+16 eval q update function  cntr  40
+For x axis: mean 0.0032 std 0.0992 min -0.0912 max 0.1629
+For y axis: mean 0.0031 std 0.0996 min -0.0953 max 0.1661
+5 batches 
+
+17 train tau 0 : 1.455031e-01 tau 1 : 9.497163e-01 tau 2 : 9.717632e-01
+17 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 17 lr 1.00e-05 total 5709.615874042997 27308.04763634433 40517.07625554166 42951.55451427591 40106.199659299 39933.505073385226 39423.031153149335 37347.930048599395
+ train 17 lr 1.00e-05 *qrmse 1.3591096725716436 1.9506860365291359 2.0302463184533233 2.0233867436985657 2.0009833149870655 1.9977817003090668 2.0078240932572795 1.9700895442086062 -qmse 2.1655335078978366 4.150929862525645 4.472309436635913 4.444065944541492 4.346393584100265 4.30157463081982 4.364263624759949 4.19891032513861 -qmae 2.0400333512818625 3.0143672820301632 3.1655568474749485 3.1406078741198886 3.111987684929736 3.106727531771438 3.1265062060603532 3.0609014041510654
+ train 17 lr 1.00e-05 *prmse 1.147367564804205 1.8116316168358366 2.1361729837752383 2.196708269961058 2.1517458289272 2.152568784900575 2.1295187844169425 2.113623085180049 -pmse 1.8099919642007651 4.1670947548141655 5.530882024674223 5.766561629272436 5.5059441839329875 5.425775633604303 5.3320511889233995 5.248265055960459 -pmae 1.728440057915078 2.7255770985620003 3.1909027370325926 3.2953035258183734 3.2289372306112276 3.2405699394266207 3.208347580547765 3.197163151148368
+ train 17 lr 1.00e-05 *krmse 0.002087220132713852 0.005166045033436206 0.009547729145275885 0.015240270398477728 0.02224314644407268 0.03044445762166914 0.03941267643159689 0.04838272477403234 -kmae 0.002087220132713852 0.005166045033436206 0.009547729145275885 0.015240270398477728 0.02224314644407268 0.03044445762166914 0.03941267643159689 0.04838272477403234
+ train 17 lr 1.00e-05 *urmse 154833799.8364418 536620922.79563344 196352126.2765529 48457151.29909627 161983008.0883473 142272074.3074082 366438190.8414179 253586558.61990696 -umae 154833799.8364418 536620922.79563344 196352126.2765529 48457151.29909627 161983008.0883473 142272074.3074082 366438190.8414179 253586558.61990696
+ train 17 lr 1.00e-05 *ermse 154833799.83449745 536620922.79052657 196352126.26700515 48457151.28385601 161983008.0661041 142272074.27696377 366438190.80200523 253586558.5715242 -emae 154833799.83449745 536620922.79052657 196352126.26700515 48457151.28385601 161983008.0661041 142272074.27696377 366438190.80200523 253586558.5715242 *relurep 17599357918.81224 58761941994.28711 18145351890.233517 5638542002.230223 19513704639.478146 16542202683.574177 31987249309.095734 31478260539.926098
+ train 17 lr 1.00e-05 qshape 3737.3464292494364 15566.83413972292 18147.1209686356 17923.24425144236 17091.061322134403 16992.561230784744 17324.02643307473 16063.81375058165 pshape 1961.269444793561 11730.213496621414 22358.955286906054 25017.310262833544 23004.138337164604 22929.94384260048 22088.004720074605 21273.116298017743 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+17 train p update function  cntr  40
+For x axis: mean 0.0165 std 0.0366 min -0.0928 max 0.1239
+For y axis: mean 0.0172 std 0.0359 min -0.0863 max 0.1231
+17 train q update function  cntr  40
+For x axis: mean 0.0013 std 0.0979 min -0.0965 max 0.1583
+For y axis: mean 0.0012 std 0.0983 min -0.0992 max 0.1631
+ at t= 17
+time use for  1 epoches is: time usage : 0:02:31.258620 ( 0:00:08.979171 ) at t= 17
+saving file to  ././results/baseline_run/mbpw000017.pth
+checkpint to file  ././results/baseline_run/mbpw000017.pth
+0 checkpoint values tau 0 : 1.455031e-01 tau 1 : 9.497163e-01 tau 2 : 9.717632e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+17 eval tau 0 : 1.455031e-01 tau 1 : 9.497163e-01 tau 2 : 9.717632e-01
+17 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 17 lr 1.00e-05 total 5714.260959741278 27294.035229929817 40480.79687656721 42940.761660679906 39985.4618324855 39873.34240889709 39372.88076474904 37288.52403473289
+ eval 17 lr 1.00e-05 *qrmse 1.359590755161765 1.950366483716935 2.0295381732432616 2.0235333522009613 1.9982046196692818 1.9964151121875708 2.007044094122593 1.9696631850663693 -qmse 2.1669150181628227 4.149654715060848 4.470994025979111 4.4453711301759515 4.333377792055017 4.296540515217219 4.363404387482985 4.201415892518192 -qmae 2.040486019194935 3.013398629219323 3.1639371499999673 3.140215038915639 3.107785844058246 3.1046345516143115 3.1261149709027145 3.059393437540335
+ eval 17 lr 1.00e-05 *prmse 1.147318744815925 1.8114863108752512 2.1359252624994824 2.1963649072696874 2.151255358727547 2.1520737612371352 2.128756622043369 2.1125729068000827 -pmse 1.8098512613452278 4.166577574561133 5.529833926227694 5.7648833000934685 5.503573985488872 5.422593001399247 5.3279569285911235 5.243281659023884 -pmae 1.7283785470865172 2.7253123282270435 3.1904251277997946 3.2946354895169314 3.2280486487282993 3.239828578193946 3.207124127178723 3.1954916520805745
+ eval 17 lr 1.00e-05 *krmse 0.0020382205949852628 0.005113248883827248 0.009471268390549192 0.015264642889232327 0.0224346504586032 0.030866006355861408 0.0401096946784929 0.049361577754458465 -kmae 0.0020382205949852628 0.005113248883827248 0.009471268390549192 0.015264642889232327 0.0224346504586032 0.030866006355861408 0.0401096946784929 0.049361577754458465
+ eval 17 lr 1.00e-05 *urmse 154980629.456191 536752788.0781654 198348341.88877916 53936665.48752604 161568974.52465844 147865354.33811778 370985388.4512512 231361749.30701238 -umae 154980629.456191 536752788.0781654 198348341.88877916 53936665.48752604 161568974.52465844 147865354.33811778 370985388.4512512 231361749.30701238
+ eval 17 lr 1.00e-05 *ermse 154980629.4543355 536752788.0731734 198348341.87930784 53936665.47226139 161568974.50222382 147865354.30725178 370985388.4111415 231361749.25765076 -emae 154980629.4543355 536752788.0731734 198348341.87930784 53936665.47226139 161568974.50222382 147865354.30725178 370985388.4111415 231361749.25765076 *relurep 17973192889.521717 66769275677.77537 19886509547.890175 6409328627.26749 17650559940.23407 18388095233.438164 36417906354.03976 25829997917.58042
+ eval 17 lr 1.00e-05 qshape 3742.2936199716323 15556.149862340786 18120.833182850536 17927.728446117642 16991.46272309468 16953.546533243138 17305.10293309251 16046.573112058064 pshape 1960.967339769646 11726.885367589031 22348.963693716672 25002.033214562263 22982.99910939083 22908.79587565396 22056.77783165653 21230.95092267482 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+17 eval p update function  cntr  40
+For x axis: mean 0.0126 std 0.0392 min -0.1000 max 0.1273
+For y axis: mean 0.0134 std 0.0384 min -0.0967 max 0.1231
+17 eval q update function  cntr  40
+For x axis: mean -0.0032 std 0.0978 min -0.1019 max 0.1563
+For y axis: mean -0.0033 std 0.0982 min -0.1068 max 0.1597
+5 batches 
+
+18 train tau 0 : 1.455523e-01 tau 1 : 9.497209e-01 tau 2 : 9.717407e-01
+18 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 18 lr 1.00e-05 total 5723.0335856496895 27284.298926548217 40442.84763648396 42999.954689913786 39949.58371018344 39943.88738054396 39324.60173743422 37297.95598517992
+ train 18 lr 1.00e-05 *qrmse 1.3604167347064435 1.9501851875553122 2.028707150392073 2.0255024788304867 1.9976115626487019 1.9987625432414036 2.0059330892993867 1.9708756907421296 -qmse 2.1690139666926984 4.14828134435762 4.468973039307523 4.452626914022624 4.328565027428607 4.307884215158594 4.3623208119336825 4.212671281483436 -qmae 2.041663880776944 3.0133593923225153 3.162805633445477 3.1431487926249373 3.1076797073522617 3.1071910815379824 3.125955751519827 3.0614635334839972
+ train 18 lr 1.00e-05 *prmse 1.147283869952978 1.811406484762767 2.1357790902096006 2.1961557497701247 2.150957120070644 2.151795594137375 2.128305607177758 2.1118452786847426 -pmse 1.8097622316199178 4.166254083952839 5.529153870757264 5.76378856785067 5.502069722656185 5.420604774886293 5.325392495762591 5.240221769525824 -pmae 1.728325513202866 2.725156339533444 3.1900335930940704 3.294115625158091 3.227466341202841 3.2392326901523516 3.2064541211596143 3.194374287629819
+ train 18 lr 1.00e-05 *krmse 0.0020136299341803054 0.0050895211216684276 0.009289344083983408 0.015095676767207977 0.0223178365826201 0.03083669555072821 0.04019050440331036 0.04954545398854362 -kmae 0.0020136299341803054 0.0050895211216684276 0.009289344083983408 0.015095676767207977 0.0223178365826201 0.03083669555072821 0.04019050440331036 0.04954545398854362
+ train 18 lr 1.00e-05 *urmse 155012851.47169006 536897026.8553584 200159915.19067696 57314231.37652562 161893871.56622562 155862839.20112365 377969984.197572 222651626.54439482 -umae 155012851.47169006 536897026.8553584 200159915.19067696 57314231.37652562 161893871.56622562 155862839.20112365 377969984.197572 222651626.54439482
+ train 18 lr 1.00e-05 *ermse 155012851.46993208 536897026.8505251 200159915.1813876 57314231.361429945 161893871.5439078 155862839.17028695 377969984.1573815 222651626.49484935 -emae 155012851.46993208 536897026.8505251 200159915.1813876 57314231.361429945 161893871.5439078 155862839.17028695 377969984.1573815 222651626.49484935 *relurep 17579770522.52468 54604462359.0368 22320960945.420177 7019205791.756134 20506991739.010662 19794605059.854847 36585175303.33641 24961393368.426125
+ train 18 lr 1.00e-05 qshape 3751.266238564111 15548.152794815109 18088.917564769188 17996.58693744011 16968.709317702458 17036.634146834145 17275.390267304494 16086.046794128919 pshape 1960.7673470855784 11725.146131733116 22342.930071714774 24992.367752473667 22969.87439248098 22896.253233709805 22038.211470129732 21200.909191051003 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+18 train p update function  cntr  40
+For x axis: mean 0.0101 std 0.0425 min -0.1083 max 0.1320
+For y axis: mean 0.0109 std 0.0418 min -0.1151 max 0.1278
+18 train q update function  cntr  40
+For x axis: mean -0.0071 std 0.0995 min -0.1241 max 0.1563
+For y axis: mean -0.0072 std 0.0999 min -0.1185 max 0.1579
+ at t= 18
+time use for  1 epoches is: time usage : 0:02:40.193334 ( 0:00:08.934714 ) at t= 18
+saving file to  ././results/baseline_run/mbpw000018.pth
+checkpint to file  ././results/baseline_run/mbpw000018.pth
+0 checkpoint values tau 0 : 1.455523e-01 tau 1 : 9.497209e-01 tau 2 : 9.717407e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+18 eval tau 0 : 1.455523e-01 tau 1 : 9.497209e-01 tau 2 : 9.717407e-01
+18 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 18 lr 1.00e-05 total 5728.217489334466 27281.789910023603 40403.68615255835 42934.56379710046 39750.96709466357 39868.96511385225 39264.966992925365 37269.96984636988
+ eval 18 lr 1.00e-05 *qrmse 1.3609713608254765 1.9500872374833151 2.0279590967042997 2.024129868199261 1.9925852002522795 1.9969163284318239 2.0052329744749944 1.9712166644398335 -qmse 2.1709471008590238 4.148970807613511 4.468303697288375 4.449126025470671 4.305946868266399 4.300882644595964 4.357570580221844 4.2182157881140725 -qmae 2.042154126380582 3.012442915957923 3.1607906048073056 3.139494018834526 3.097532908207234 3.1033640113769927 3.1250419774304383 3.059661411091411
+ eval 18 lr 1.00e-05 *prmse 1.1472287568311388 1.8112768984866772 2.13550328148011 2.19584134850268 2.150362624939799 2.15118362271786 2.1273864885049756 2.110742383858706 -pmse 1.8095922098338661 4.165610105693861 5.527894248846659 5.761795069362205 5.499226042469139 5.416778736186919 5.320663494600136 5.234497069639005 -pmae 1.728210217879673 2.7249025082226375 3.189706731787944 3.2935542560170887 3.226513616020257 3.238161107241892 3.2051067588766218 3.1928567289511784
+ eval 18 lr 1.00e-05 *krmse 0.002029260316717618 0.005184588039583127 0.009625517975499842 0.015697109181958612 0.023263972881871608 0.03219914327039972 0.0420190557283985 0.05184210939207072 -kmae 0.002029260316717618 0.005184588039583127 0.009625517975499842 0.015697109181958612 0.023263972881871608 0.03219914327039972 0.0420190557283985 0.05184210939207072
+ eval 18 lr 1.00e-05 *urmse 155101550.9896962 537062237.3673922 202822024.2463277 58260814.185767934 162807554.94909906 171416880.8857424 375231950.75080264 215485850.8091228 -umae 155101550.9896962 537062237.3673922 202822024.2463277 58260814.185767934 162807554.94909906 171416880.8857424 375231950.75080264 215485850.8091228
+ eval 18 lr 1.00e-05 *ermse 155101550.98790255 537062237.3624123 202822024.23670214 58260814.17007084 162807554.92583507 171416880.85354328 375231950.7087836 215485850.75728074 -emae 155101550.98790255 537062237.3624123 202822024.23670214 58260814.17007084 162807554.92583507 171416880.85354328 375231950.7087836 215485850.75728074 *relurep 18728724627.57588 59752208024.58815 22736275568.356224 6835659547.2909155 20075051934.1493 18386164410.945423 29063562991.865124 21557272880.512726
+ eval 18 lr 1.00e-05 qshape 3756.8462023607935 15548.928474171402 18061.233664218045 17945.027186905667 16795.18291794262 16987.31503934316 17252.062174673036 16100.66343699012 pshape 1960.3712869736723 11721.861435852194 22331.45248834031 24978.536610194795 22944.784176720943 22870.650074509096 22001.904818252333 21158.30640937976 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+18 eval p update function  cntr  40
+For x axis: mean 0.0073 std 0.0442 min -0.1197 max 0.1323
+For y axis: mean 0.0082 std 0.0434 min -0.1165 max 0.1275
+18 eval q update function  cntr  40
+For x axis: mean -0.0112 std 0.1034 min -0.1263 max 0.1570
+For y axis: mean -0.0113 std 0.1039 min -0.1317 max 0.1603
+5 batches 
+
+19 train tau 0 : 1.456018e-01 tau 1 : 9.497265e-01 tau 2 : 9.717196e-01
+19 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ train 19 lr 1.00e-05 total 5727.4925741442075 27277.367386307546 40387.83288079225 42950.61822010148 39743.92072902688 39923.66481762206 39207.35084918582 37268.68554428521
+ train 19 lr 1.00e-05 *qrmse 1.3609306459681791 1.9500282351777543 2.0276983448931936 2.0249530939078944 1.9928718916262582 1.999341873481859 2.0045441008314513 1.9721396595252234 -qmse 2.1708139484604527 4.148332148424123 4.466989946033751 4.451579852891846 4.305694352604377 4.31126235915986 4.3567603500652865 4.221443531594057 -qmae 2.0422332268098784 3.0126703933883774 3.1611399612626707 3.141021283178927 3.0983784294212677 3.106809764715568 3.123677007769317 3.060588114219788
+ train 19 lr 1.00e-05 *prmse 1.1471765508653118 1.8111836042938556 2.135345652315033 2.195551184280969 2.1499638878884237 2.1505439484995783 2.1266624174695172 2.109900936951745 -pmse 1.8094737901418174 4.1651604158301065 5.5269920208507255 5.760398377143752 5.497287199107723 5.414115061408958 5.3171980277708055 5.230320722522171 -pmae 1.7281380821367225 2.724809126758538 3.189428866935345 3.2931589834307844 3.2259010084235316 3.2370691793180257 3.203914372855651 3.1913830603767908
+ train 19 lr 1.00e-05 *krmse 0.0021675924955950167 0.005501035362901563 0.010178537405892741 0.016538978626562794 0.024451691260461917 0.03378369501271807 0.044033614245353125 0.054285630737953894 -kmae 0.0021675924955950167 0.005501035362901563 0.010178537405892741 0.016538978626562794 0.024451691260461917 0.03378369501271807 0.044033614245353125 0.054285630737953894
+ train 19 lr 1.00e-05 *urmse 154997527.02704406 537851286.0220246 204737974.93494004 62317070.215255655 160064332.46677142 171219931.3326518 377712327.995342 218238743.59043628 -umae 154997527.02704406 537851286.0220246 204737974.93494004 62317070.215255655 160064332.46677142 171219931.3326518 377712327.995342 218238743.59043628
+ train 19 lr 1.00e-05 *ermse 154997527.0251161 537851286.0167271 204737974.9247615 62317070.19871666 160064332.44231972 171219931.29886812 377712327.95130837 218238743.53615063 -emae 154997527.0251161 537851286.0167271 204737974.9247615 62317070.19871666 160064332.44231972 171219931.29886812 377712327.95130837 218238743.53615063 *relurep 18798027483.102573 54729964756.19616 18840119083.252094 7291043640.212605 19522361120.49948 17621620623.81646 28550623298.51836 26649540909.711357
+ train 19 lr 1.00e-05 qshape 3756.4455216255674 15546.882374092593 18052.05423993063 17974.63252609868 16804.36827702929 17068.631558971345 17225.010696759622 16132.986794879089 pshape 1960.04705251864 11719.485012214951 22324.778640861623 24964.985694002804 22928.552451997595 22844.03325865072 21971.340152426197 21124.698749406125 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+19 train p update function  cntr  40
+For x axis: mean 0.0095 std 0.0450 min -0.1223 max 0.1401
+For y axis: mean 0.0105 std 0.0441 min -0.1183 max 0.1358
+19 train q update function  cntr  40
+For x axis: mean -0.0100 std 0.1043 min -0.1319 max 0.1576
+For y axis: mean -0.0100 std 0.1047 min -0.1317 max 0.1638
+ at t= 19
+time use for  1 epoches is: time usage : 0:02:49.467440 ( 0:00:09.274106 ) at t= 19
+saving file to  ././results/baseline_run/mbpw000019.pth
+checkpint to file  ././results/baseline_run/mbpw000019.pth
+0 checkpoint values tau 0 : 1.456018e-01 tau 1 : 9.497265e-01 tau 2 : 9.717196e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+19 eval tau 0 : 1.456018e-01 tau 1 : 9.497265e-01 tau 2 : 9.717196e-01
+19 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([0.5000], device='cuda:0') tau grad 2 : tensor([0.5000], device='cuda:0')
+
+ eval 19 lr 1.00e-05 total 5727.150044442323 27271.883790710526 40373.21240019625 42933.01439925991 39707.5339728583 39881.2648553964 39169.36217833565 37124.07290639733
+ eval 19 lr 1.00e-05 *qrmse 1.3609542553915426 1.9499651303451357 2.0275990490891687 2.0251032285274113 1.992591939609369 1.999310104550991 2.0048392301315436 1.9693670277013264 -qmse 2.1708450722121144 4.1484530599789595 4.466748269201142 4.453195446434067 4.305783376526491 4.309372456820588 4.359120924135799 4.210089834967832 -qmae 2.042150975821144 3.01250104818721 3.1607376642429914 3.1413236605481254 3.098442747718209 3.1061057465029323 3.124139534713567 3.0567322993411166
+ eval 19 lr 1.00e-05 *prmse 1.1471006553378928 1.8110065634322396 2.13505781267216 2.1950605838394717 2.149311512521957 2.149566376756577 2.1254463174393963 2.108509084690694 -pmse 1.8092703896059479 4.164403093990911 5.525459085682732 5.757891897458149 5.493686960733496 5.409327216058353 5.311225707237415 5.223042835184673 -pmae 1.7280263859864333 2.7245426576708214 3.189092429416757 3.292485011707697 3.225006421879121 3.2357008586854272 3.201992150478998 3.1893774257504717
+ eval 19 lr 1.00e-05 *krmse 0.002305939187453032 0.0058562416416768626 0.011121750832578913 0.017991080922506363 0.026511109521968113 0.03654130985910331 0.04755898460199619 0.058594919145363834 -kmae 0.002305939187453032 0.0058562416416768626 0.011121750832578913 0.017991080922506363 0.026511109521968113 0.03654130985910331 0.04755898460199619 0.058594919145363834
+ eval 19 lr 1.00e-05 *urmse 155318315.78246444 537501767.9360664 207854111.35452375 62787682.44304292 163929514.3035375 192579053.23701745 386360276.02401954 221284632.8031543 -umae 155318315.78246444 537501767.9360664 207854111.35452375 62787682.44304292 163929514.3035375 192579053.23701745 386360276.02401954 221284632.8031543
+ eval 19 lr 1.00e-05 *ermse 155318315.7803212 537501767.9302403 207854111.343402 62787682.425051846 163929514.27702636 192579053.20047614 386360275.9764606 221284632.74455935 -emae 155318315.7803212 537501767.9302403 207854111.343402 62787682.425051846 163929514.27702636 192579053.20047614 386360275.9764606 221284632.74455935 *relurep 19000610252.005363 58585153562.28298 19911629463.493225 7705365468.269153 20449365589.471424 19181139153.29196 42289175208.6318 23412471446.580074
+ eval 19 lr 1.00e-05 qshape 3756.599609482632 15546.06875401549 18049.31144611061 17978.643603745342 16795.927330141676 17067.123112784986 17236.37768019776 16043.278233349707 pshape 1959.5504349596897 11714.815036695038 22312.900954085646 24943.370795514573 22900.60664271662 22803.14174261141 21921.984498137892 21069.79467304763 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+19 eval p update function  cntr  40
+For x axis: mean 0.0115 std 0.0433 min -0.1217 max 0.1391
+For y axis: mean 0.0125 std 0.0423 min -0.1171 max 0.1332
+19 eval q update function  cntr  40
+For x axis: mean -0.0093 std 0.1063 min -0.1339 max 0.1636
+For y axis: mean -0.0094 std 0.1068 min -0.1405 max 0.1667
+5 batches 
+
+20 train tau 0 : 1.456515e-01 tau 1 : 9.497198e-01 tau 2 : 9.716983e-01
+20 train tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ train 20 lr 1.00e-05 total 5723.920977650987 27254.36358687096 40377.789977700144 42901.65404408174 39661.99510114747 39777.09426663205 39139.50559609615 37118.93359246106
+ train 20 lr 1.00e-05 *qrmse 1.3606953817832346 1.9496696940353402 2.0280638961411177 2.0247775643005914 1.9919392793893589 1.997221042151914 2.0050718651393673 1.9707581926195403 -qmse 2.170098309433606 4.14708228681693 4.468351854248679 4.451341635728108 4.303718859309419 4.302038064540928 4.358241118486115 4.210304984038875 -qmae 2.0416376937760625 3.0117949252014187 3.1612058488582293 3.1403518872399676 3.0961445408308044 3.1039525227669413 3.1249097694901353 3.0575398215623366
+ train 20 lr 1.00e-05 *prmse 1.1470001705920327 1.8107687561801444 2.1347817640240314 2.1946208836887715 2.1488050287837117 2.1487548363429645 2.1244942917618745 2.1073233146078385 -pmse 1.8091242518880644 4.163846647940937 5.524338622741318 5.756081077762547 5.491055579235594 5.405724724587363 5.306526924145667 5.2171010505340565 -pmae 1.7279141315677748 2.724314367342301 3.1889216888392267 3.29210531862667 3.2242576000254792 3.2347562365022737 3.2007921707802525 3.187638399059391
+ train 20 lr 1.00e-05 *krmse 0.002341310025800669 0.006157738760367959 0.011737362086254555 0.018968800280185837 0.02793411596238362 0.03849375479085733 0.05010753323069679 0.0617714820036956 -kmae 0.002341310025800669 0.006157738760367959 0.011737362086254555 0.018968800280185837 0.02793411596238362 0.03849375479085733 0.05010753323069679 0.0617714820036956
+ train 20 lr 1.00e-05 *urmse 155423248.79559177 537373098.0140421 209271333.1033537 63789841.56810471 166512370.70076028 198445737.80211535 396528200.9070953 229109780.25340876 -umae 155423248.79559177 537373098.0140421 209271333.1033537 63789841.56810471 166512370.70076028 198445737.80211535 396528200.9070953 229109780.25340876
+ train 20 lr 1.00e-05 *ermse 155423248.79332185 537373098.0078843 209271333.09161636 63789841.5491359 166512370.67282617 198445737.7636216 396528200.85698783 229109780.19163734 -emae 155423248.79332185 537373098.0078843 209271333.09161636 63789841.5491359 166512370.67282617 198445737.7636216 396528200.85698783 229109780.19163734 *relurep 16538984251.267614 58585846065.57092 19100535265.642727 7722874749.210556 20826177212.576084 21897557186.242073 36318673061.82212 28463631527.254284
+ train 20 lr 1.00e-05 qshape 3754.0250242682473 15534.655525509845 18065.024292485952 17966.002535672375 16771.794078995925 16995.910592274893 17245.00577254125 16085.793146957847 pshape 1958.8959533827397 11708.708061361112 22301.765685214203 24924.651508409373 22879.201022151545 22770.183674357155 21883.499823554892 21022.140445503202 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+20 train p update function  cntr  40
+For x axis: mean 0.0110 std 0.0398 min -0.1258 max 0.1383
+For y axis: mean 0.0121 std 0.0387 min -0.1144 max 0.1311
+20 train q update function  cntr  40
+For x axis: mean -0.0109 std 0.1033 min -0.1337 max 0.1636
+For y axis: mean -0.0109 std 0.1037 min -0.1361 max 0.1605
+ at t= 20
+time use for  1 epoches is: time usage : 0:02:58.551481 ( 0:00:09.084041 ) at t= 20
+saving file to  ././results/baseline_run/mbpw000020.pth
+checkpint to file  ././results/baseline_run/mbpw000020.pth
+0 checkpoint values tau 0 : 1.456515e-01 tau 1 : 9.497198e-01 tau 2 : 9.716983e-01
+0 checkpoint values tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+empty list: key  total  value  []
+empty list: key  *qrmse  value  []
+empty list: key  -qmse  value  []
+empty list: key  -qmae  value  []
+empty list: key  *prmse  value  []
+empty list: key  -pmse  value  []
+empty list: key  -pmae  value  []
+empty list: key  *krmse  value  []
+empty list: key  -kmae  value  []
+empty list: key  *urmse  value  []
+empty list: key  -umae  value  []
+empty list: key  *ermse  value  []
+empty list: key  -emae  value  []
+empty list: key  *relurep  value  []
+empty list: key  qshape  value  []
+empty list: key  pshape  value  []
+empty list: key  eshape  value  []
+empty list: key  mshape  value  []
+empty list: key  rep  value  []
+empty list: key  poly  value  []
+
+
+0 checkpoint values p update function  cntr  0
+0 checkpoint values p  force_stat.py, no stat to print
+0 checkpoint values q update function  cntr  0
+0 checkpoint values q  force_stat.py, no stat to print
+20 eval tau 0 : 1.456515e-01 tau 1 : 9.497198e-01 tau 2 : 9.716983e-01
+20 eval tau grad 0 : tensor([-0.5000], device='cuda:0') tau grad 1 : tensor([-0.5000], device='cuda:0') tau grad 2 : tensor([-0.5000], device='cuda:0')
+
+ eval 20 lr 1.00e-05 total 5716.677970989624 27247.304924832097 40369.46215817581 42868.406542429446 39682.80953200375 39633.28417915008 39129.368166798995 36991.05705776926
+ eval 20 lr 1.00e-05 *qrmse 1.3600806060851773 1.9496343312312223 2.028195661248691 2.0245950754030773 1.9933973159477383 1.9947076597716435 2.006469757963581 1.968599185237482 -qmse 2.168425849235659 4.146625012748125 4.468560821990101 4.450965361010116 4.309635948425543 4.293283509056911 4.362812545278197 4.202674687742933 -qmae 2.0405957111953894 3.0111962646574506 3.160831728735301 3.1393985644975326 3.0973114659070804 3.100394389764486 3.1262298887369124 3.0558888667974315
+ eval 20 lr 1.00e-05 *prmse 1.1469343586558438 1.8105740797492156 2.134477293226956 2.1939735898761548 2.148104126555029 2.1475419724779963 2.123047511478121 2.1057771719470284 -pmse 1.8089075175592015 4.163019532037126 5.522623034337057 5.753273566535798 5.487041867396373 5.4002850296893135 5.299604237155793 5.208733522883723 -pmae 1.7278998238912848 2.7240838071459046 3.1888012528966185 3.291408589570252 3.2232100331521814 3.233275643802204 3.198453860270108 3.1849846185824644
+ eval 20 lr 1.00e-05 *krmse 0.0025278927051373135 0.006695083554069825 0.012713870626623502 0.020498612731597476 0.030135053247223854 0.04147180886919262 0.053948499428436894 0.06650163759705666 -kmae 0.0025278927051373135 0.006695083554069825 0.012713870626623502 0.020498612731597476 0.030135053247223854 0.04147180886919262 0.053948499428436894 0.06650163759705666
+ eval 20 lr 1.00e-05 *urmse 155849289.38509703 538113258.9821023 212573224.65474632 65659208.33064754 163408526.0215745 203817715.00061378 391405712.001274 239241258.07228732 -umae 155849289.38509703 538113258.9821023 212573224.65474632 65659208.33064754 163408526.0215745 203817715.00061378 391405712.001274 239241258.07228732
+ eval 20 lr 1.00e-05 *ermse 155849289.38261282 538113258.9754072 212573224.64203244 65659208.31014893 163408525.99143943 203817714.95914197 391405711.94732547 239241258.00578576 -emae 155849289.38261282 538113258.9754072 212573224.64203244 65659208.31014893 163408525.99143943 203817714.95914197 391405711.94732547 239241258.00578576 *relurep 17926282230.39463 62935276945.974686 26998990509.057484 8110184720.335474 14241864401.543173 25688402317.252525 33253515051.729076 29755940602.739307
+ eval 20 lr 1.00e-05 qshape 3747.1815849628533 15532.497798242039 18069.02358440245 17962.990541538886 16822.338890328934 16902.853376511404 17295.344412181297 16016.50169931729 pshape 1958.4963860267708 11703.807126590062 22289.438573773365 24894.416000890556 22849.470641674812 22719.430802638683 21823.023754617698 20963.555358451973 eshape 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0empty list: key  mshape  value  []
+ rep 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 poly 4.0 4.0 4.0 4.0 4.0 4.0 4.0 4.0
+
+20 eval p update function  cntr  40
+For x axis: mean 0.0117 std 0.0370 min -0.1347 max 0.1339
+For y axis: mean 0.0128 std 0.0363 min -0.1115 max 0.1272
+20 eval q update function  cntr  40
+For x axis: mean -0.0121 std 0.0977 min -0.1259 max 0.1520
+For y axis: mean -0.0121 std 0.0981 min -0.1337 max 0.1551
+end date/time every checkpoint: 20260130, 14:32:44
+run time  0:02:59.964173
