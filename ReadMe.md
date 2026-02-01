@@ -27,7 +27,10 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 - PyTorch ≥ 2.0  
 - Linux (tested on Ubuntu)  
 - CUDA-enabled GPU (optional but recommended)
-
+Exact requirements are provided as `requirements.txt`, which can be installed via
+```
+pip install requirements.txt
+```
 ---
 
 ## Typical workflow
@@ -41,8 +44,6 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 ---
 
 ## Directory structure (3D Lennard–Jones)
-
-> Note: the directory name `3D_LJ_Potential` is kept for backward compatibility.
 
 ```
 3D_LJ_Potential/
