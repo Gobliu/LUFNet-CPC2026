@@ -51,8 +51,8 @@ pip install -r requirements.txt
 
 1. Inspect or test the pipeline using example data (`thumbnail_data/`)
 2. Configure training parameters in `train_config.yaml`
-3. Train a model using `train_main.py`
-4. Evaluate the trained model using `test_main.py`
+3. Train a model using this script: `train_main.py`
+4. Evaluate the trained model using this script: `test_main.py`
 5. (Optional) Compare checkpoints against a baseline for reproducibility
 
 ---
