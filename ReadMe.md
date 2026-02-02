@@ -94,7 +94,7 @@ python test_main.py
 
 ## Data
 
-- **`thumbnail_data/`**  
+- **`3D_LJ_Potential/thumbnail_data/`**  
   Small example datasets sufficient for pipeline testing and debugging.
 
 - **Full dataset of 3D Lennard–Jones**  
