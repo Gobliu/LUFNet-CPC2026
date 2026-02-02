@@ -23,7 +23,7 @@ Other branches are retained **for backup and development purposes only**.
 
 - **2D Lennard–Jones (LUFNet)**  
   The 2D LJ workflow and associated thumbnail datasets are **not included** in this
-  release and will be added in a future version (expected March 2026).
+  release and will be added in a future version (expected May 2026).
 
 - **3D Lennard–Jones (LUFNet)**  
   This release contains the complete 3D LJ workflow, including:
