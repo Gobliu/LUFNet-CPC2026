@@ -15,7 +15,7 @@ DOI: https://doi.org/10.1016/j.cpc.2026.110036
 Please use the **`main` branch**, which contains the latest stable version of the code.
 Other branches are retained **for backup and development purposes only**.
 
-- Current version: **v1.0**
+- Current version: **v1.0** (released on 2 Feb 2026)
 
 ---
 
