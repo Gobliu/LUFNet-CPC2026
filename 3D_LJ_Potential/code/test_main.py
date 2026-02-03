@@ -55,17 +55,17 @@ def main():
     region = args['region']
     gamma = args['gamma']
 
-    traindict = {"loadfile": args['ckpt_path'],  # to load previously trained model
-                 "net_nnodes": 128,  # number of nodes in neural nets for force
-                 "pw4mb_nnodes" : 128,
-                 "pw_output_dim" : 3, # 20250812: change from 2D to 3D, psi
-                 "init_weights"   : 'relu',
-                 "optimizer" : 'Adam',
-                 "single_particle_net_type" : single_parnet_type,
-                 "multi_particle_net_type"  : multi_parnet_type,
-                 "readout_step_net_type"    : readout_net_type,
-                 "n_encoder_layers": 2,  # ---LW
-                 "n_gnn_layers" : 2,
+    traindict = { "loadfile": args['ckpt_path'],  # to load previously trained model
+                  "net_nnodes": 128,  # number of nodes in neural nets for force
+                  "pw4mb_nnodes" : 128,
+                  "pw_output_dim" : 3, # 20250812: change from 2D to 3D, psi
+                  "init_weights"   : 'relu',
+                  "optimizer" : 'Adam',
+                  "single_particle_net_type" : single_parnet_type,
+                  "multi_particle_net_type"  : multi_parnet_type,
+                  "readout_step_net_type"    : readout_net_type,
+                  "n_encoder_layers": 2,  # ---LW
+                  "n_gnn_layers" : 2,
                   "edge_attention" : True,
                   "d_model": 256,  # ---LW
                   "nhead": 8,  # ---LW
@@ -74,7 +74,7 @@ def main():
                   "tau_traj_len": 8 * tau_long,  # n evaluations in integrator
                   "tau_long": tau_long,
                   "saved_pair_steps": saved_pair_steps,
-                 "loss_weights": loss_weights,
+                  "loss_weights": loss_weights,
                   "window_sliding": window_sliding,  # number of times to do integration before cal the loss
                   "ngrids": ngrid,  # 6*len(b_list)
                   "b_list": b,  # # grid lattice constant for multibody interactions
@@ -83,7 +83,7 @@ def main():
                   "append_strike" : append_strike, # ai 0.1 -> 10; ai 0.02 -> 50; ai 0.01 -> 100
                   "maxlr"    : 1e-5,
                   "tau_init": 1 , # starting learning rate
-                 "gamma" : gamma
+                  "gamma" : gamma
                  }
 
     lossdict = { "polynomial_degree" : 4,

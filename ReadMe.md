@@ -90,6 +90,17 @@ python test_main.py
 - Evaluation parameters are read from `test_config.yaml`
 - Outputs are written to `results/`
 
+To plot the training curve, redirect the output to a log file:
+
+```bash
+python train_main.py > results/<your run name>/log
+```
+Change the `run_name` in `plot_log.py` to match your run name, then execute:
+
+```bash
+python plot_log
+```
+
 ---
 
 ## Data
@@ -98,7 +109,7 @@ python test_main.py
   Small example datasets for pipeline testing and debugging.
 
 - **Full dataset of 3D Lennard–Jones**  
-  The full dataset (MD/MC trajectories, energies, and forces) is deposited on Zenodo.  
+  The full dataset is deposited on Zenodo, with a detailed description provided in the attached file `xxx.csv`.
   DOI: (to be added)
 
 Update dataset paths in `train_config.yaml` to use the full dataset.

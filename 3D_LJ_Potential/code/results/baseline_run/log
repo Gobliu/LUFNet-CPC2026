@@ -1,7 +1,7 @@
 device singleton constructed for  cuda
-pid :  132795
+pid :  3578967
 uname :  uname_result(system='Linux', node='bii-spd-0b4c993', release='6.14.0-37-generic', version='#37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2', machine='x86_64')
-code run start time  20260130, 14:29:44
+code run start time  20260202, 08:26:16
 device singleton constructed for  cuda
 trainer dict ============== 
 loadfile : None
@@ -306,7 +306,7 @@ For y axis: mean -0.0060 std 0.1371 min -0.1996 max 0.2464
 For x axis: mean -0.0135 std 0.0450 min -0.0950 max 0.0712
 For y axis: mean -0.0136 std 0.0451 min -0.0929 max 0.0706
  at t= 1
-time use for  1 epoches is: time usage : 0:00:08.092121 ( 0:00:08.092121 ) at t= 1
+time use for  1 epoches is: time usage : 0:00:08.189720 ( 0:00:08.189720 ) at t= 1
 saving file to  ././results/baseline_run/mbpw000001.pth
 checkpint to file  ././results/baseline_run/mbpw000001.pth
 0 checkpoint values tau 0 : 1.451389e-01 tau 1 : 9.497688e-01 tau 2 : 9.719684e-01
@@ -376,7 +376,7 @@ For y axis: mean -0.0119 std 0.0570 min -0.1126 max 0.1304
 For x axis: mean -0.0127 std 0.0801 min -0.1544 max 0.0982
 For y axis: mean -0.0128 std 0.0803 min -0.1584 max 0.0938
  at t= 2
-time use for  1 epoches is: time usage : 0:00:17.042055 ( 0:00:08.949934 ) at t= 2
+time use for  1 epoches is: time usage : 0:00:17.342989 ( 0:00:09.153269 ) at t= 2
 saving file to  ././results/baseline_run/mbpw000002.pth
 checkpint to file  ././results/baseline_run/mbpw000002.pth
 0 checkpoint values tau 0 : 1.450980e-01 tau 1 : 9.497791e-01 tau 2 : 9.719489e-01
@@ -446,7 +446,7 @@ For y axis: mean -0.0047 std 0.0179 min -0.0566 max 0.0459
 For x axis: mean -0.0070 std 0.1051 min -0.1639 max 0.1342
 For y axis: mean -0.0071 std 0.1053 min -0.1698 max 0.1322
  at t= 3
-time use for  1 epoches is: time usage : 0:00:25.978261 ( 0:00:08.936206 ) at t= 3
+time use for  1 epoches is: time usage : 0:00:26.423609 ( 0:00:09.080620 ) at t= 3
 saving file to  ././results/baseline_run/mbpw000003.pth
 checkpint to file  ././results/baseline_run/mbpw000003.pth
 0 checkpoint values tau 0 : 1.451017e-01 tau 1 : 9.497690e-01 tau 2 : 9.719284e-01
@@ -516,7 +516,7 @@ For y axis: mean 0.0151 std 0.0221 min -0.0408 max 0.0786
 For x axis: mean 0.0061 std 0.1067 min -0.1550 max 0.1491
 For y axis: mean 0.0060 std 0.1069 min -0.1558 max 0.1483
  at t= 4
-time use for  1 epoches is: time usage : 0:00:34.833667 ( 0:00:08.855406 ) at t= 4
+time use for  1 epoches is: time usage : 0:00:35.578447 ( 0:00:09.154838 ) at t= 4
 saving file to  ././results/baseline_run/mbpw000004.pth
 checkpint to file  ././results/baseline_run/mbpw000004.pth
 0 checkpoint values tau 0 : 1.451279e-01 tau 1 : 9.497497e-01 tau 2 : 9.719149e-01
@@ -586,7 +586,7 @@ For y axis: mean 0.0356 std 0.0397 min -0.0412 max 0.1238
 For x axis: mean 0.0192 std 0.0974 min -0.1217 max 0.1615
 For y axis: mean 0.0191 std 0.0977 min -0.1233 max 0.1591
  at t= 5
-time use for  1 epoches is: time usage : 0:00:43.735010 ( 0:00:08.901343 ) at t= 5
+time use for  1 epoches is: time usage : 0:00:44.924218 ( 0:00:09.345771 ) at t= 5
 saving file to  ././results/baseline_run/mbpw000005.pth
 checkpint to file  ././results/baseline_run/mbpw000005.pth
 0 checkpoint values tau 0 : 1.451549e-01 tau 1 : 9.497266e-01 tau 2 : 9.719013e-01
@@ -656,7 +656,7 @@ For y axis: mean 0.0423 std 0.0545 min -0.0439 max 0.1450
 For x axis: mean 0.0214 std 0.0853 min -0.0819 max 0.1543
 For y axis: mean 0.0213 std 0.0856 min -0.0877 max 0.1549
  at t= 6
-time use for  1 epoches is: time usage : 0:00:52.748511 ( 0:00:09.013501 ) at t= 6
+time use for  1 epoches is: time usage : 0:00:54.278837 ( 0:00:09.354619 ) at t= 6
 saving file to  ././results/baseline_run/mbpw000006.pth
 checkpint to file  ././results/baseline_run/mbpw000006.pth
 0 checkpoint values tau 0 : 1.451565e-01 tau 1 : 9.497065e-01 tau 2 : 9.718906e-01
@@ -726,7 +726,7 @@ For y axis: mean 0.0330 std 0.0481 min -0.0356 max 0.1406
 For x axis: mean 0.0128 std 0.0836 min -0.0830 max 0.1430
 For y axis: mean 0.0127 std 0.0839 min -0.0858 max 0.1441
  at t= 7
-time use for  1 epoches is: time usage : 0:01:01.661815 ( 0:00:08.913304 ) at t= 7
+time use for  1 epoches is: time usage : 0:01:03.531316 ( 0:00:09.252479 ) at t= 7
 saving file to  ././results/baseline_run/mbpw000007.pth
 checkpint to file  ././results/baseline_run/mbpw000007.pth
 0 checkpoint values tau 0 : 1.451458e-01 tau 1 : 9.497098e-01 tau 2 : 9.718773e-01
@@ -796,7 +796,7 @@ For y axis: mean 0.0261 std 0.0317 min -0.0318 max 0.1069
 For x axis: mean 0.0102 std 0.0942 min -0.0980 max 0.1593
 For y axis: mean 0.0101 std 0.0945 min -0.0997 max 0.1601
  at t= 8
-time use for  1 epoches is: time usage : 0:01:10.462692 ( 0:00:08.800877 ) at t= 8
+time use for  1 epoches is: time usage : 0:01:12.589954 ( 0:00:09.058638 ) at t= 8
 saving file to  ././results/baseline_run/mbpw000008.pth
 checkpint to file  ././results/baseline_run/mbpw000008.pth
 0 checkpoint values tau 0 : 1.451457e-01 tau 1 : 9.497204e-01 tau 2 : 9.718669e-01
@@ -866,7 +866,7 @@ For y axis: mean 0.0269 std 0.0233 min -0.0398 max 0.0912
 For x axis: mean 0.0157 std 0.0991 min -0.1010 max 0.1641
 For y axis: mean 0.0156 std 0.0994 min -0.1037 max 0.1643
  at t= 9
-time use for  1 epoches is: time usage : 0:01:19.314776 ( 0:00:08.852084 ) at t= 9
+time use for  1 epoches is: time usage : 0:01:21.642750 ( 0:00:09.052796 ) at t= 9
 saving file to  ././results/baseline_run/mbpw000009.pth
 checkpint to file  ././results/baseline_run/mbpw000009.pth
 0 checkpoint values tau 0 : 1.451650e-01 tau 1 : 9.497121e-01 tau 2 : 9.718587e-01
@@ -936,7 +936,7 @@ For y axis: mean 0.0252 std 0.0266 min -0.0418 max 0.0938
 For x axis: mean 0.0169 std 0.0954 min -0.0928 max 0.1607
 For y axis: mean 0.0168 std 0.0957 min -0.0991 max 0.1617
  at t= 10
-time use for  1 epoches is: time usage : 0:01:28.234823 ( 0:00:08.920047 ) at t= 10
+time use for  1 epoches is: time usage : 0:01:30.669709 ( 0:00:09.026959 ) at t= 10
 saving file to  ././results/baseline_run/mbpw000010.pth
 checkpint to file  ././results/baseline_run/mbpw000010.pth
 0 checkpoint values tau 0 : 1.451970e-01 tau 1 : 9.497030e-01 tau 2 : 9.718589e-01
@@ -1006,7 +1006,7 @@ For y axis: mean 0.0195 std 0.0336 min -0.0628 max 0.0999
 For x axis: mean 0.0124 std 0.0892 min -0.0876 max 0.1540
 For y axis: mean 0.0123 std 0.0895 min -0.0901 max 0.1547
  at t= 11
-time use for  1 epoches is: time usage : 0:01:37.391116 ( 0:00:09.156293 ) at t= 11
+time use for  1 epoches is: time usage : 0:01:39.722880 ( 0:00:09.053171 ) at t= 11
 saving file to  ././results/baseline_run/mbpw000011.pth
 checkpint to file  ././results/baseline_run/mbpw000011.pth
 0 checkpoint values tau 0 : 1.452364e-01 tau 1 : 9.496995e-01 tau 2 : 9.718482e-01
@@ -1076,7 +1076,7 @@ For y axis: mean 0.0186 std 0.0360 min -0.0660 max 0.1137
 For x axis: mean 0.0119 std 0.0881 min -0.0838 max 0.1508
 For y axis: mean 0.0118 std 0.0884 min -0.0903 max 0.1518
  at t= 12
-time use for  1 epoches is: time usage : 0:01:46.333151 ( 0:00:08.942035 ) at t= 12
+time use for  1 epoches is: time usage : 0:01:48.811951 ( 0:00:09.089071 ) at t= 12
 saving file to  ././results/baseline_run/mbpw000012.pth
 checkpint to file  ././results/baseline_run/mbpw000012.pth
 0 checkpoint values tau 0 : 1.452781e-01 tau 1 : 9.497049e-01 tau 2 : 9.718377e-01
@@ -1146,7 +1146,7 @@ For y axis: mean 0.0186 std 0.0372 min -0.0689 max 0.1160
 For x axis: mean 0.0106 std 0.0905 min -0.0859 max 0.1534
 For y axis: mean 0.0105 std 0.0909 min -0.0875 max 0.1549
  at t= 13
-time use for  1 epoches is: time usage : 0:01:55.272057 ( 0:00:08.938906 ) at t= 13
+time use for  1 epoches is: time usage : 0:01:58.023100 ( 0:00:09.211149 ) at t= 13
 saving file to  ././results/baseline_run/mbpw000013.pth
 checkpint to file  ././results/baseline_run/mbpw000013.pth
 0 checkpoint values tau 0 : 1.453171e-01 tau 1 : 9.497170e-01 tau 2 : 9.718231e-01
@@ -1216,7 +1216,7 @@ For y axis: mean 0.0158 std 0.0339 min -0.0705 max 0.1125
 For x axis: mean 0.0053 std 0.0939 min -0.0877 max 0.1538
 For y axis: mean 0.0052 std 0.0943 min -0.0894 max 0.1560
  at t= 14
-time use for  1 epoches is: time usage : 0:02:04.289573 ( 0:00:09.017516 ) at t= 14
+time use for  1 epoches is: time usage : 0:02:07.078178 ( 0:00:09.055078 ) at t= 14
 saving file to  ././results/baseline_run/mbpw000014.pth
 checkpint to file  ././results/baseline_run/mbpw000014.pth
 0 checkpoint values tau 0 : 1.453605e-01 tau 1 : 9.497196e-01 tau 2 : 9.718085e-01
@@ -1286,7 +1286,7 @@ For y axis: mean 0.0185 std 0.0307 min -0.0650 max 0.1072
 For x axis: mean 0.0044 std 0.0988 min -0.0885 max 0.1683
 For y axis: mean 0.0043 std 0.0991 min -0.0903 max 0.1713
  at t= 15
-time use for  1 epoches is: time usage : 0:02:13.387371 ( 0:00:09.097798 ) at t= 15
+time use for  1 epoches is: time usage : 0:02:16.480081 ( 0:00:09.401903 ) at t= 15
 saving file to  ././results/baseline_run/mbpw000015.pth
 checkpint to file  ././results/baseline_run/mbpw000015.pth
 0 checkpoint values tau 0 : 1.454067e-01 tau 1 : 9.497247e-01 tau 2 : 9.717972e-01
@@ -1356,7 +1356,7 @@ For y axis: mean 0.0213 std 0.0308 min -0.0768 max 0.1135
 For x axis: mean 0.0067 std 0.1012 min -0.0873 max 0.1688
 For y axis: mean 0.0066 std 0.1016 min -0.0901 max 0.1719
  at t= 16
-time use for  1 epoches is: time usage : 0:02:22.279449 ( 0:00:08.892078 ) at t= 16
+time use for  1 epoches is: time usage : 0:02:25.610660 ( 0:00:09.130579 ) at t= 16
 saving file to  ././results/baseline_run/mbpw000016.pth
 checkpint to file  ././results/baseline_run/mbpw000016.pth
 0 checkpoint values tau 0 : 1.454544e-01 tau 1 : 9.497205e-01 tau 2 : 9.717843e-01
@@ -1426,7 +1426,7 @@ For y axis: mean 0.0172 std 0.0359 min -0.0863 max 0.1231
 For x axis: mean 0.0013 std 0.0979 min -0.0965 max 0.1583
 For y axis: mean 0.0012 std 0.0983 min -0.0992 max 0.1631
  at t= 17
-time use for  1 epoches is: time usage : 0:02:31.258620 ( 0:00:08.979171 ) at t= 17
+time use for  1 epoches is: time usage : 0:02:34.665031 ( 0:00:09.054371 ) at t= 17
 saving file to  ././results/baseline_run/mbpw000017.pth
 checkpint to file  ././results/baseline_run/mbpw000017.pth
 0 checkpoint values tau 0 : 1.455031e-01 tau 1 : 9.497163e-01 tau 2 : 9.717632e-01
@@ -1496,7 +1496,7 @@ For y axis: mean 0.0109 std 0.0418 min -0.1151 max 0.1278
 For x axis: mean -0.0071 std 0.0995 min -0.1241 max 0.1563
 For y axis: mean -0.0072 std 0.0999 min -0.1185 max 0.1579
  at t= 18
-time use for  1 epoches is: time usage : 0:02:40.193334 ( 0:00:08.934714 ) at t= 18
+time use for  1 epoches is: time usage : 0:02:43.862746 ( 0:00:09.197715 ) at t= 18
 saving file to  ././results/baseline_run/mbpw000018.pth
 checkpint to file  ././results/baseline_run/mbpw000018.pth
 0 checkpoint values tau 0 : 1.455523e-01 tau 1 : 9.497209e-01 tau 2 : 9.717407e-01
@@ -1566,7 +1566,7 @@ For y axis: mean 0.0105 std 0.0441 min -0.1183 max 0.1358
 For x axis: mean -0.0100 std 0.1043 min -0.1319 max 0.1576
 For y axis: mean -0.0100 std 0.1047 min -0.1317 max 0.1638
  at t= 19
-time use for  1 epoches is: time usage : 0:02:49.467440 ( 0:00:09.274106 ) at t= 19
+time use for  1 epoches is: time usage : 0:02:53.122162 ( 0:00:09.259416 ) at t= 19
 saving file to  ././results/baseline_run/mbpw000019.pth
 checkpint to file  ././results/baseline_run/mbpw000019.pth
 0 checkpoint values tau 0 : 1.456018e-01 tau 1 : 9.497265e-01 tau 2 : 9.717196e-01
@@ -1636,7 +1636,7 @@ For y axis: mean 0.0121 std 0.0387 min -0.1144 max 0.1311
 For x axis: mean -0.0109 std 0.1033 min -0.1337 max 0.1636
 For y axis: mean -0.0109 std 0.1037 min -0.1361 max 0.1605
  at t= 20
-time use for  1 epoches is: time usage : 0:02:58.551481 ( 0:00:09.084041 ) at t= 20
+time use for  1 epoches is: time usage : 0:03:02.147041 ( 0:00:09.024879 ) at t= 20
 saving file to  ././results/baseline_run/mbpw000020.pth
 checkpint to file  ././results/baseline_run/mbpw000020.pth
 0 checkpoint values tau 0 : 1.456515e-01 tau 1 : 9.497198e-01 tau 2 : 9.716983e-01
@@ -1685,5 +1685,5 @@ For y axis: mean 0.0128 std 0.0363 min -0.1115 max 0.1272
 20 eval q update function  cntr  40
 For x axis: mean -0.0121 std 0.0977 min -0.1259 max 0.1520
 For y axis: mean -0.0121 std 0.0981 min -0.1337 max 0.1551
-end date/time every checkpoint: 20260130, 14:32:44
-run time  0:02:59.964173
+end date/time every checkpoint: 20260202, 08:29:20
+run time  0:03:03.614835
