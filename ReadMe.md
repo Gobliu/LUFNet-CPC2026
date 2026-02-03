@@ -93,7 +93,7 @@ python test_main.py
 To plot the training curve, redirect the output to a log file:
 
 ```bash
-python train_main.py > results/<your run name>/log
+python train_main.py > results/<your_run_name>/log
 ```
 Change the `run_name` in `plot_log.py` to match your run name, then execute:
 
