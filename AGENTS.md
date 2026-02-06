@@ -1,3 +1,4 @@
+# For Codex only; not for human
 # Repository Guidelines
 
 ## Project Structure & Module Organization
