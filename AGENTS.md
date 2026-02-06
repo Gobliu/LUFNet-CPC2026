@@ -1,4 +1,5 @@
-# For Codex only; not for human
+# !!!!!  This file is for Codex use only. You can safely ignore it.  !!!!!
+
 # Repository Guidelines
 
 ## Project Structure & Module Organization
