@@ -110,7 +110,7 @@ python plot_log
 
 - **Full dataset of 3D Lennard–Jones**  
   The full dataset is deposited on Zenodo, with a detailed description provided in the attached file `xxx.csv`.
-  DOI: (to be added)
+  DOI: https://doi.org/10.5281/zenodo.18241955
 
 Update dataset paths in `train_config.yaml` to use the full dataset.
 
