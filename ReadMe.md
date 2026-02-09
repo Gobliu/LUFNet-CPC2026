@@ -46,7 +46,7 @@ Exact dependencies are listed in `requirements.txt` and can be installed via:
 # ===== Optional: To create a new conda environment and activate it =====
 conda create --name LUFNet python=3.10 pip numpy ipython
 conda activate LUFNet
-# ==========
+# =======================================================================
 
 pip install -r requirements.txt
 ```
