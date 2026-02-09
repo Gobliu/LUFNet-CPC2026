@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from typing import Union, Dict, List
 
-def run_baseline_results(log_dir: Union[str, Path]) -> None:
+def combine_logs_and_extract(log_dir: Union[str, Path]) -> None:
     """
     Python equivalent of:
     log_dir='results/baseline_run'
@@ -93,6 +93,7 @@ def generate_log_dict(log_dir: Union[str, Path], save_path: Union[str, Path]) ->
         log_dict[key] = str(file_path)
     
     output_path = Path(save_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(log_dict, f, indent=2)
     print(f"Successfully saved log dictionary to {output_path}")
@@ -201,11 +202,11 @@ if __name__ == "__main__":
     run_name = "baseline_run"
     plot_title = "dpt=20; ai tau =0.05; batch size 16; lr 1e-5; poly deg=4"
     loss_weights_arg = "0,1/8,0,1/4,0,1/2,0,1"
-    dict_output_file = script_dir / "load_file.dict"
+    dict_output_file = script_dir / "analysis" / "load_file.dict"
     
     # 1. Process log files (cat and show_results.sh)
     target_log_dir = script_dir / "results" / run_name
-    run_baseline_results(target_log_dir)
+    combine_logs_and_extract(target_log_dir)
     
     # 2. Generate and save the metadata dictionary
     results_map = generate_log_dict(target_log_dir, save_path=dict_output_file)

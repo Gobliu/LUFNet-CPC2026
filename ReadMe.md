@@ -43,6 +43,11 @@ Other branches are retained **for backup and development purposes only**.
 Exact dependencies are listed in `requirements.txt` and can be installed via:
 
 ```bash
+# ===== Optional: To create a new conda environment and activate it =====
+conda create --name LUFNet python=3.10 pip numpy ipython
+conda activate LUFNet
+# ==========
+
 pip install -r requirements.txt
 ```
 ---
