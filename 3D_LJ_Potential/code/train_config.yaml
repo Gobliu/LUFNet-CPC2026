@@ -1,42 +1,91 @@
-net_type: api0lw8421ew1repw10poly4l # part of save filename
-single_parnet_type: transformer_type # single particle neural network type
-multi_parnet_type: gnn_identity # multi particle neural network type
-readout_net_type: mlp_type # readout neural network type
-seed: 34952
-deterministic: true
-force_cuda: true
-trans_layer: 2  # transformer layer
-gnn_layer: 2  # graph neural network layer
-nnode: 128 # number of nodes in neural nets (use pwnet, readout net)
-tau_long: 0.05 # LUFnet time step size -- 0.05, 0.02, 0.01
-saved_pair_steps: 5  # saved time point to adjust tau_long e.g. tau_long=0.01 -> 1; tau_long=0.02 -> 2; tau_long=0.05 -> 5
-nitr: 500 #  iterations to save paired time points with tau =0.0001 (e.g. ai at 0.01 -> 100; ai at 0.02 -> 200; ai at 0.05 -> 500)
-window_sliding: 8 # number of time points to do integration to calculate the loss batch_size: 16
-batch_size: 2
-ngrid: 12  # 2D -> 6 ; 3D -> 12 -- current code only for grid 12
-b: # list of grid distance; grid lattice constant for multibody interactions
-  - 0.2
-a: # list of grid off set angle
-  - 0
-loss_weights: # loss = w1L1 +  w2L2 + w3L3 + w4L4 + w5L5 + w6L6 + w7L7 + w8L8
-  - 0
-  - 0.125
-  - 0
-  - 0.25
-  - 0
-  - 0.5
-  - 0
-  - 1
-ew: 1 # energey loss weight
-repw: 10 # repulsive loss weight
-rthrsh: 0.7 # 0.7 0.67
-poly_deg: 4 # 4 1 polynomial based qloss, ploss term
-maxlr: 0.00001 # lr = 1e-5 1e-6
-region: l # phase region we are interested
-dpt_train: 10 # train dataset
-dpt_valid: 10 # valid dataset
-start_epoch: 0 # if checkpoint exist, set start epoch from saved epoch number. otherwise start epoch=0
-end_epoch: 20 # end epoch (exclusive)
-loadfile: null  # null means None, if checkpoint exist, load it filename
-#loadfile: results/traj_len08ws08tau0.05ngrid12api0lw8421ew1repw10poly4llr1e6_dpt180000/mbpw000024.pth  # null means None, if checkpoint exist, load it filename
-#loadfile: results/traj_len08ws08tau0.05ngrid12api0lw8421ew1repw10thrsh067poly4l_dpt180000/mbpw000104.pth  # null means None, if checkpoint exist, load it filename
+metadata:
+  net_type: api0lw8421ew1repw10poly4l
+  region: l
+
+system:
+  seed: 34952
+  deterministic: true
+  force_cuda: true
+
+model:
+  single_parnet_type: transformer_type
+  multi_parnet_type: gnn_identity
+  readout_net_type: mlp_type
+  trans_layer: 2
+  gnn_layer: 2
+  nnode: 128
+  pw4mb_nnodes: 128
+  pw_output_dim: 3
+  d_model: 256
+  nhead: 8
+  net_dropout: 0.0
+  edge_attention: true
+  init_weights: relu
+  tau_init: 1
+
+simulation:
+  tau_long: 0.05
+  saved_pair_steps: 5
+  window_sliding: 8
+  tau_traj_len_factor: 8
+  allowed_window_sliding:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 7
+    - 8
+    - 9
+    - 10
+    - 12
+    - 14
+    - 16
+
+grid:
+  ngrid: 12
+  b:
+    - 0.2
+  a:
+    - 0
+
+optimizer:
+  optimizer: Adam
+  maxlr: 0.00001
+  grad_clip: 0.5
+
+loss:
+  loss_weights:
+    - 0
+    - 0.125
+    - 0
+    - 0.25
+    - 0
+    - 0.5
+    - 0
+    - 1
+  ew: 1
+  repw: 10
+  rthrsh: 0.7
+  poly_deg: 4
+
+data:
+  train_file: ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+  valid_file: ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+  test_file: ../thumbnail_data/n64lt0.1stpstraj180_l_dpt100.pt
+  dpt_train: 10
+  dpt_valid: 10
+  dpt_test: 10
+  batch_size: 2
+
+run:
+  start_epoch: 0
+  end_epoch: 20
+  loadfile: null
+  save_dir: ./results/baseline_run
+  nitr: 500
+  tau_short: 0.0001
+  append_strike: 500
+  ckpt_interval: 1
+  val_interval: 1
+  verb: 1
