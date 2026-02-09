@@ -13,7 +13,6 @@ def run_baseline_results(log_dir: Union[str, Path]) -> None:
     ./utils/show_results.sh $log_dir/log_combine
     """
     # 1. Path Setup using pathlib
-    script_dir = Path(__file__).resolve().parent
     base_path = Path(log_dir)
     log_combine_file = base_path / "log_combine"
     script_path = script_dir / "utils" / "show_results.sh"
@@ -196,7 +195,7 @@ def plot_loss_weights(data: Dict[str, str], run_prefix: str, weight_str: str, ti
     plt.close()
 
 if __name__ == "__main__":
-    script_dir = Path(__file__).resolve().parent
+    script_dir = Path(__file__).resolve().parent.parent
     
     # Parameters
     run_name = "baseline_run"

@@ -53,8 +53,6 @@ pip install -r requirements.txt
 2. Configure training parameters in `train_config.yaml`
 3. Train a model using this script: `train_main.py`
 4. Evaluate the trained model using this script: `test_main.py`
-5. (Optional) Compare checkpoints against a baseline for reproducibility
-
 ---
 
 ## Directory structure (3D Lennard–Jones)
@@ -66,13 +64,17 @@ pip install -r requirements.txt
 │   ├── test_main.py
 │   ├── train_config.yaml
 │   ├── test_config.yaml
-│   ├── compare_with_baseline.py
-│   ├── utils/
+│   ├── analysis/
 │   ├── data_loader/
-│   ├── ML/
 │   ├── hamiltonian/
+│   ├── ML/
 │   ├── MD/
-│   └── MC/
+│   ├── MC/
+│   ├── utils/
+│   ├── parameters/
+│   ├── log/
+│   ├── results/
+│   └── thumbnail_data/
 └── thumbnail_data/
 ```
 
@@ -95,10 +97,10 @@ To plot the training curve, redirect the output to a log file:
 ```bash
 python train_main.py > results/your_run_name/log
 ```
-Change the `run_name` in `plot_log.py` to match your run name, then execute:
+Change the `run_name` in `analysis/plot_log.py` to match your run name, then execute:
 
 ```bash
-python plot_log
+python analysis/plot_log.py
 ```
 
 ---
